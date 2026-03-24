@@ -1,0 +1,34 @@
+name: CI - Angular Build e Testes
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Rodar lint
+        run: npm run lint --if-present
+
+      - name: Rodar testes
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Build da aplicação
+        run: npm run build -- --configuration production
