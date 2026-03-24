@@ -6,4 +6,11 @@ import { Component } from '@angular/core';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {}
+export class Login {
+
+  mostrarSenha = false;
+
+  toggleSenha() {
+    this.mostrarSenha = !this.mostrarSenha;
+  }
+}
