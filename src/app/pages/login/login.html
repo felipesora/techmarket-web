@@ -6,55 +6,89 @@
 
     <div class="bg-[#E9ECEF] h-[0.5px] w-full"></div>
     
-    <div class="p-8 flex flex-col items-center gap-5">
+    <div class="p-8">
 
-        <h1 class="font-bold text-2xl">Acessar minha conta</h1>
+        <h1 class="font-bold text-2xl text-center pb-5">Acessar minha conta</h1>
 
-        <div class="flex flex-col w-full gap-1">
-            <label for="email" class="text-[#334155] font-bold text-sm">E-mail</label>
-            <input 
-                name="email" 
-                type="email" 
-                placeholder="exemplo@techmarket.com.br" 
-                class="border border-[#E2E8F0] rounded-[10px] py-3.5 px-4 text-[15px] transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
-            >
-        </div>
-
-        <div class="flex flex-col w-full gap-1">
-            <label for="senha" class="text-[#334155] font-bold text-sm">Senha</label>
-
-            <div class="relative w-full">
-                <input 
-                    name="senha" 
-                    [type]="mostrarSenha ? 'text' : 'password'" 
-                    placeholder="••••••••"
-                    class="border border-[#E2E8F0] rounded-[10px] py-3.5 px-4 pr-12 text-[15px] 
-                        transition-all duration-300 
-                        focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none
-                        w-full"
+        <form [formGroup]="form" (ngSubmit)="logar()" class="flex flex-col items-center gap-5">
+            <div class="flex flex-col w-full gap-1">
+                <label for="email" class="text-[#334155] font-bold text-sm">E-mail</label>
+                <input
+                    formControlName="email"
+                    name="email"
+                    type="email"
+                    placeholder="exemplo@techmarket.com.br"
+                    class="border border-[#E2E8F0] rounded-[10px] py-3.5 px-4 text-[15px] transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
                 >
-
-                @if (!mostrarSenha) {
-                    <button (click)="toggleSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
-                        <img src="icons/icone-invisivel-cinza.png" class="w-5 group-hover:hidden">
-                        <img src="icons/icone-invisivel-azul.png" class="w-5 hidden group-hover:block">
-                    </button>
-                } @else {
-                    <button (click)="toggleSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
-                        <img src="icons/icone-visivel-cinza.png" class="w-5 group-hover:hidden">
-                        <img src="icons/icone-visivel-azul.png" class="w-5 hidden group-hover:block">
-                    </button>
+                @if (submitted && form.get('email')?.errors?.['emailObrigatorio']) {
+                    <span class="text-red-500 text-xs">* Email é obrigatório</span>
                 }
 
+                @if (submitted && form.get('email')?.errors?.['emailMaximo']) {
+                    <span class="text-red-500 text-xs">* Email deve ter no máximo 150 caracteres</span>
+                }
+
+                @if (submitted && form.get('email')?.errors?.['emailInvalido']) {
+                    <span class="text-red-500 text-xs">* Email inválido</span>
+                }
+            </div>
+            <div class="flex flex-col w-full gap-1">
+                <label for="senha" class="text-[#334155] font-bold text-sm">Senha</label>
+                <div class="relative w-full">
+                    <input
+                        formControlName="senha"
+                        name="senha"
+                        [type]="mostrarSenha ? 'text' : 'password'"
+                        placeholder="••••••••"
+                        class="border border-[#E2E8F0] rounded-[10px] py-3.5 px-4 pr-12 text-[15px]
+                            transition-all duration-300
+                            focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none
+                            w-full"
+                    >
+                    @if (!mostrarSenha) {
+                        <button (click)="toggleSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
+                            <img src="icons/icone-invisivel-cinza.png" class="w-5 group-hover:hidden">
+                            <img src="icons/icone-invisivel-azul.png" class="w-5 hidden group-hover:block">
+                        </button>
+                    } @else {
+                        <button (click)="toggleSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
+                            <img src="icons/icone-visivel-cinza.png" class="w-5 group-hover:hidden">
+                            <img src="icons/icone-visivel-azul.png" class="w-5 hidden group-hover:block">
+                        </button>
+                    }
+
+                    @if (submitted && form.get('senha')?.errors?.['senhaObrigatoria']) {
+                        <span class="text-red-500 text-xs">* Senha é obrigatória</span>
+                    }
+
+                    @if (submitted && form.get('senha')?.errors?.['senhaMinimo']) {
+                        <span class="text-red-500 text-xs">* Senha deve ter no mínimo 3 caracteres</span>
+                    }
+
+                    @if (submitted && form.get('senha')?.errors?.['senhaMaximo']) {
+                        <span class="text-red-500 text-xs">* Senha deve ter no máximo 150 caracteres</span>
+                    }
+                </div>
             </div>
 
-        </div>
+            @if (mensagem) {
+                <div 
+                    class="w-full text-center text-sm font-medium p-3 rounded-lg" 
+                    [ngClass]="{
+                        'bg-green-100 text-green-700': tipoMensagem === 'sucesso',
+                        'bg-red-100 text-red-700': tipoMensagem === 'erro'
+                    }"
+                >
+                    {{ mensagem }}
+                </div>
+            }
 
-        <button class="bg-[#0076D2] text-white font-bold w-full py-4 rounded-[10px] cursor-pointer hover:bg-[#002158] transition-all duration-300">
-            Entrar na minha conta
-        </button>
+            <button type="submit" class="bg-[#0076D2] text-white font-bold w-full py-4 rounded-[10px] cursor-pointer hover:bg-[#002158] transition-all duration-300">
+                Entrar na minha conta
+            </button>
+        </form>
 
-        <div class="flex items-center gap-2 w-full">
+        <div class="flex items-center gap-2 w-full py-5">
             <div class="bg-[#E9ECEF] h-px flex-1"></div>
             <p class="text-[12px] text-[#64748B]">OU</p>
             <div class="bg-[#E9ECEF] h-px flex-1"></div>
@@ -64,7 +98,7 @@
             Criar nova conta
         </button>
 
-        <div class="flex flex-col items-center">
+        <div class="flex flex-col items-center pt-5">
             <p class="text-[10px] text-[#64748B] text-center">Ao continuar, você concorda com nossos <span class="text-[#0076D2] cursor-pointer hover:underline">Termos de Uso</span> e <span class="text-[#0076D2] cursor-pointer hover:underline">Política de Privacidade</span>.</p>
             <p class="text-[10px] text-[#64748B] text-center">Ambiente seguro — seus dados estão protegidos.</p>
         </div>

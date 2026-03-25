@@ -6,7 +6,11 @@ export interface UsuarioCadastro {
     id_perfil: number
 }
 
-export interface Login {
+export interface LoginRequest {
     email: string
     senha: string
+}
+
+export interface LoginResponse {
+  token: string;
 }
