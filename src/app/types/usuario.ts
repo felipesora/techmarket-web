@@ -5,3 +5,8 @@ export interface UsuarioCadastro {
     senha: string
     id_perfil: number
 }
+
+export interface Login {
+    email: string
+    senha: string
+}

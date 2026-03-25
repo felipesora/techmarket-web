@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class Identity {
+export class IdentityService {
 
   private readonly API = 'http://localhost:8080/techmarket-identity-service';
 

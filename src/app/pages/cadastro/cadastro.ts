@@ -1,9 +1,16 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from "@angular/router";
-import { Identity } from '../../services/identity/identity';
+import { Router, RouterLink } from '@angular/router';
+import { IdentityService } from '../../services/identity/identity.service';
 import { UsuarioCadastro } from '../../types/usuario';
-import { confirmarSenhaValidator, cpfValidator, emailValidator, nomeValidator, senhasIguaisValidator, senhaValidator } from './validatorsCadastro';
+import {
+  confirmarSenhaValidator,
+  cpfValidator,
+  emailValidator,
+  nomeValidator,
+  senhasIguaisValidator,
+  senhaValidator,
+} from './validatorsCadastro';
 import { NgxMaskDirective } from 'ngx-mask';
 import { NgClass } from '@angular/common';
 
@@ -14,7 +21,6 @@ import { NgClass } from '@angular/common';
   styleUrl: './cadastro.css',
 })
 export class Cadastro {
-
   mostrarSenha = false;
   form!: FormGroup;
   submitted = false;
@@ -22,16 +28,24 @@ export class Cadastro {
   mensagem: string | null = null;
   tipoMensagem: 'sucesso' | 'erro' | null = null;
 
-  constructor(private formBuilder: FormBuilder, private identityService: Identity, private router: Router, private cdr: ChangeDetectorRef) {
-    this.form = this.formBuilder.group({
-      nome: ['', nomeValidator()],
-      email: ['', emailValidator()],
-      cpf: ['', cpfValidator()],
-      senha: ['', senhaValidator()],
-      confirmarSenha: ['', confirmarSenhaValidator()]
-    }, {
-      validators: senhasIguaisValidator
-    });
+  constructor(
+    private formBuilder: FormBuilder,
+    private identityService: IdentityService,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+  ) {
+    this.form = this.formBuilder.group(
+      {
+        nome: ['', nomeValidator()],
+        email: ['', emailValidator()],
+        cpf: ['', cpfValidator()],
+        senha: ['', senhaValidator()],
+        confirmarSenha: ['', confirmarSenhaValidator()],
+      },
+      {
+        validators: senhasIguaisValidator,
+      },
+    );
   }
 
   toggleSenha() {
@@ -51,17 +65,16 @@ export class Cadastro {
 
     const cpfSemMascara = usuarioFormulario.cpf.replace(/\D/g, '');
 
-    const usuario:UsuarioCadastro = {
+    const usuario: UsuarioCadastro = {
       nome: usuarioFormulario.nome,
       email: usuarioFormulario.email,
       cpf: cpfSemMascara,
       senha: usuarioFormulario.senha,
-      id_perfil: 2
-    }
+      id_perfil: 2,
+    };
 
     this.identityService.criarUsuario(usuario).subscribe({
       next: () => {
-        
         this.tipoMensagem = 'sucesso';
         this.mensagem = 'Cadastro efetuado com sucesso!';
         this.cdr.detectChanges();
@@ -69,7 +82,6 @@ export class Cadastro {
         setTimeout(() => {
           this.router.navigate(['/auth/login']);
         }, 2000);
-
       },
       error: (err) => {
         console.error('Erro HTTP:', err);
@@ -105,8 +117,7 @@ export class Cadastro {
         this.mensagem = 'Erro ao cadastrar. Tente novamente mais tarde.';
         this.cdr.detectChanges();
         console.log('Mensagem: ', this.mensagem);
-      }
+      },
     });
   }
-
 }
