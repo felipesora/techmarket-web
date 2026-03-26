@@ -10,20 +10,22 @@
         </li>
     </ul>
 
-    <button routerLink="/auth/login" class="flex flex-col items-center cursor-pointer text-sm hover:text-[#0076D2] transition-all duration-300">
-        <img src="icons/icone-usuario-azul-claro.png" alt="ícone de usuario" class="w-9">
-        Meu perfil
-    </button>
-
-    <!-- <div routerLink="/auth/cadastro" class="flex items-center gap-2">
-        <button class="text-sm font-medium cursor-pointer hover:text-[#0076D2] transition-all duration-300">
-            Criar conta
+    @if (usuarioLogado()) {
+        <button routerLink="/auth/login" class="flex flex-col items-center cursor-pointer text-sm hover:text-[#0076D2] transition-all duration-300">
+            <img src="icons/icone-usuario-azul-claro.png" alt="ícone de usuario" class="w-9">
+            Meu perfil
         </button>
+    } @else {
+        <div routerLink="/auth/cadastro" class="flex items-center gap-2">
+            <button class="text-sm font-medium cursor-pointer hover:text-[#0076D2] transition-all duration-300">
+                Criar conta
+            </button>
 
-        <p>|</p>
+            <p>|</p>
 
-        <button routerLink="/auth/login" class="text-sm font-medium cursor-pointer hover:text-[#0076D2] transition-all duration-300">
-            Login
-        </button>
-    </div> -->
+            <button routerLink="/auth/login" class="text-sm font-medium cursor-pointer hover:text-[#0076D2] transition-all duration-300">
+                Login
+            </button>
+        </div>
+    }
 </nav>
