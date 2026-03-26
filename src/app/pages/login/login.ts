@@ -4,6 +4,7 @@ import { Router, RouterLink } from "@angular/router";
 import { IdentityService } from '../../services/identity/identity.service';
 import { emailValidator, senhaValidator } from '../cadastro/validatorsCadastro';
 import { NgClass } from '@angular/common';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class Login {
     private identityService: IdentityService,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {
     this.form = this.formBuilder.group(
       {
@@ -52,11 +54,17 @@ export class Login {
     this.identityService.fazerLogin(usuario).subscribe({
       next: (response) => {
         const token = response.token;
-        console.log(token);
+        localStorage.setItem('tokenUser', token);
+
+        this.authService.getUsuarioToken();
 
         this.tipoMensagem = 'sucesso';
         this.mensagem = 'Login efetuado com sucesso!';
         this.cdr.detectChanges();
+
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 2000);
       },
       error: (err) => {
         console.error('Erro HTTP:', err);
