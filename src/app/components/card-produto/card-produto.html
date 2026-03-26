@@ -5,18 +5,18 @@
 
     <div class="p-3 flex flex-col gap-2">
         <div class="flex justify-between items-center">
-            <p class="text-[12px] font-bold text-[#0076D2]">NOTEBOOKS</p>
+            <p class="text-[12px] font-bold text-[#0076D2]">{{ produto.categoria }}</p>
             <button class="cursor-pointer">
                 <img src="icons/icone-favorito-azul.png" alt="ícone de favoritar" class="w-7">
             </button>
         </div>
 
         <div>
-            <h2 class="text-[18px] font-medium">Notebook Gamer 5</h2>
-            <p class="text-sm text-gray-500">HyperX</p>
+            <h2 class="text-[18px] font-medium">{{ produto.nome }}</h2>
+            <p class="text-sm text-gray-500">{{ produto.marca }}</p>
         </div>
 
-        <h3 class="text-[20px] font-bold text-[#002158]">R$ 4499,90</h3>
+        <h3 class="text-[20px] font-bold text-[#002158]">{{ produto.preco | currency:'BRL':'symbol':'1.2-2' }}</h3>
 
         <button class="cursor-pointer text-[14px] font-bold bg-[#0076D2] text-white rounded-[10px] w-full py-2 hover:bg-[#002158] transition-all duration-300">
             Ver Produto
