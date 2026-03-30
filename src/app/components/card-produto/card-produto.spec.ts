@@ -13,7 +13,16 @@ describe('Produto', () => {
 
     fixture = TestBed.createComponent(CardProduto);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+
+    // Definir o produto ANTES do detectChanges
+    component.produto = {
+      categoria: 'NOTEBOOKS',
+      nome: 'Notebook Teste',
+      marca: 'Marca Teste',
+      preco: 2999.99
+    } as any;
+
+    fixture.detectChanges(); // agora sim
   });
 
   it('should create', () => {

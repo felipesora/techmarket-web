@@ -14,7 +14,7 @@ export class CardProduto {
   @Input() produto!: Produto;
 
   get imagemProduto(): string | null {
-    switch (this.produto.categoria) {
+    switch (this.produto?.categoria) {
       case 'NOTEBOOKS': return 'images/produtos/notebook.png';
       case 'CELULARES': return 'images/produtos/celular.png';
       case 'COMPUTADORES': return 'images/produtos/computador.png';
