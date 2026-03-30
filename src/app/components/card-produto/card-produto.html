@@ -1,6 +1,12 @@
 <div class="bg-white rounded-[10px] w-82.5 border border-[#E9ECEF] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#CBD5E1]">
     <div class="border-b border-[#E9ECEF] h-48 flex items-center justify-center">
-        <img src="images/imagem-teste-produto.png" alt="imagem do produto" class="max-h-40 object-contain">
+        @if (imagemProduto) {
+            <img [src]="imagemProduto" alt="imagem do produto" class="max-h-40 object-contain">
+        } @else {
+            <div class="w-20 h-20 rounded-full bg-white border-2 border-[#0076D2] flex items-center justify-center">
+                <span class="text-[#0076D2] text-3xl font-bold">?</span>
+            </div>
+        }
     </div>
 
     <div class="p-3 flex flex-col gap-2">

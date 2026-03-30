@@ -1,4 +1,4 @@
-<main class="bg-[#F5F7FC] p-7 flex flex-col gap-14">
+<main class="bg-[#F5F7FC] p-7 flex flex-col gap-14 min-h-screen">
     <section>
 
         <div class="flex justify-between items-center">
@@ -14,8 +14,12 @@
         </div>
 
         <div class="pt-5 flex flex-wrap justify-between gap-y-6">
-            @for (produto of produtos; track $index) {
-                <app-card-produto [produto]="produto"></app-card-produto>
+            @if (produtos.length !== 0) {
+                @for (produto of produtos; track $index) {
+                    <app-card-produto [produto]="produto"></app-card-produto>
+                }
+            } @else {
+                <p class="w-full text-center text-gray-500 text-sm py-10">Nenhum produto em destaque no momento.</p>
             }
         </div>
     </section>
@@ -35,8 +39,12 @@
         </div>
 
         <div class="pt-5 flex flex-wrap justify-between gap-y-6">
-            @for (produto of produtos; track $index) {
-                <app-card-produto [produto]="produto"></app-card-produto>
+            @if (produtos.length !== 0) {
+                @for (produto of produtos; track $index) {
+                    <app-card-produto [produto]="produto"></app-card-produto>
+                }
+            } @else {
+                <p class="w-full text-center text-gray-500 text-sm py-10">Nenhum produto em promoção no momento.</p>
             }
         </div>
     </section>
