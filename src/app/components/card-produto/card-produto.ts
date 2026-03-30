@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Produto } from '../../types/produto';
 import { CurrencyPipe } from '@angular/common';
+import { FavoritosService } from '../../services/favoritos/favoritos.service';
 
 @Component({
   selector: 'app-card-produto',
@@ -10,6 +11,8 @@ import { CurrencyPipe } from '@angular/common';
   styleUrl: './card-produto.css',
 })
 export class CardProduto {
+
+  constructor(private favoritosService: FavoritosService) {}
 
   @Input() produto!: Produto;
 
@@ -30,5 +33,13 @@ export class CardProduto {
       case 'OUTROS': return null;
       default: return null;
     }
+  }
+
+  toggleFavorito() {
+    this.favoritosService.toggleFavorito(this.produto.id);
+  }
+
+  get estaFavoritado(): boolean {
+    return this.favoritosService.isFavorito(this.produto.id);
   }
 }
