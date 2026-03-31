@@ -14,12 +14,13 @@ export class ListaProdutos implements OnInit {
 
   listaProdutos: Produto[] = [];
   categoria: string | null = null;
+  busca: string | null = null;
   ordenarPor: string = 'preco_asc';
 
   constructor(private route: ActivatedRoute, private produtoService: ProdutoService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.pegarCategoriaDoParam();
+    this.pegarAtributosDoParam();
   }
 
   listarProdutosPelaCategoria(categoria: string | null) {
@@ -40,20 +41,55 @@ export class ListaProdutos implements OnInit {
     })
   }
 
-  pegarCategoriaDoParam() {
+  buscarProdutos(busca: string | null) {
+    if (busca == null) {
+      this.listaProdutos = [];
+      return;
+    }
+
+    this.produtoService.getProdutosPorBusca(busca, this.ordenarPor).subscribe({
+      next: (response) => {
+        this.listaProdutos = response;
+        this.cdr.detectChanges();
+        console.log('Produtos encontrados: ', this.listaProdutos);
+      },
+      error: (error) => {
+        console.error('Erro ao carregar produtos:', error);
+      }
+    })
+  }
+
+  pegarAtributosDoParam() {
     this.route.queryParamMap.subscribe(params => {
       const categoriaParam = params.get('categoria');
-      this.categoria = categoriaParam ? categoriaParam.toUpperCase() : null;
+      const buscaParam = params.get('busca');
 
-      this.listarProdutosPelaCategoria(this.categoria);
+      if (categoriaParam) {
+        this.categoria = categoriaParam ? categoriaParam.toUpperCase() : null;
+        this.listarProdutosPelaCategoria(this.categoria);
+      }
+
+      else if (buscaParam) {
+        this.busca = buscaParam;
+        this.buscarProdutos(buscaParam);
+      }
+
     });
   }
 
   alterarOrdenacao(event: Event) {
     const select = event.target as HTMLSelectElement;
-
     this.ordenarPor = select.value;
 
-    this.listarProdutosPelaCategoria(this.categoria);
+    const categoriaParam = this.route.snapshot.queryParamMap.get('categoria');
+    const buscaParam = this.route.snapshot.queryParamMap.get('busca');
+
+    if (categoriaParam) {
+      this.listarProdutosPelaCategoria(categoriaParam);
+    }
+
+    else if (buscaParam) {
+      this.buscarProdutos(buscaParam);
+    }
   }
 }
