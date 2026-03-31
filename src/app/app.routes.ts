@@ -4,7 +4,7 @@ import { Login } from './pages/login/login';
 import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { Cadastro } from './pages/cadastro/cadastro';
-import { ProdutosFavoritos } from './pages/produtos-favoritos/produtos-favoritos/produtos-favoritos';
+import { ProdutosFavoritos } from './pages/produtos-favoritos/produtos-favoritos';
 import { ListaProdutos } from './pages/lista-produtos/lista-produtos/lista-produtos';
 
 export const routes: Routes = [
