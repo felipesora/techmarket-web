@@ -4,12 +4,14 @@
     </button>
 
     <div class="flex items-center">
-        <input 
+        <input
+            [(ngModel)]="busca"
+            (keyup.enter)="pesquisar()"
             type="text" 
             placeholder="O que você procura? (ex: notebook, celular...)"
             class="border border-gray-200 h-10 px-3 rounded-l-lg outline-none w-125"
         >
-        <button class="bg-[#0076D2] px-3 h-10 rounded-r-lg flex items-center justify-center cursor-pointer hover:bg-[#002158] transition-all duration-300">
+        <button (click)="pesquisar()" class="bg-[#0076D2] px-3 h-10 rounded-r-lg flex items-center justify-center cursor-pointer hover:bg-[#002158] transition-all duration-300">
             <img src="icons/icone-pesquisar-branco.png" alt="ícone de pesquisa" class="w-6">
         </button>
     </div>

@@ -35,4 +35,32 @@ export class ProdutoService {
 
     return this.http.post<Produto[]>(`${this.API}/favoritos`, ids, { headers });
   };
+
+  getProdutosPorCategoria(categoria: string, ordenarPor: string): Observable<Produto[]> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    const params = new HttpParams()
+      .set('categoria', categoria)
+      .set('ordenarPor', ordenarPor);
+
+    return this.http.get<Produto[]>(this.API, { headers, params });
+  };
+
+  getProdutosPorBusca(busca: string, ordenarPor: string): Observable<Produto[]> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    const params = new HttpParams()
+      .set('busca', busca)
+      .set('ordenarPor', ordenarPor);
+
+    return this.http.get<Produto[]>(this.API, { headers, params });
+  };
 }

@@ -1,0 +1,64 @@
+<main class="bg-[#F5F7FC] p-7 flex flex-col gap-14 min-h-screen">
+  <section>
+
+    <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center gap-2 border-l-4 border-[#0076D2] pl-3">
+            <img src="icons/icone-busca-azul.png" alt="ícone de busca" class="w-8">
+            @if (categoria) {
+              <h1 class="font-bold text-2xl">Resultados da Busca</h1>
+            } @else if (busca) {
+              <h1 class="font-bold text-2xl">Resultados da Busca: {{ busca }}</h1>
+            }
+        </div>
+    </div>
+
+    <!-- Informações da busca -->
+    <div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
+      <div class="flex flex-col gap-3">
+        <div class="flex items-center gap-2 text-gray-600">
+            <span class="font-medium">Categoria:</span>
+            <span class="text-[#0076D2] font-semibold">{{ categoria || 'Todas' }}</span>
+        </div>
+        
+        <div class="flex items-center justify-between flex-wrap gap-3">
+            <div class="flex items-center gap-2">
+                <span class="font-medium text-gray-600">Total encontrado:</span>
+                <span class="text-2xl font-bold text-[#0076D2]">{{ listaProdutos.length }}</span>
+                <span class="text-gray-500">{{ listaProdutos.length === 1 ? 'produto' : 'produtos' }}</span>
+            </div>
+            
+            @if (listaProdutos.length > 1) {
+              <!-- Ordenação -->
+              <div class="flex items-center gap-3">
+                  <label class="text-sm text-gray-600">Ordenar por:</label>
+                  <select
+                  (change)="alterarOrdenacao($event)"
+                      class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#0076D2]">
+                      <option value="preco_asc">Menor preço</option>
+                      <option value="preco_desc">Maior preço</option>
+                  </select>
+              </div>
+            }
+            
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de produtos -->
+    <div class="pt-5 flex flex-wrap justify-between gap-y-6">
+      @if (listaProdutos.length !== 0) {
+        @for (produto of listaProdutos; track $index) {
+            <app-card-produto [produto]="produto"></app-card-produto>
+        }
+      } @else {
+        <div class="text-center py-16 w-full">
+            <div class="mb-4">
+                <img src="icons/icone-busca-vazia.png" alt="Nenhum produto encontrado" class="w-16 mx-auto opacity-50">
+            </div>
+            <p class="text-gray-500 text-base mb-2">Nenhum produto encontrado</p>
+            <p class="text-gray-400 text-sm">Tente buscar por outra categoria ou verifique os filtros utilizados.</p>
+        </div>
+      }
+    </div>
+  </section>
+</main>
