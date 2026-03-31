@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Produto } from '../../../types/produto';
-import { ProdutoService } from '../../../services/produto/produto.service';
-import { AuthService } from '../../../services/auth/auth.service';
-import { CardProduto } from "../../../components/card-produto/card-produto";
+import { ProdutoService } from '../../services/produto/produto.service';
+import { Produto } from '../../types/produto';
+import { CardProduto } from '../../components/card-produto/card-produto';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-produtos-favoritos',
