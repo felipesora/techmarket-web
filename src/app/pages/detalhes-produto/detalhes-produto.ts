@@ -2,12 +2,13 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ProdutoService } from '../../services/produto/produto.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Produto } from '../../types/produto';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgClass } from '@angular/common';
 import { FavoritosService } from '../../services/favoritos/favoritos.service';
+import { CarrinhoService } from '../../services/carrinho/carrinho.service';
 
 @Component({
   selector: 'app-detalhes-produto',
-  imports: [CurrencyPipe, RouterLink],
+  imports: [CurrencyPipe, RouterLink, NgClass],
   templateUrl: './detalhes-produto.html',
   styleUrl: './detalhes-produto.css',
 })
@@ -15,8 +16,15 @@ export class DetalhesProduto implements OnInit {
 
   idProduto: string | null = null;
   produto: Produto | null = null;
+  adicionadoNoCarrinho: boolean = false;
 
-  constructor(private produtoService: ProdutoService, private route: ActivatedRoute, private cdr: ChangeDetectorRef, private favoritosService: FavoritosService) {}
+  constructor(
+    private produtoService: ProdutoService, 
+    private route: ActivatedRoute, 
+    private cdr: ChangeDetectorRef, 
+    private favoritosService: FavoritosService,
+    private carrinhoService: CarrinhoService
+  ) {}
 
   ngOnInit() {
     this.obterDadosProduto();
@@ -74,5 +82,17 @@ export class DetalhesProduto implements OnInit {
     if (!this.produto) return false;
     
     return this.favoritosService.isFavorito(this.produto.id);
+  }
+
+  adicionarCarrinho() {
+    if (!this.produto) return;
+    this.carrinhoService.adicionarProduto(this.produto.id);
+
+    this.adicionadoNoCarrinho = true;
+
+    setTimeout(() => {
+      this.adicionadoNoCarrinho = false;
+      this.cdr.detectChanges();
+    }, 3000);
   }
 }

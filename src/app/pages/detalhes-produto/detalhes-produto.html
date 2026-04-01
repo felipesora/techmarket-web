@@ -103,11 +103,17 @@
                 
                     <!-- Botões de ação -->
                     <div class="flex flex-col sm:flex-row gap-3 mt-4">
-                        <button 
-                            [disabled]="produto?.estoque === 0"
-                            class="cursor-pointer flex-1 bg-[#0076D2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#005fa8] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                        <button
+                            (click)="adicionarCarrinho()"
+                            [disabled]="produto?.estoque === 0 || adicionadoNoCarrinho"
+                            class="cursor-pointer flex-1 px-6 py-3 rounded-lg font-semibold transition-colors"
+                            [ngClass]="{
+                                'bg-[#0076D2] text-white! hover:bg-[#005fa8]': !adicionadoNoCarrinho,
+                                'bg-green-500 text-white': adicionadoNoCarrinho,
+                                'bg-gray-300 cursor-not-allowed': produto?.estoque === 0
+                            }"
                         >
-                        Adicionar ao carrinho
+                        {{ adicionadoNoCarrinho ? 'Produto Adicionado!' : 'Adicionar ao carrinho' }}
                         </button>
                     </div>
                 

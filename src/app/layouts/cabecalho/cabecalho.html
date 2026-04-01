@@ -23,7 +23,16 @@
         </button>
 
         <button class="flex flex-col items-center cursor-pointer text-sm hover:text-[#0076D2] transition-all duration-300">
-            <img src="icons/icone-carrinho-azul.png" alt="ícone de carrinho" class="w-7">
+            <div class="relative">
+                <img src="icons/icone-carrinho-azul.png" alt="ícone de carrinho" class="w-7">
+
+                @if (quantidadeCarrinho > 0) {
+                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                        {{ quantidadeCarrinho }}
+                    </span>
+                }
+            </div>
+
             Carrinho
         </button>
     </div>
