@@ -24,11 +24,19 @@
 
                 <div class="lg:w-1/2 flex flex-col gap-4">
                     <!-- Marca -->
-                    @if (produto?.marca) {
+                    <div class="flex items-center justify-between">
                         <div class="text-sm text-[#0076D2] font-semibold uppercase tracking-wide">
-                        {{ produto?.marca }}
+                            {{ produto?.marca }}
                         </div>
-                    }
+
+                        <button class="cursor-pointer" (click)="toggleFavorito()">
+                            <img 
+                                [src]="estaFavoritado ? 'icons/icone-favorito-azul-preenchido.png' : 'icons/icone-favorito-azul.png'" 
+                                alt="ícone de favoritar" 
+                                class="w-7"
+                            >
+                        </button>
+                    </div>
                 
                     <!-- Nome do produto -->
                     <h1 class="text-2xl lg:text-3xl font-bold text-gray-800 leading-tight">

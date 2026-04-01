@@ -3,6 +3,7 @@ import { ProdutoService } from '../../services/produto/produto.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Produto } from '../../types/produto';
 import { CurrencyPipe } from '@angular/common';
+import { FavoritosService } from '../../services/favoritos/favoritos.service';
 
 @Component({
   selector: 'app-detalhes-produto',
@@ -15,7 +16,7 @@ export class DetalhesProduto implements OnInit {
   idProduto: string | null = null;
   produto: Produto | null = null;
 
-  constructor(private produtoService: ProdutoService, private route: ActivatedRoute, private cdr: ChangeDetectorRef) {}
+  constructor(private produtoService: ProdutoService, private route: ActivatedRoute, private cdr: ChangeDetectorRef, private favoritosService: FavoritosService) {}
 
   ngOnInit() {
     this.obterDadosProduto();
@@ -61,5 +62,17 @@ export class DetalhesProduto implements OnInit {
       case 'OUTROS': return null;
       default: return null;
     }
+  }
+
+  toggleFavorito() {
+    if (!this.produto) return;
+
+    this.favoritosService.toggleFavorito(this.produto.id);
+  }
+
+  get estaFavoritado(): boolean {
+    if (!this.produto) return false;
+    
+    return this.favoritosService.isFavorito(this.produto.id);
   }
 }
