@@ -63,4 +63,14 @@ export class ProdutoService {
 
     return this.http.get<Produto[]>(this.API, { headers, params });
   };
+
+  getProdutoPorId(id: string): Observable<Produto> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get<Produto>(`${this.API}/${id}`, { headers });
+  };
 }

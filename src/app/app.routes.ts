@@ -5,7 +5,8 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { Cadastro } from './pages/cadastro/cadastro';
 import { ProdutosFavoritos } from './pages/produtos-favoritos/produtos-favoritos';
-import { ListaProdutos } from './pages/lista-produtos/lista-produtos/lista-produtos';
+import { ListaProdutos } from './pages/lista-produtos/lista-produtos';
+import { DetalhesProduto } from './pages/detalhes-produto/detalhes-produto';
 
 export const routes: Routes = [
     {
@@ -23,6 +24,10 @@ export const routes: Routes = [
         {
             path: 'produtos',
             component: ListaProdutos
+        },
+        {
+            path: 'detalhes-produto/:id',
+            component: DetalhesProduto
         }
         ]
     },

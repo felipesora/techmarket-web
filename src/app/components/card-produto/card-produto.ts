@@ -2,10 +2,11 @@ import { Component, Input } from '@angular/core';
 import { Produto } from '../../types/produto';
 import { CurrencyPipe } from '@angular/common';
 import { FavoritosService } from '../../services/favoritos/favoritos.service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-card-produto',
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, RouterLink],
   standalone: true,
   templateUrl: './card-produto.html',
   styleUrl: './card-produto.css',
