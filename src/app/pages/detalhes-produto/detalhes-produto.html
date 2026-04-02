@@ -1,0 +1,159 @@
+<main class="bg-[#F5F7FC] p-7 min-h-screen">
+
+    <!-- Breadcrumb -->
+    <div class="mb-6">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <button routerLink="/" class="cursor-pointer hover:text-[#0076D2] transition-colors">Home</button>
+            <span>/</span>
+            <span class="text-[#0076D2] font-medium">{{ produto?.nome }}</span>
+        </nav>
+    </div>
+
+    <div class="flex flex-col gap-6">
+        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div class="flex flex-col lg:flex-row gap-8 p-6">
+                <div class="lg:w-1/2">
+                    <div class="bg-gray-50 rounded-lg p-4 flex items-center justify-center min-h-[400px]">
+                        <img 
+                            [src]="imagemProduto"
+                            [alt]="produto?.nome"
+                            class="max-w-full max-h-[380px] object-contain"
+                        >
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 flex flex-col gap-4">
+                    <!-- Marca -->
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-[#0076D2] font-semibold uppercase tracking-wide">
+                            {{ produto?.marca }}
+                        </div>
+
+                        <button class="cursor-pointer" (click)="toggleFavorito()">
+                            <img 
+                                [src]="estaFavoritado ? 'icons/icone-favorito-azul-preenchido.png' : 'icons/icone-favorito-azul.png'" 
+                                alt="ícone de favoritar" 
+                                class="w-7"
+                            >
+                        </button>
+                    </div>
+                
+                    <!-- Nome do produto -->
+                    <h1 class="text-2xl lg:text-3xl font-bold text-gray-800 leading-tight">
+                        {{ produto?.nome }}
+                    </h1>
+                
+                    <!-- Avaliação
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-1">
+                        <span class="text-yellow-400">★★★★★</span>
+                        <span class="text-sm text-gray-600">4.8</span>
+                        </div>
+                        <span class="text-gray-300">|</span>
+                        <span class="text-sm text-gray-500">150 avaliações</span>
+                    </div> -->
+                
+                    <!-- Preço -->
+                    <div class="border-t border-b border-gray-100 py-4 my-2">
+                        <!-- @if (produto?.precoPromocional) {
+                        <div class="flex items-baseline gap-3">
+                            <span class="text-3xl lg:text-4xl font-bold text-[#0076D2]">
+                            {{ produto.precoPromocional | currency:'BRL' }}
+                            </span>
+                            <span class="text-lg text-gray-400 line-through">
+                            {{ produto.preco | currency:'BRL' }}
+                            </span>
+                        </div>
+                        } @else {
+                        <span class="text-3xl lg:text-4xl font-bold text-[#0076D2]">
+                            {{ produto?.preco | currency:'BRL' }}
+                        </span>
+                        } -->
+                        <span class="text-3xl lg:text-4xl font-bold text-[#0076D2]">
+                            {{ produto?.preco | currency:'BRL':'symbol':'1.2-2' }}
+                        </span>
+                        
+                        <!-- Opções de parcelamento -->
+                        <p class="text-sm text-gray-500 mt-2">
+                        em até 12x de {{ ((produto?.preco ?? 0) / 12) | currency:'BRL':'symbol':'1.2-2' }} sem juros
+                        </p>
+                    </div>
+                
+                    <!-- Estoque -->
+                    @if (produto) {
+                        <div class="flex items-center gap-2">
+                            @if (produto.estoque > 0) {
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span class="text-sm text-green-700 font-medium">
+                                Em estoque ({{ produto.estoque }} unidades)
+                                </span>
+                            </div>
+                            } @else {
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                                <span class="text-sm text-red-700 font-medium">
+                                Esgotado
+                                </span>
+                            </div>
+                            }
+                        </div>
+                    }
+
+                
+                    <!-- Botões de ação -->
+                    <div class="flex flex-col sm:flex-row gap-3 mt-4">
+                        <button
+                            (click)="adicionarCarrinho()"
+                            [disabled]="produto?.estoque === 0 || adicionadoNoCarrinho"
+                            class="cursor-pointer flex-1 px-6 py-3 rounded-lg font-semibold transition-colors"
+                            [ngClass]="{
+                                'bg-[#0076D2] text-white! hover:bg-[#005fa8]': !adicionadoNoCarrinho,
+                                'bg-green-500 text-white': adicionadoNoCarrinho,
+                                'bg-gray-300 cursor-not-allowed': produto?.estoque === 0
+                            }"
+                        >
+                        {{ adicionadoNoCarrinho ? 'Produto Adicionado!' : 'Adicionar ao carrinho' }}
+                        </button>
+                    </div>
+                
+                    <!-- Informações adicionais -->
+                    <div class="mt-4 p-4 bg-gray-50 rounded-lg">
+                        <div class="grid grid-cols-2 gap-3 text-sm">
+                            <div>
+                                <span class="text-gray-500">Código:</span>
+                                <span class="text-gray-700 ml-2">{{ produto?.codigo || 'PROD-001' }}</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Categoria:</span>
+                                <span class="text-gray-700 ml-2">{{ produto?.categoria }}</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Vendido por:</span>
+                                <span class="text-gray-700 ml-2">Loja Oficial</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Garantia:</span>
+                                <span class="text-gray-700 ml-2">12 meses</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de descrição -->
+        <div class="w-full">
+            <div class="bg-white rounded-lg shadow-sm p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 border-l-4 border-[#0076D2] pl-3">
+                Descrição do produto
+                </h2>
+                <div class="prose prose-sm max-w-none">
+                    <p class="text-gray-600 leading-relaxed whitespace-pre-line">
+                        {{ produto?.descricao || 'Descrição não disponível para este produto.' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

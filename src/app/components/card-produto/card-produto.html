@@ -29,7 +29,7 @@
 
         <h3 class="text-[20px] font-bold text-[#002158]">{{ produto.preco | currency:'BRL':'symbol':'1.2-2' }}</h3>
 
-        <button class="cursor-pointer text-[14px] font-bold bg-[#0076D2] text-white rounded-[10px] w-full py-2 hover:bg-[#002158] transition-all duration-300">
+        <button [routerLink]="['/detalhes-produto', produto.id]" class="cursor-pointer text-[14px] font-bold bg-[#0076D2] text-white rounded-[10px] w-full py-2 hover:bg-[#005fa8] transition-all duration-300">
             Ver Produto
         </button>
     </div>

@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProdutoService } from '../../../services/produto/produto.service';
-import { Produto } from '../../../types/produto';
-import { CardProduto } from "../../../components/card-produto/card-produto";
+import { Produto } from '../../types/produto';
+import { ProdutoService } from '../../services/produto/produto.service';
+import { CardProduto } from '../../components/card-produto/card-produto';
 
 @Component({
   selector: 'app-lista-produtos',

@@ -1,21 +1,21 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Produto } from '../../types/produto';
 import { CurrencyPipe } from '@angular/common';
-import { FavoritosService } from '../../services/favoritos/favoritos.service';
-import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: 'app-card-produto',
-  imports: [CurrencyPipe, RouterLink],
-  standalone: true,
-  templateUrl: './card-produto.html',
-  styleUrl: './card-produto.css',
+  selector: 'app-card-produto-carrinho',
+  imports: [CurrencyPipe],
+  templateUrl: './card-produto-carrinho.html',
+  styleUrl: './card-produto-carrinho.css',
 })
-export class CardProduto {
-
-  constructor(private favoritosService: FavoritosService) {}
+export class CardProdutoCarrinho {
 
   @Input() produto!: Produto;
+  @Input() quantidade!: number;
+
+  @Output() aumentar = new EventEmitter<string>();
+  @Output() diminuir = new EventEmitter<string>();
+  @Output() remover = new EventEmitter<string>();
 
   get imagemProduto(): string | null {
     switch (this.produto?.categoria) {
@@ -34,13 +34,5 @@ export class CardProduto {
       case 'OUTROS': return null;
       default: return null;
     }
-  }
-
-  toggleFavorito() {
-    this.favoritosService.toggleFavorito(this.produto.id);
-  }
-
-  get estaFavoritado(): boolean {
-    return this.favoritosService.isFavorito(this.produto.id);
   }
 }

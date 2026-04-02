@@ -1,21 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CardProduto } from './card-produto';
-import { RouterTestingModule } from '@angular/router/testing';
+import { CardProdutoCarrinho } from './card-produto-carrinho';
 
-describe('Produto', () => {
-  let component: CardProduto;
-  let fixture: ComponentFixture<CardProduto>;
+describe('CardProdutoCarrinho', () => {
+  let component: CardProdutoCarrinho;
+  let fixture: ComponentFixture<CardProdutoCarrinho>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CardProduto, RouterTestingModule],
+      imports: [CardProdutoCarrinho],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CardProduto);
+    fixture = TestBed.createComponent(CardProdutoCarrinho);
     component = fixture.componentInstance;
 
-    // Definir o produto ANTES do detectChanges
     component.produto = {
       categoria: 'NOTEBOOKS',
       nome: 'Notebook Teste',
@@ -23,7 +21,7 @@ describe('Produto', () => {
       preco: 2999.99
     } as any;
 
-    fixture.detectChanges(); // agora sim
+    await fixture.whenStable();
   });
 
   it('should create', () => {

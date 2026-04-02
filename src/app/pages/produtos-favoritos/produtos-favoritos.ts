@@ -32,7 +32,7 @@ export class ProdutosFavoritos implements OnInit {
       return;
     }
 
-    this.produtoService.getProdutosFavoritados(idsProdutosFavoritados).subscribe({
+    this.produtoService.getProdutosPorIds(idsProdutosFavoritados).subscribe({
       next: (response) => {
         this.produtosFavoritados = response;
         this.cdr.detectChanges();
