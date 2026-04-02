@@ -1,0 +1,31 @@
+<main class="bg-[#F5F7FC] p-7 min-h-screen">
+    <div class="mb-6">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <button routerLink="/" class="cursor-pointer hover:text-[#0076D2] transition-colors">Home</button>
+            <span>/</span>
+            <span class="text-[#0076D2] font-medium">Carrinho</span>
+        </nav>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden p-5">
+        <div class="flex items-center gap-2 border-b-2 border-[#eef2f6] pb-3">
+            <img src="icons/icone-carrinho-azul.png" alt="ícone de fogo" class="w-8">
+            <h1 class="font-bold text-2xl">Seu Carrinho</h1>
+        </div>
+
+        <div class="py-6">
+            <app-card-produto-carrinho></app-card-produto-carrinho>
+        </div>
+
+        <div class="border-t-2 border-[#eef2f6] pt-3 flex items-center justify-between">
+            <div class="flex gap-3 items-baseline">
+                <p class="text-[#334155] font-bold text-[1.2rem]">Total:</p>
+                <p class="text-[#0076D2] font-bold text-[2rem]">R$ 1.420,60</p>
+            </div>
+
+            <button class="bg-[#0076D2] text-white font-bold text-[1rem] rounded-[15px] px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
+                Continuar para próxima etapa
+            </button>
+        </div>
+    </div>
+</main>

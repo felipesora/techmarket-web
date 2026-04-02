@@ -7,6 +7,7 @@ import { Cadastro } from './pages/cadastro/cadastro';
 import { ProdutosFavoritos } from './pages/produtos-favoritos/produtos-favoritos';
 import { ListaProdutos } from './pages/lista-produtos/lista-produtos';
 import { DetalhesProduto } from './pages/detalhes-produto/detalhes-produto';
+import { Carrinho } from './pages/carrinho/carrinho';
 
 export const routes: Routes = [
     {
@@ -28,7 +29,11 @@ export const routes: Routes = [
         {
             path: 'detalhes-produto/:id',
             component: DetalhesProduto
-        }
+        },
+        {
+            path: 'carrinho',
+            component: Carrinho
+        },
         ]
     },
     {
