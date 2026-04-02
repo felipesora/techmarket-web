@@ -5,7 +5,7 @@
             <span>/</span>
             <button routerLink="/carrinho" class="cursor-pointer hover:text-[#0076D2] transition-colors">Carrinho</button>
             <span>/</span>
-            <span class="text-[#0076D2] font-medium">Pagamento</span>
+            <span class="text-[#0076D2] font-medium">Revisão do pedido</span>
         </nav>
     </div>
 
@@ -51,7 +51,7 @@
                         <input 
                             type="radio" 
                             name="paymentMethod" 
-                            value="CARTAO"
+                            value="CARTAO_CREDITO"
                             [(ngModel)]="formaPagamento"
                             class="appearance-none w-[22px] h-[22px] border-2 border-slate-300 rounded-full cursor-pointer transition-all duration-100 shrink-0 focus:outline-none checked:border-[#0076D2] checked:bg-[#0076D2] checked:shadow-[inset_0_0_0_4px_white]"
                         >

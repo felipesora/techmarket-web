@@ -1,11 +1,12 @@
 import { CurrencyPipe } from '@angular/common';
 import { ChangeDetectorRef, Component, NgModule, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CarrinhoItem, ProdutoCarrinho } from '../../types/carrinho';
 import { CarrinhoService } from '../../services/carrinho/carrinho.service';
 import { ProdutoService } from '../../services/produto/produto.service';
 import { FormsModule } from '@angular/forms';
 import { PedidoRequest } from '../../types/pedido';
+import { PedidoService } from '../../services/pedido/pedido.service';
 
 @Component({
   selector: 'app-confirmar-pedido',
@@ -19,7 +20,7 @@ export class ConfirmarPedido implements OnInit {
   listaProdutosDoCarrinho: ProdutoCarrinho[] = [];
   formaPagamento: string = '';
 
-  constructor(private carrinhoService: CarrinhoService, private produtoService: ProdutoService, private cdr: ChangeDetectorRef) {}
+  constructor(private pedidoService: PedidoService, private carrinhoService: CarrinhoService, private produtoService: ProdutoService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.pegarItensDoCarrinho();
@@ -69,6 +70,23 @@ export class ConfirmarPedido implements OnInit {
       itens: this.listaCarrinho
     }
 
-    console.log(pedido);
+    this.cadastrarPedido(pedido);
+  }
+
+  cadastrarPedido(pedido: PedidoRequest) {
+    this.pedidoService.criarPedido(pedido).subscribe({
+      next: (response) => {
+        console.log('Pedido Criado: ', response);
+
+        this.carrinhoService.limparCarrinho();
+
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 2000);
+      },
+      error: (err) => {
+        console.log("Erro ao criar o pedido: ", err);
+      }
+    })
   }
 }

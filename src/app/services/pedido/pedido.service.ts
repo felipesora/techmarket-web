@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PedidoRequest, PedidoResponse } from '../../types/pedido';
 import { Observable } from 'rxjs';
@@ -13,6 +13,12 @@ export class PedidoService {
   constructor(private http: HttpClient) {}
 
   criarPedido(pedido: PedidoRequest): Observable<PedidoResponse> {
-    return this.http.post<PedidoResponse>(this.API, pedido);
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.post<PedidoResponse>(this.API, pedido, { headers });
   }
 }
