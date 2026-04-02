@@ -13,6 +13,14 @@ describe('CardProdutoCarrinho', () => {
 
     fixture = TestBed.createComponent(CardProdutoCarrinho);
     component = fixture.componentInstance;
+
+    component.produto = {
+      categoria: 'NOTEBOOKS',
+      nome: 'Notebook Teste',
+      marca: 'Marca Teste',
+      preco: 2999.99
+    } as any;
+
     await fixture.whenStable();
   });
 

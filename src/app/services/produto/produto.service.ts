@@ -26,7 +26,7 @@ export class ProdutoService {
     return this.http.get<ProdutoPageResponse>(this.API, { headers, params });
   };
 
-  getProdutosFavoritados(ids: string[]): Observable<Produto[]> {
+  getProdutosPorIds(ids: string[]): Observable<Produto[]> {
     const token = localStorage.getItem('tokenUser');
 
     const headers = new HttpHeaders({

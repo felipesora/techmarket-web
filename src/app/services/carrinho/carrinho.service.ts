@@ -48,4 +48,51 @@ export class CarrinhoService {
     const carrinho = this.getCarrinho();
     return carrinho.reduce((total, item) => total + item.quantidade, 0);
   }
+
+  aumentarQuantidadeDoProduto(id: string) {
+    const carrinho = this.getCarrinho();
+
+    const item = carrinho.find(p => p.id_mongo === id);
+
+    if (item) {
+      item.quantidade += 1;
+    }
+
+    this.salvarCarrinho(carrinho);
+  }
+
+  diminuirQuantidadeDoProduto(id: string) {
+    const carrinho = this.getCarrinho();
+
+    const item = carrinho.find(p => p.id_mongo === id);
+
+    if (item) {
+
+      if (item.quantidade === 1) {
+        return;
+      }
+
+      item.quantidade -= 1;
+
+      if (item.quantidade <= 0) {
+        const index = carrinho.indexOf(item);
+        carrinho.splice(index, 1);
+      }
+    }
+
+    this.salvarCarrinho(carrinho);
+  }
+
+  removerProdutoDoCarrinho(id: string) {
+    const carrinho = this.getCarrinho();
+
+    const item = carrinho.find(p => p.id_mongo === id);
+
+    if (item) {
+      const index = carrinho.indexOf(item);
+      carrinho.splice(index, 1);
+    }
+
+    this.salvarCarrinho(carrinho);
+  }
 }

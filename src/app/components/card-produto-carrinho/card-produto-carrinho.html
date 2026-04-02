@@ -1,32 +1,41 @@
 <div class="bg-white px-5 py-4 flex items-center justify-between rounded-[20px] border border-[#f0f2f5] shadow-sm hover:border-[#e0e7ed] hover:shadow transition-all">
     <div class="flex items-center gap-3">
         <div class="rounded-[20px] w-[100px] h-[100px] flex items-center p-1 border border-[#edf2f7]">
-            <img src="images/produtos/notebook.png" alt="imagem do produto">
+            <img [src]="imagemProduto" alt="imagem do produto">
         </div>
         <div>
-            <h2 class="font-bold text-lg">Mouse Sem Fio</h2>
-            <p class="text-[#0076D2] font-bold text-lg">R$ 189,90</p>
+            <h2 class="font-bold text-lg">{{ produto.nome }}</h2>
+            <p class="text-[#0076D2] font-bold text-lg">{{ produto.preco | currency:'BRL':'symbol':'1.2-2' }}</p>
         </div>
     </div>
 
+    <!-- Itens do Carrinho -->
     <div class="flex items-center gap-7">
         <div class="flex items-center">
-            <button class="group cursor-pointer rounded-full p-1 flex items-center justify-center hover:bg-[#E2E8F0] transition-all">
-                <img src="icons/icone-reduzir-preto.png" alt="ícone de remover" class="w-6 group-hover:hidden">
-                <img src="icons/icone-reduzir-azul.png" alt="ícone de remover" class="w-6 hidden group-hover:block">
+            <button 
+                (click)="diminuir.emit(produto.id)" 
+                class="group flex bg-[#F1F5F9] items-center border border-[#E2E8F0] px-3 h-12 rounded-l-2xl hover:bg-[#E2E8F0] transition-all"
+                [class.cursor-not-allowed]="quantidade === 1"
+                [class.cursor-pointer]="quantidade > 1"
+                [class.hover:bg-[#E2E8F0]]="quantidade > 1"
+            >
+                <img src="icons/icone-reduzir-preto.png" alt="ícone de remover" class="w-4" [class.opacity-40]="quantidade === 1" [class.group-hover:hidden]="quantidade > 1">
+                <img src="icons/icone-reduzir-azul.png" alt="ícone de remover" class="w-4 hidden" [class.opacity-40]="quantidade === 1" [class.group-hover:block]="quantidade > 1">
             </button>
 
-            <span>2</span>
+            <span class="bg-white border border-[#E2E8F0] px-4 h-12 font-bold flex items-center">
+                {{ quantidade }}
+            </span>
 
-            <button class="group cursor-pointer rounded-full p-1 flex items-center justify-center hover:bg-[#E2E8F0] transition-all">
-                <img src="icons/icone-adicionar-preto.png" alt="ícone de remover" class="w-6 group-hover:hidden">
-                <img src="icons/icone-adicionar-azul.png" alt="ícone de remover" class="w-6 hidden group-hover:block">
+            <button (click)="aumentar.emit(produto.id)" class="group bg-[#F1F5F9] cursor-pointer flex items-center border border-[#E2E8F0] px-3 h-12 rounded-r-2xl hover:bg-[#E2E8F0] transition-all">
+                <img src="icons/icone-adicionar-preto.png" alt="ícone de remover" class="w-4 group-hover:hidden">
+                <img src="icons/icone-adicionar-azul.png" alt="ícone de remover" class="w-4 hidden group-hover:block">
             </button>
         </div>
 
-        <h2 class="font-bold text-2xl">R$ 599,80</h2>
+        <h2 class="font-bold text-lg">{{ produto.preco * quantidade | currency:'BRL':'symbol':'1.2-2' }}</h2>
 
-        <button class="group cursor-pointer rounded-full p-1 flex items-center justify-center hover:bg-[#fef2f2] transition-all">
+        <button (click)="remover.emit(produto.id)" class="group cursor-pointer rounded-full p-1 flex items-center justify-center hover:bg-[#fef2f2] transition-all">
             <img src="icons/icone-remover-cinza.png" alt="ícone de remover" class="w-8 group-hover:hidden">
             <img src="icons/icone-remover-vermelho.png" alt="ícone de remover" class="w-8 hidden group-hover:block">
         </button>
