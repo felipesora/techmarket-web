@@ -1,0 +1,18 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { PedidoRequest, PedidoResponse } from '../../types/pedido';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class PedidoService {
+
+  private readonly API = 'http://localhost:8080/techmarket-order-service/pedidos';
+
+  constructor(private http: HttpClient) {}
+
+  criarPedido(pedido: PedidoRequest): Observable<PedidoResponse> {
+    return this.http.post<PedidoResponse>(this.API, pedido);
+  }
+}

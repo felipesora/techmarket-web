@@ -22,7 +22,7 @@
                     <p class="text-[#2C3E66] font-medium">Total do pedido</p>
                 </div>
 
-                <h2 class="text-[#0076D2] font-bold text-[2rem]">R$ 1.289,70</h2>
+                <h2 class="text-[#0076D2] font-bold text-[2rem]">{{ precoTotalCarrinho | currency:'BRL':'symbol':'1.2-2' }}</h2>
             </div>
 
             <div class="flex flex-col gap-5">
@@ -32,6 +32,7 @@
                             type="radio" 
                             name="paymentMethod" 
                             value="PIX"
+                            [(ngModel)]="formaPagamento"
                             class="appearance-none w-[22px] h-[22px] border-2 border-slate-300 rounded-full cursor-pointer transition-all duration-100 shrink-0 focus:outline-none checked:border-[#0076D2] checked:bg-[#0076D2] checked:shadow-[inset_0_0_0_4px_white]"
                         >
 
@@ -51,6 +52,7 @@
                             type="radio" 
                             name="paymentMethod" 
                             value="CARTAO"
+                            [(ngModel)]="formaPagamento"
                             class="appearance-none w-[22px] h-[22px] border-2 border-slate-300 rounded-full cursor-pointer transition-all duration-100 shrink-0 focus:outline-none checked:border-[#0076D2] checked:bg-[#0076D2] checked:shadow-[inset_0_0_0_4px_white]"
                         >
 
@@ -70,6 +72,7 @@
                             type="radio" 
                             name="paymentMethod" 
                             value="BOLETO"
+                            [(ngModel)]="formaPagamento"
                             class="appearance-none w-[22px] h-[22px] border-2 border-slate-300 rounded-full cursor-pointer transition-all duration-100 shrink-0 focus:outline-none checked:border-[#0076D2] checked:bg-[#0076D2] checked:shadow-[inset_0_0_0_4px_white]"
                         >
 
@@ -84,7 +87,7 @@
                 </label>
             </div>
 
-            <button routerLink="/confirmacao-pedido" class="bg-[#0076D2] flex items-center justify-center gap-1 text-white font-bold text-[1rem] rounded-[15px] px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
+            <button (click)="gerarPedido()" [disabled]="!formaPagamento" routerLink="/confirmacao-pedido" class="bg-[#0076D2] flex items-center justify-center gap-1 text-white font-bold text-[1rem] rounded-[15px] px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
                 Ir para pagamento
                 <img src="icons/icone-proximo-branco.png" alt="ícone de próximo" class="w-6">
             </button>
