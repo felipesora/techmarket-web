@@ -8,6 +8,7 @@ import { ProdutosFavoritos } from './pages/produtos-favoritos/produtos-favoritos
 import { ListaProdutos } from './pages/lista-produtos/lista-produtos';
 import { DetalhesProduto } from './pages/detalhes-produto/detalhes-produto';
 import { Carrinho } from './pages/carrinho/carrinho';
+import { ConfirmarPedido } from './pages/confirmar-pedido/confirmar-pedido';
 
 export const routes: Routes = [
     {
@@ -33,6 +34,10 @@ export const routes: Routes = [
         {
             path: 'carrinho',
             component: Carrinho
+        },
+        {
+            path: 'confirmacao-pedido',
+            component: ConfirmarPedido
         },
         ]
     },
