@@ -9,6 +9,7 @@ import { ListaProdutos } from './pages/lista-produtos/lista-produtos';
 import { DetalhesProduto } from './pages/detalhes-produto/detalhes-produto';
 import { Carrinho } from './pages/carrinho/carrinho';
 import { ConfirmarPedido } from './pages/confirmar-pedido/confirmar-pedido';
+import { Pagamento } from './pages/pagamento/pagamento';
 
 export const routes: Routes = [
     {
@@ -38,6 +39,10 @@ export const routes: Routes = [
         {
             path: 'confirmacao-pedido',
             component: ConfirmarPedido
+        },
+        {
+            path: 'pagamento/:idPedido',
+            component: Pagamento
         },
         ]
     },

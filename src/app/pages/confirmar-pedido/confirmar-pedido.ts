@@ -80,9 +80,7 @@ export class ConfirmarPedido implements OnInit {
 
         this.carrinhoService.limparCarrinho();
 
-        setTimeout(() => {
-          this.router.navigate(['/']);
-        }, 2000);
+        this.router.navigate(['/pagamento', response.id_pedido]);
       },
       error: (err) => {
         console.log("Erro ao criar o pedido: ", err);
