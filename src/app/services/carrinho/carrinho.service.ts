@@ -95,4 +95,8 @@ export class CarrinhoService {
 
     this.salvarCarrinho(carrinho);
   }
+
+  limparCarrinho() {
+    this.salvarCarrinho([]);
+  }
 }

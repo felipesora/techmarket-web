@@ -1,0 +1,83 @@
+<main class="bg-[#F5F7FC] p-7 min-h-screen">
+    <div class="mb-6">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <button routerLink="/" class="cursor-pointer hover:text-[#0076D2] transition-colors">Home</button>
+            <span>/</span>
+            <span class="text-gray-500 font-medium">Carrinho</span>
+            <span>/</span>
+            <span class="text-gray-500 font-medium">Revisão do pedido</span>
+            <span>/</span>
+            <span class="text-[#0076D2] font-medium">Pagamento</span>
+        </nav>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden p-5">
+        <div class="flex items-center gap-2 border-b-2 border-[#eef2f6] pb-3">
+            <img src="icons/icone-pagamento.png" alt="ícone de pagamento" class="w-9">
+            <h1 class="font-bold text-2xl">Efetuar Pagamento</h1>
+        </div>
+
+        <div class="py-6 flex flex-col gap-8">
+            <div class="bg-[#F8FAFE] p-5 border border-[#eef2f9] rounded-[15px] flex flex-col gap-5 justify-between">
+                <div class="flex items-center justify-between border-b border-[#eef2f9]">
+                    <div class="flex items-center gap-2 pb-2">
+                        <img src="icons/icone-calendario.png" alt="ícone de data" class="w-6">
+                        <p class="text-[#2C3E66] font-medium">Data do pedido</p>
+                    </div>
+
+                    <p class="text-black font-bold text-lg">{{ pedido?.data_criacao | date:'dd/MM/yyyy \'às\' HH:mm' }}</p>
+                </div>
+                
+                <div class="flex items-center justify-between border-b border-[#eef2f9]">
+                    <div class="flex items-center gap-2 pb-2">
+                        <img src="icons/icone-cartao-azul.png" alt="ícone de pagamento" class="w-6">
+                        <p class="text-[#2C3E66] font-medium">Método de pagamento</p>
+                    </div>
+
+                    <p class="text-black font-bold text-lg">{{ formatarMetodoPagamento(pedido?.metodo_pagamento) }}</p>
+                </div>
+
+                <div class="bg-[#EFF6FF] rounded-[15px] p-3 flex items-baseline-last justify-between">
+                    <div class="flex items-center gap-2 pb-2">
+                        <img src="icons/icone-etiqueta.png" alt="ícone de etiqueta" class="w-6">
+                        <p class="text-[#0076D2] font-bold text-lg">VALOR TOTAL DO PEDIDO</p>
+                    </div>
+
+                    <p class="text-[#0076D2] font-bold text-2xl">{{ pedido?.valor_total | currency:'BRL':'symbol':'1.2-2' }}</p>
+                </div>
+            </div>
+
+            <button (click)="efetuarPagamento()" class="bg-[#0076D2] flex items-center justify-center gap-2 text-white font-bold text-[1rem] rounded-[15px] px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
+                <img src="icons/icone-play.png" alt="ícone de próximo" class="w-6">
+                Simular Pagamento
+            </button>
+        </div>
+    </div>
+</main>
+
+<!-- Modal -->
+@if (modalPagamentoSucesso) {
+    <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+        <div class="bg-white rounded-2xl p-8 w-[420px] shadow-lg flex flex-col items-center gap-6">
+            <div class="rounded-full p-2 bg-[#E6F7EC]">
+                <img src="icons/icone-check.png" class="w-16">
+            </div>
+
+            <h2 class="text-2xl font-bold text-[#2C3E66]">
+                Pagamento simulado!
+            </h2>
+
+            <p class="text-gray-500 text-center">
+                Sua transação foi processada com sucesso no ambiente de teste.
+            </p>
+
+            <button
+                (click)="finalizarPedido()"
+                class="bg-[#0076D2] text-white cursor-pointer px-6 py-3 rounded-lg font-bold hover:bg-[#005fa8] transition">
+                Finalizar Pedido
+            </button>
+        </div>
+
+    </div>
+}

@@ -9,7 +9,7 @@
 
     <div class="bg-white rounded-lg shadow-sm overflow-hidden p-5">
         <div class="flex items-center gap-2 border-b-2 border-[#eef2f6] pb-3">
-            <img src="icons/icone-carrinho-azul.png" alt="ícone de fogo" class="w-8">
+            <img src="icons/icone-carrinho-azul.png" alt="ícone de fogo" class="w-9">
             <h1 class="font-bold text-2xl">Seu Carrinho</h1>
         </div>
 
@@ -37,8 +37,8 @@
                 <p class="text-[#0076D2] font-bold text-[2rem]">{{ precoTotalCarrinho | currency:'BRL':'symbol':'1.2-2' }}</p>
             </div>
 
-            <button class="bg-[#0076D2] flex items-center gap-1 text-white font-bold text-[1rem] rounded-[15px] px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
-                Continuar para próxima etapa
+            <button routerLink="/confirmacao-pedido" class="bg-[#0076D2] flex items-center gap-1 text-white font-bold text-[1rem] rounded-[15px] px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
+                Revisar pedido
                 <img src="icons/icone-proximo-branco.png" alt="ícone de próximo" class="w-6">
             </button>
         </div>

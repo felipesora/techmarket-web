@@ -1,0 +1,96 @@
+<main class="bg-[#F5F7FC] p-7 min-h-screen">
+    <div class="mb-6">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <button routerLink="/" class="cursor-pointer hover:text-[#0076D2] transition-colors">Home</button>
+            <span>/</span>
+            <button routerLink="/carrinho" class="cursor-pointer hover:text-[#0076D2] transition-colors">Carrinho</button>
+            <span>/</span>
+            <span class="text-[#0076D2] font-medium">Revisão do pedido</span>
+        </nav>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden p-5">
+        <div class="flex items-center gap-2 border-b-2 border-[#eef2f6] pb-3">
+            <img src="icons/icone-cartao-azul.png" alt="ícone de pagamento" class="w-9">
+            <h1 class="font-bold text-2xl">Escolha a forma de pagamento</h1>
+        </div>
+
+        <div class="py-6 flex flex-col gap-8">
+            <div class="bg-[#F8FAFE] px-5 py-4 border border-[#eef2f9] rounded-[15px] flex items-center gap-1 justify-between">
+                <div class="flex items-center gap-1">
+                    <img src="icons/icone-carrinho-preto.png" alt="ícone de carrinho" class="w-7">
+                    <p class="text-[#2C3E66] font-medium">Total do pedido</p>
+                </div>
+
+                <h2 class="text-[#0076D2] font-bold text-[2rem]">{{ precoTotalCarrinho | currency:'BRL':'symbol':'1.2-2' }}</h2>
+            </div>
+
+            <div class="flex flex-col gap-5">
+                <label class="cursor-pointer flex items-center justify-between px-5 py-4 border border-[#eef2f9] rounded-[15px] hover:border-[#0076D2] hover:translate-y-[-1px] hover:shadow-[0_6px_12px_rgba(0,118,210,0.08)] transition-all">
+                    <div class="flex items-center gap-5">
+                        <input 
+                            type="radio" 
+                            name="paymentMethod" 
+                            value="PIX"
+                            [(ngModel)]="formaPagamento"
+                            class="appearance-none w-[22px] h-[22px] border-2 border-slate-300 rounded-full cursor-pointer transition-all duration-100 shrink-0 focus:outline-none checked:border-[#0076D2] checked:bg-[#0076D2] checked:shadow-[inset_0_0_0_4px_white]"
+                        >
+
+                        <div class="flex items-center gap-3">
+                            <img src="icons/icone-pix-preto.png" alt="ícone pix" class="w-8">
+                            <p class="font-bold text-lg">PIX</p>
+                        </div>
+                    </div>
+
+
+                    <p class="text-xs text-[#0076D2] bg-[#EFF6FF] px-3 rounded-full">+ rápido</p>
+                </label>
+
+                <label class="cursor-pointer flex items-center justify-between px-5 py-4 border border-[#eef2f9] rounded-[15px] hover:border-[#0076D2] hover:translate-y-[-1px] hover:shadow-[0_6px_12px_rgba(0,118,210,0.08)] transition-all">
+                    <div class="flex items-center gap-5">
+                        <input 
+                            type="radio" 
+                            name="paymentMethod" 
+                            value="CARTAO_CREDITO"
+                            [(ngModel)]="formaPagamento"
+                            class="appearance-none w-[22px] h-[22px] border-2 border-slate-300 rounded-full cursor-pointer transition-all duration-100 shrink-0 focus:outline-none checked:border-[#0076D2] checked:bg-[#0076D2] checked:shadow-[inset_0_0_0_4px_white]"
+                        >
+
+                        <div class="flex items-center gap-3">
+                            <img src="icons/icone-cartao-preto.png" alt="ícone pix" class="w-8">
+                            <p class="font-bold text-lg">Cartão de Crédito</p>
+                        </div>
+                    </div>
+
+
+                    <p class="text-xs text-[#0076D2] bg-[#EFF6FF] px-3 rounded-full">parcele já</p>
+                </label>
+
+                <label class="cursor-pointer flex items-center justify-between px-5 py-4 border border-[#eef2f9] rounded-[15px] hover:border-[#0076D2] hover:translate-y-[-1px] hover:shadow-[0_6px_12px_rgba(0,118,210,0.08)] transition-all">
+                    <div class="flex items-center gap-5">
+                        <input 
+                            type="radio" 
+                            name="paymentMethod" 
+                            value="BOLETO"
+                            [(ngModel)]="formaPagamento"
+                            class="appearance-none w-[22px] h-[22px] border-2 border-slate-300 rounded-full cursor-pointer transition-all duration-100 shrink-0 focus:outline-none checked:border-[#0076D2] checked:bg-[#0076D2] checked:shadow-[inset_0_0_0_4px_white]"
+                        >
+
+                        <div class="flex items-center gap-3">
+                            <img src="icons/icone-boleto-preto.png" alt="ícone pix" class="w-8">
+                            <p class="font-bold text-lg">Boleto Bancário</p>
+                        </div>
+                    </div>
+
+
+                    <p class="text-xs text-[#0076D2] bg-[#EFF6FF] px-3 rounded-full">tradicional</p>
+                </label>
+            </div>
+
+            <button (click)="gerarPedido()" [disabled]="!formaPagamento" routerLink="/confirmacao-pedido" class="bg-[#0076D2] flex items-center justify-center gap-1 text-white font-bold text-[1rem] rounded-[15px] px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
+                Ir para pagamento
+                <img src="icons/icone-proximo-branco.png" alt="ícone de próximo" class="w-6">
+            </button>
+        </div>
+    </div>
+</main>
