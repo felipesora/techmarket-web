@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PedidoResponse } from '../../types/pedido';
 import { PedidoService } from '../../services/pedido/pedido.service';
 import { CurrencyPipe, DatePipe } from '@angular/common';
@@ -15,11 +15,13 @@ export class Pagamento implements OnInit {
 
   idPedido: number | null = null;
   pedido: PedidoResponse | null = null;
+  modalPagamentoSucesso = false;
 
   constructor(
     private pagamentoService: PagamentoService,
     private pedidoService: PedidoService,
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
+    private router: Router,
     private cdr: ChangeDetectorRef,
   ) {}
 
@@ -68,6 +70,8 @@ export class Pagamento implements OnInit {
     this.pagamentoService.confirmarPagamento(idPedido).subscribe({
       next: (response) => {
         console.log('Pagamento aprovado: ', response);
+        this.modalPagamentoSucesso = true;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.log("Erro ao aprovar o pagamento: ", err);
@@ -77,5 +81,11 @@ export class Pagamento implements OnInit {
 
   efetuarPagamento() {
     this.confirmarPagamento(this.idPedido);
+  }
+
+  finalizarPedido() {
+    this.modalPagamentoSucesso = false;
+    this.cdr.detectChanges();
+    this.router.navigate(['/']);
   }
 }

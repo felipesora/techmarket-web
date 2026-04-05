@@ -47,10 +47,37 @@
                 </div>
             </div>
 
-            <button (click)="efetuarPagamento()" routerLink="/confirmacao-pedido" class="bg-[#0076D2] flex items-center justify-center gap-2 text-white font-bold text-[1rem] rounded-[15px] px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
+            <button (click)="efetuarPagamento()" class="bg-[#0076D2] flex items-center justify-center gap-2 text-white font-bold text-[1rem] rounded-[15px] px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
                 <img src="icons/icone-play.png" alt="ícone de próximo" class="w-6">
                 Simular Pagamento
             </button>
         </div>
     </div>
 </main>
+
+<!-- Modal -->
+@if (modalPagamentoSucesso) {
+    <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+        <div class="bg-white rounded-2xl p-8 w-[420px] shadow-lg flex flex-col items-center gap-6">
+            <div class="rounded-full p-2 bg-[#E6F7EC]">
+                <img src="icons/icone-check.png" class="w-16">
+            </div>
+
+            <h2 class="text-2xl font-bold text-[#2C3E66]">
+                Pagamento simulado!
+            </h2>
+
+            <p class="text-gray-500 text-center">
+                Sua transação foi processada com sucesso no ambiente de teste.
+            </p>
+
+            <button
+                (click)="finalizarPedido()"
+                class="bg-[#0076D2] text-white cursor-pointer px-6 py-3 rounded-lg font-bold hover:bg-[#005fa8] transition">
+                Finalizar Pedido
+            </button>
+        </div>
+
+    </div>
+}
