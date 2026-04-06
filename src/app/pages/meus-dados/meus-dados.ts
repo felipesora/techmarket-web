@@ -5,6 +5,7 @@ import { UsuarioService } from '../../services/usuario/usuario.service';
 import { AtualizarSenhaDTO, UsuarioResponse, UsuarioUpdateDTO } from '../../types/usuario';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { confirmarSenhaValidator, cpfValidator, emailValidator, nomeValidator, novaSenhaValidator, senhaAtualValidator, senhasIguaisValidator } from './validatorsDados';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-meus-dados',
@@ -29,7 +30,11 @@ export class MeusDados implements OnInit {
   mensagemSucessoAtualizarSenha: string | null = null;
   mensagemErroAtualizarSenha: string | null = null;
 
-  constructor(private usuarioService: UsuarioService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
+  modalDeletarConta = false;
+  mensagemSucessoDeletarConta: string | null = null;
+  mensagemErroDeletarConta: string | null = null;
+
+  constructor(private usuarioService: UsuarioService, private authService: AuthService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
       this.formDadosUsuario = this.fb.group({
         nome: ['', nomeValidator()],
         email: ['', emailValidator()],
@@ -163,6 +168,35 @@ export class MeusDados implements OnInit {
 
         this.mensagemErroAtualizarSenha = error?.error?.message || "Erro ao atualizar senha.";
 
+        this.cdr.detectChanges();
+      }
+    })
+  }
+
+  abrirModalDeletarConta() {
+    this.modalDeletarConta = true;
+  }
+
+  fecharModalDeletarConta() {
+    this.modalDeletarConta = false;
+  }
+
+  deletarConta() {
+    const idUsuario = Number(localStorage.getItem('idUsuarioLogado'));
+
+    this.usuarioService.deletarUsuario(idUsuario).subscribe({
+      next: (response) => {
+        console.log('Conta deletada com sucesso: ', response);
+        this.mensagemSucessoDeletarConta = "Conta deletada com sucesso!";
+        this.cdr.detectChanges();
+
+        setTimeout(() => {
+          this.authService.logout();
+        }, 2000);
+      },
+      error: (error) => {
+        console.error('Erro ao deletar conta do usuário:', error);
+        this.mensagemErroDeletarConta = "Erro ao deletar conta.";
         this.cdr.detectChanges();
       }
     })

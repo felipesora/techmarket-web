@@ -41,4 +41,14 @@ export class UsuarioService {
 
     return this.http.patch<void>(`${this.API}/${id}/senha`, atualizarSenhaDTO, { headers });
   };
+
+  deletarUsuario(id: number): Observable<void> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.delete<void>(`${this.API}/${id}`, { headers });
+  };
 }
