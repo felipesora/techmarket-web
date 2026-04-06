@@ -23,3 +23,11 @@ export interface UsuarioResponse {
     status: string
     tipo_perfil: string
 }
+
+export interface UsuarioUpdateDTO {
+    nome: string
+    email: string
+    cpf: string
+    status: string
+    id_perfil: number
+}

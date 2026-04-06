@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
 import { UsuarioService } from '../../services/usuario/usuario.service';
-import { UsuarioResponse } from '../../types/usuario';
+import { UsuarioResponse, UsuarioUpdateDTO } from '../../types/usuario';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -18,6 +18,9 @@ export class MeusDados implements OnInit {
 
   formDadosUsuario!: FormGroup;
   formSenha!: FormGroup;
+
+  mensagemSucessoAtualizarDados: string | null = null;
+  mensagemErroAtualizarDados: string | null = null;
 
   constructor(private usuarioService: UsuarioService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {}
 
@@ -60,6 +63,40 @@ export class MeusDados implements OnInit {
       },
       error: (error) => {
         console.error('Erro ao carregar os dados do usuário:', error);
+      }
+    })
+  }
+
+  atualizarDadosDoUsuario() {
+    const idUsuario = Number(localStorage.getItem('idUsuarioLogado'));
+
+    const usuarioUpdate: UsuarioUpdateDTO = this.formDadosUsuario.value;
+    usuarioUpdate.status = "ATIVO"
+    usuarioUpdate.id_perfil = this.dadosUsuario?.tipo_perfil === "ADMINISTRADOR"? 1 : 2;
+
+    this.mensagemSucessoAtualizarDados = null;
+    this.mensagemErroAtualizarDados = null;
+
+    this.usuarioService.atualizarDadosUsuario(idUsuario, usuarioUpdate).subscribe({
+      next: (response) => {
+        this.dadosUsuario = response;
+
+        this.formDadosUsuario.patchValue({
+          nome: response.nome,
+          email: response.email,
+          cpf: response.cpf
+        });
+
+        this.mensagemSucessoAtualizarDados = "Dados atualizados com sucesso!";
+
+        this.cdr.detectChanges();
+
+        console.log('Dados do usuários atualizados: ', response);
+      },
+      error: (error) => {
+        console.error('Erro ao atualizar os dados do usuário:', error);
+        this.mensagemErroAtualizarDados = "Erro ao atualizar os dados do usuário.";
+        this.cdr.detectChanges();
       }
     })
   }

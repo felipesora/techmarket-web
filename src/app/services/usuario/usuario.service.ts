@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UsuarioResponse } from '../../types/usuario';
+import { UsuarioResponse, UsuarioUpdateDTO } from '../../types/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -20,5 +20,15 @@ export class UsuarioService {
     });
 
     return this.http.get<UsuarioResponse>(`${this.API}/${id}`, { headers });
+  };
+
+  atualizarDadosUsuario(id: number, usuarioUpdate: UsuarioUpdateDTO): Observable<UsuarioResponse> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.put<UsuarioResponse>(`${this.API}/${id}`, usuarioUpdate, { headers });
   };
 }
