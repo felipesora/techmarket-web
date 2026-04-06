@@ -13,6 +13,7 @@
             <h1 class="font-bold text-2xl">Meus Dados</h1>
         </div>
 
+        <!-- Atualizar Informações Pessoais -->
         <div class="py-6 flex flex-col gap-8">
             <div class="bg-[#F8FAFE] p-5 border border-[#eef2f9] rounded-[15px] flex flex-col gap-5 justify-between">
                 <div class="flex items-center gap-2">
@@ -104,13 +105,14 @@
                 </form>
             </div>
 
+            <!-- Atualizar Senha -->
             <div class="bg-[#F8FAFE] p-5 border border-[#eef2f9] rounded-[15px] flex flex-col gap-5 justify-between">
                 <div class="flex items-center gap-2">
                     <img src="icons/icone-senha.png" alt="ícone de pagamento" class="w-7">
                     <h1 class="font-bold text-lg">Alteração de senha</h1>
                 </div>
 
-                <form [formGroup]="formSenha" class="flex flex-col gap-4">
+                <form [formGroup]="formSenha" (ngSubmit)="atualizarSenhaDoUsuario()" class="flex flex-col gap-4">
                     <div class="flex flex-col w-full gap-1">
                         <label for="senha" class="text-[#334155] font-bold text-sm">Senha Atual</label>
 
@@ -118,7 +120,7 @@
                             <input
                                 formControlName="senhaAtual"
                                 name="senha"
-                                [type]="mostrarSenha ? 'text' : 'password'"
+                                [type]="mostrarSenhaAtual ? 'text' : 'password'"
                                 placeholder="••••••••"
                                 class="border border-[#E2E8F0] rounded-full py-2 px-4 pr-12 text-sm
                                     transition-all duration-300 
@@ -126,16 +128,28 @@
                                     w-full"
                             >
 
-                            @if (!mostrarSenha) {
-                                <button type="button" (click)="toggleSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
+                            @if (!mostrarSenhaAtual) {
+                                <button type="button" (click)="toggleSenhaAtual()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
                                     <img src="icons/icone-invisivel-cinza.png" class="w-5 group-hover:hidden">
                                     <img src="icons/icone-invisivel-azul.png" class="w-5 hidden group-hover:block">
                                 </button>
                             } @else {
-                                <button type="button" (click)="toggleSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
+                                <button type="button" (click)="toggleSenhaAtual()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
                                     <img src="icons/icone-visivel-cinza.png" class="w-5 group-hover:hidden">
                                     <img src="icons/icone-visivel-azul.png" class="w-5 hidden group-hover:block">
                                 </button>
+                            }
+
+                            @if (submittedAtualizarSenha && formSenha.get('senhaAtual')?.errors?.['senhaAtualObrigatoria']) {
+                                <span class="text-red-500 text-xs">* Senha é obrigatória</span>
+                            }
+
+                            @if (submittedAtualizarSenha && formSenha.get('senhaAtual')?.errors?.['senhaAtualMinimo']) {
+                                <span class="text-red-500 text-xs">* Senha deve ter no mínimo 6 caracteres</span>
+                            }
+
+                            @if (submittedAtualizarSenha && formSenha.get('senhaAtual')?.errors?.['senhaAtualMaximo']) {
+                                <span class="text-red-500 text-xs">* Senha deve ter no máximo 150 caracteres</span>
                             }
                         </div>
                     </div>
@@ -147,24 +161,36 @@
                             <input
                                 formControlName="novaSenha"
                                 name="senha"
-                                [type]="mostrarSenha ? 'text' : 'password'"
-                                placeholder="••••••••"
+                                [type]="mostrarNovaSenha ? 'text' : 'password'"
+                                placeholder="Mínimo 6 caracteres"
                                 class="border border-[#E2E8F0] rounded-full py-2 px-4 pr-12 text-sm
                                     transition-all duration-300 
                                     focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none
                                     w-full"
                             >
 
-                            @if (!mostrarSenha) {
-                                <button type="button" (click)="toggleSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
+                            @if (!mostrarNovaSenha) {
+                                <button type="button" (click)="toggleNovaSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
                                     <img src="icons/icone-invisivel-cinza.png" class="w-5 group-hover:hidden">
                                     <img src="icons/icone-invisivel-azul.png" class="w-5 hidden group-hover:block">
                                 </button>
                             } @else {
-                                <button type="button" (click)="toggleSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
+                                <button type="button" (click)="toggleNovaSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
                                     <img src="icons/icone-visivel-cinza.png" class="w-5 group-hover:hidden">
                                     <img src="icons/icone-visivel-azul.png" class="w-5 hidden group-hover:block">
                                 </button>
+                            }
+
+                            @if (submittedAtualizarSenha && formSenha.get('novaSenha')?.errors?.['novaSenhaObrigatoria']) {
+                                <span class="text-red-500 text-xs">* Senha é obrigatória</span>
+                            }
+
+                            @if (submittedAtualizarSenha && formSenha.get('novaSenha')?.errors?.['novaSenhaMinimo']) {
+                                <span class="text-red-500 text-xs">* Senha deve ter no mínimo 6 caracteres</span>
+                            }
+
+                            @if (submittedAtualizarSenha && formSenha.get('novaSenha')?.errors?.['novaSenhaMaximo']) {
+                                <span class="text-red-500 text-xs">* Senha deve ter no máximo 150 caracteres</span>
                             }
                         </div>
                     </div>
@@ -176,36 +202,53 @@
                             <input
                                 formControlName="confirmarSenha"
                                 name="senha"
-                                [type]="mostrarSenha ? 'text' : 'password'"
-                                placeholder="••••••••"
+                                type="password"
+                                placeholder="Confirmar nova senha"
                                 class="border border-[#E2E8F0] rounded-full py-2 px-4 pr-12 text-sm
                                     transition-all duration-300 
                                     focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none
                                     w-full"
                             >
 
-                            @if (!mostrarSenha) {
-                                <button type="button" (click)="toggleSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
-                                    <img src="icons/icone-invisivel-cinza.png" class="w-5 group-hover:hidden">
-                                    <img src="icons/icone-invisivel-azul.png" class="w-5 hidden group-hover:block">
-                                </button>
-                            } @else {
-                                <button type="button" (click)="toggleSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
-                                    <img src="icons/icone-visivel-cinza.png" class="w-5 group-hover:hidden">
-                                    <img src="icons/icone-visivel-azul.png" class="w-5 hidden group-hover:block">
-                                </button>
+                            @if (submittedAtualizarSenha && formSenha.get('confirmarSenha')?.errors?.['confirmarSenhaObrigatoria']) {
+                                <span class="text-red-500 text-xs">* Senha é obrigatória</span>
+                            }
+
+                            @if (submittedAtualizarSenha && formSenha.get('confirmarSenha')?.errors?.['confirmarSenhaMinimo']) {
+                                <span class="text-red-500 text-xs">* Senha deve ter no mínimo 6 caracteres</span>
+                            }
+
+                            @if (submittedAtualizarSenha && formSenha.get('confirmarSenha')?.errors?.['confirmarSenhaMaximo']) {
+                                <span class="text-red-500 text-xs">* Senha deve ter no máximo 100 caracteres</span>
+                            }
+
+                            @if (submittedAtualizarSenha && formSenha.errors?.['senhaDiferente']) {
+                                <span class="text-red-500 text-xs">* As senhas não coincidem</span>
                             }
                         </div>
                     </div>
 
+                    @if (mensagemSucessoAtualizarSenha) {
+                        <div class="bg-green-100 border border-green-300 text-green-700 px-4 py-2 rounded-lg text-sm">
+                            {{ mensagemSucessoAtualizarSenha }}
+                        </div>
+                    }
+
+                    @if (mensagemErroAtualizarSenha) {
+                        <div class="bg-red-100 border border-red-300 text-red-700 px-4 py-2 rounded-lg text-sm">
+                            {{ mensagemErroAtualizarSenha }}
+                        </div>
+                    }
+
                     <div>
-                        <button class="bg-[#0076D2] flex items-center justify-center gap-2 text-white font-bold text-sm rounded-full px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
+                        <button type="submit" class="bg-[#0076D2] flex items-center justify-center gap-2 text-white font-bold text-sm rounded-full px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
                             Alterar senha
                         </button>
                     </div>
                 </form>
             </div>
 
+            <!-- Deletar Conta -->
             <div class="bg-[#FFFBFB] p-5 border border-[#FFE2E2] rounded-[15px] flex flex-col gap-5 justify-between">
                 <div class="flex items-center gap-2">
                     <img src="icons/icone-remover-vermelho.png" alt="ícone de pagamento" class="w-7">

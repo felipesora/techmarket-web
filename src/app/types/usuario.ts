@@ -31,3 +31,8 @@ export interface UsuarioUpdateDTO {
     status: string
     id_perfil: number
 }
+
+export interface AtualizarSenhaDTO {
+    senha_atual: string
+    nova_senha: string
+}
