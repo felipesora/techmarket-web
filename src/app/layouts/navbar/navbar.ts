@@ -15,4 +15,8 @@ export class Navbar {
   usuarioLogado(): boolean {
     return this.authService.isUsuarioLogado();
   }
+
+  fazerLogout() {
+    this.authService.logout();
+  }
 }
