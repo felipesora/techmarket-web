@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { TokenPayload } from '../../types/token';
 import { jwtDecode } from 'jwt-decode';
+import { Router } from '@angular/router';
+import { CarrinhoService } from '../carrinho/carrinho.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+
+  constructor(private router: Router, private carrinhoService: CarrinhoService) {}
 
   getUsuarioToken() {
     const token = localStorage.getItem('tokenUser');
@@ -24,6 +28,10 @@ export class AuthService {
     localStorage.removeItem('idUsuarioLogado');
     localStorage.removeItem('perfil');
     localStorage.removeItem('exp');
+    localStorage.removeItem('produtos-favoritos');
+    this.carrinhoService.limparCarrinho();
+
+    this.router.navigate(['/']);
   }
 
   isTokenValid() {
