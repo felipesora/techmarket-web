@@ -4,6 +4,7 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { UsuarioService } from '../../services/usuario/usuario.service';
 import { UsuarioResponse, UsuarioUpdateDTO } from '../../types/usuario';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { cpfValidator, emailValidator, nomeValidator } from './validatorsDados';
 
 @Component({
   selector: 'app-meus-dados',
@@ -19,21 +20,23 @@ export class MeusDados implements OnInit {
   formDadosUsuario!: FormGroup;
   formSenha!: FormGroup;
 
+  submittedAtualizarDados = false;
   mensagemSucessoAtualizarDados: string | null = null;
   mensagemErroAtualizarDados: string | null = null;
 
-  constructor(private usuarioService: UsuarioService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {}
+  constructor(private usuarioService: UsuarioService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
+      this.formDadosUsuario = this.fb.group({
+        nome: ['', nomeValidator()],
+        email: ['', emailValidator()],
+        cpf: ['', cpfValidator()],
+      }); 
+  }
 
   toggleSenha() {
     this.mostrarSenha = !this.mostrarSenha;
   }
 
   ngOnInit() {
-    this.formDadosUsuario = this.fb.group({
-      nome: [''],
-      email: [''],
-      cpf: [''],
-    });
 
     this.formSenha = this.fb.group({
       senhaAtual: [''],
@@ -68,9 +71,17 @@ export class MeusDados implements OnInit {
   }
 
   atualizarDadosDoUsuario() {
+    this.submittedAtualizarDados = true;
+
+    if (this.formDadosUsuario.invalid) {
+      this.formDadosUsuario.markAllAsTouched();
+      return;
+    }
+
     const idUsuario = Number(localStorage.getItem('idUsuarioLogado'));
 
     const usuarioUpdate: UsuarioUpdateDTO = this.formDadosUsuario.value;
+    usuarioUpdate.cpf = usuarioUpdate.cpf.replace(/\D/g, '');
     usuarioUpdate.status = "ATIVO"
     usuarioUpdate.id_perfil = this.dadosUsuario?.tipo_perfil === "ADMINISTRADOR"? 1 : 2;
 

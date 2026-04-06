@@ -30,6 +30,17 @@
                             placeholder="Seu nome completo"
                             class="border border-[#E2E8F0] rounded-full py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
                         >
+                        @if (submittedAtualizarDados && formDadosUsuario.get('nome')?.errors?.['nomeObrigatorio']) {
+                            <span class="text-red-500 text-xs">* Nome é obrigatório</span>
+                        }
+
+                        @if (submittedAtualizarDados && formDadosUsuario.get('nome')?.errors?.['nomeMinimo']) {
+                            <span class="text-red-500 text-xs">* Nome deve ter no mínimo 3 caracteres</span>
+                        }
+
+                        @if (submittedAtualizarDados && formDadosUsuario.get('nome')?.errors?.['nomeMaximo']) {
+                            <span class="text-red-500 text-xs">* Nome deve ter no máximo 150 caracteres</span>
+                        }
                     </div>
 
                     <div class="flex flex-col w-full gap-1">
@@ -41,6 +52,17 @@
                             placeholder="exemplo@techmarket.com.br"
                             class="border border-[#E2E8F0] rounded-full py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
                         >
+                        @if (submittedAtualizarDados && formDadosUsuario.get('email')?.errors?.['emailObrigatorio']) {
+                            <span class="text-red-500 text-xs">* Email é obrigatório</span>
+                        }
+
+                        @if (submittedAtualizarDados && formDadosUsuario.get('email')?.errors?.['emailMaximo']) {
+                            <span class="text-red-500 text-xs">* Email deve ter no máximo 150 caracteres</span>
+                        }
+
+                        @if (submittedAtualizarDados && formDadosUsuario.get('email')?.errors?.['emailInvalido']) {
+                            <span class="text-red-500 text-xs">* Email inválido</span>
+                        }
                     </div>
 
                     <div class="flex flex-col w-full gap-1">
@@ -53,6 +75,13 @@
                             mask="000.000.000-00"
                             class="border border-[#E2E8F0] rounded-full py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
                         >
+                        @if (submittedAtualizarDados && formDadosUsuario.get('cpf')?.errors?.['cpfObrigatorio']) {
+                            <span class="text-red-500 text-xs">* CPF é obrigatório</span>
+                        }
+
+                        @if (submittedAtualizarDados && formDadosUsuario.get('cpf')?.errors?.['cpfFormatoInvalido']) {
+                            <span class="text-red-500 text-xs">* CPF deve seguir o formato 000.000.000-00</span>
+                        }
                     </div>
 
                     @if (mensagemSucessoAtualizarDados) {
