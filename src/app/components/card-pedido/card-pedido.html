@@ -3,7 +3,7 @@
     <div class="bg-[#FBFDFF] border-b border-[#EDF2F7] flex items-center justify-between p-6">
         <div class="flex items-center gap-4">
             <span class="text-[#0076D2] text-sm font-bold bg-[#EEF4FE] rounded-full py-0.5 px-3">Pedido #{{ pedido.id_pedido }}</span>
-            <span class="text-[#5B6E8C] text-sm">{{ pedido?.data_criacao | date:'dd/MM/yyyy \'às\' HH:mm' }}</span>
+            <span class="text-[#5B6E8C] text-sm">{{ pedido.data_criacao | date:'dd/MM/yyyy \'às\' HH:mm' }}</span>
         </div>
 
         @if (pedido.status_pedido === "PAGAMENTO_APROVADO") {
