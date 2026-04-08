@@ -1,0 +1,105 @@
+<div class="rounded-[20px] border border-[#EDF2F7] hover:translate-y-[-1px] hover:shadow-[0_6px_12px_rgba(0,118,210,0.08)] transition-all">
+
+    <div class="bg-[#FBFDFF] border-b border-[#EDF2F7] flex items-center justify-between p-6">
+        <div class="flex items-center gap-4">
+            <span class="text-[#0076D2] text-sm font-bold bg-[#EEF4FE] rounded-full py-0.5 px-3">Pedido #{{ pedido.id_pedido }}</span>
+            <span class="text-[#5B6E8C] text-sm">{{ pedido?.data_criacao | date:'dd/MM/yyyy \'às\' HH:mm' }}</span>
+        </div>
+
+        @if (pedido.status_pedido === "PAGAMENTO_APROVADO") {
+            <p class="text-[#15803D] text-md font-bold bg-[#E0F7E8] rounded-full py-1 px-3 flex items-center gap-2">
+                <img src="icons/icone-check.png" alt="ícone pagamento aprovado" class="w-6">
+                Pagamento aprovado
+            </p>
+        }
+
+        @if (pedido.status_pedido === "AGUARDANDO_PAGAMENTO") {
+            <p class="text-[#B4532B] text-md font-bold bg-[#FFF3E3] rounded-full py-1 px-3 flex items-center gap-2">
+                <img src="icons/icone-pedido-aguardo.png" alt="ícone aguardando pagamento" class="w-6">
+                Aguardando pagamento
+            </p>
+        }
+
+        @if (pedido.status_pedido === "CANCELADO") {
+            <p class="text-[#BF1C1C] text-md font-bold bg-[#FEE7E7] rounded-full py-1 px-3 flex items-center gap-2">
+                <img src="icons/icone-pedido-cancelado.png" alt="ícone pagamento cancelado" class="w-6">
+                Pagamento cancelado
+            </p>
+        }
+    </div>
+
+    <div class="p-6 flex flex-col gap-5">
+        <div class="flex items-center gap-2">
+            @if (pedido.metodo_pagamento === "PIX") {
+                <img src="icons/icone-pix-preto.png" alt="ícone tipo do pagamento" class="w-6">
+                <p class="text-[#334155] text-md">PIX</p>
+            }
+
+            @if (pedido.metodo_pagamento === "CARTAO_CREDITO") {
+                <img src="icons/icone-cartao-preto.png" alt="ícone tipo do pagamento" class="w-6">
+                <p class="text-[#334155] text-md">Cartão de Crédito</p>
+            }
+
+            @if (pedido.metodo_pagamento === "BOLETO") {
+                <img src="icons/icone-boleto-preto.png" alt="ícone tipo do pagamento" class="w-6">
+                <p class="text-[#334155] text-md">Boleto Bancário</p>
+            }
+        </div>
+
+        <div class="flex flex-col">
+            <p class="text-[#7C8BA0] text-sm">TOTAL DO PEDIDO</p>
+            <h3 class="text-[#0076D2] text-3xl font-bold">{{ pedido.valor_total | currency:'BRL':'symbol':'1.2-2' }}</h3>
+        </div>
+
+        <div class="flex items-center gap-4">
+
+            @if (pedido.status_pedido === "AGUARDANDO_PAGAMENTO") {
+                <button class="bg-[#0076D2] border border-[#0076D2] rounded-full text-white text-sm font-bold py-1 px-4 cursor-pointer flex items-center gap-2 hover:bg-[#005fa8] hover:border-[#005fa8] transition-all">
+                    <img src="icons/icone-cartao-branco.png" alt="ícone de seta" class="w-4">
+                    Ir para pagamento
+                </button>
+
+                <button class="bg-[#FEE2E2] border border-[#FECACA] rounded-full text-[#BF1C1C] text-sm font-bold py-1 px-4 cursor-pointer flex items-center gap-2 hover:hover:bg-[#FECACA] transition-all">
+                    <img src="icons/icone-pedido-cancelado.png" alt="ícone de seta" class="w-4">
+                    Cancelar pedido
+                </button>
+            }
+            
+            <button (click)="toggleItens()" class="bg-white border border-[#CBD5E1] rounded-full text-[#5B6E8C] text-sm font-bold py-1 px-4 cursor-pointer flex items-center gap-2 hover:bg-[#CBD5E1] transition-all">
+                @if (!itensVisiveis) {
+                    <img src="icons/icone-expandir.png" alt="ícone de seta" class="w-4">
+                } @else {
+                    <img src="icons/icone-fechar-expandir.png" alt="ícone de seta" class="w-4">
+                }
+                
+                Ver itens
+            </button>
+        </div>
+    </div>
+
+    @if (itensVisiveis) {
+        <div class="p-6 bg-[#F9FBFE] border-t border-dashed border-[#EDF2F7] flex flex-col gap-5">
+
+            <div class="flex flex-col gap-3">
+                <div class="flex items-center gap-1">
+                    <img src="icons/icone-caixa.png" alt="ícone de caixa" class="w-5">
+                    <p class="text-sm text-black font-bold">Produtos:</p>
+                </div>
+
+                <ul class="border-b border-[#EEF2F6] pb-2 flex flex-col gap-2">
+                    @for (item of pedido.itens; track $index) {
+                        <li class="flex items-center justify-between">
+                            <p class="text-sm text-black font-bold">{{ item.produto.nome }}</p>
+                            <p class="text-sm text-[#475569]">{{ item.quantidade }}x {{ item.produto.preco_unitario | currency:'BRL':'symbol':'1.2-2' }}</p>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <h4 class="text-sm text-black font-bold">Total</h4>
+                <h4 class="text-sm text-black font-bold">{{ pedido.valor_total | currency:'BRL':'symbol':'1.2-2' }}</h4>
+            </div>
+        </div>
+    }
+</div>

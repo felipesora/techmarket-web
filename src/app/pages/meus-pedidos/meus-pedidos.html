@@ -1,0 +1,22 @@
+<main class="bg-[#F5F7FC] p-7 min-h-screen">
+    <div class="mb-6">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <button routerLink="/" class="cursor-pointer hover:text-[#0076D2] transition-colors">Home</button>
+            <span>/</span>
+            <span class="text-[#0076D2] font-medium">Meus Pedidos</span>
+        </nav>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden p-5">
+        <div class="flex items-center gap-2 border-b-2 border-[#eef2f6] pb-3">
+            <img src="icons/icone-pedidos.png" alt="ícone de pagamento" class="w-9">
+            <h1 class="font-bold text-2xl">Meus Pedidos</h1>
+        </div>
+
+        <div class="py-6 flex flex-col gap-8">
+            @for (pedido of pedidosUsuario; track $index) {
+                <app-card-pedido [pedido]="pedido"></app-card-pedido>
+            }
+        </div>
+    </div>
+</main>
