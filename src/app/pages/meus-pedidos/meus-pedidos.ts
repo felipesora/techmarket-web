@@ -13,6 +13,11 @@ import { PedidoResponse } from '../../types/pedido';
 export class MeusPedidos implements OnInit {
 
   pedidosUsuario: PedidoResponse[] = [];
+  modalConfirmarCancelamento: boolean = false;
+  idPedidoSelecionado!: number;
+
+  mensagemSucessoCancelarPedido: string | null = null;
+  mensagemErroCancelarPedido: string | null = null;
 
   constructor(private pedidoService: PedidoService, private cdr: ChangeDetectorRef) {}
 
@@ -32,6 +37,34 @@ export class MeusPedidos implements OnInit {
       },
       error: (error) => {
         console.error('Erro ao carregar os pedidos do usuário:', error);
+      }
+    })
+  }
+
+  abrirModalConfirmarCancelamento(idPedido: number) {
+    this.idPedidoSelecionado = idPedido
+    this.modalConfirmarCancelamento = true;
+  }
+
+  fecharModalConfirmarCancelamento() {
+    this.modalConfirmarCancelamento = false;
+  }
+
+  cancelarPedido() {
+    this.pedidoService.cancelarPedido(this.idPedidoSelecionado).subscribe({
+      next: (response) => {
+        console.log('Pedido do usuário cancelado: ', this.pedidosUsuario);
+        this.mensagemSucessoCancelarPedido = "Pedido cancelado com sucesso!"
+        this.cdr.detectChanges();
+        
+        setTimeout(() => {
+          this.modalConfirmarCancelamento = false;
+          this.pegarPedidosDoUsuario();
+        }, 2000);
+      },
+      error: (error) => {
+        console.error('Erro ao cancelar o pedido do usuário:', error);
+        this.mensagemErroCancelarPedido = "Erro ao cancelar o pedido."
       }
     })
   }

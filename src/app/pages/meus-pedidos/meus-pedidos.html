@@ -15,8 +15,59 @@
 
         <div class="py-6 flex flex-col gap-8">
             @for (pedido of pedidosUsuario; track $index) {
-                <app-card-pedido [pedido]="pedido"></app-card-pedido>
+                <app-card-pedido 
+                    [pedido]="pedido"
+                    (cancelarPedidoClick)="abrirModalConfirmarCancelamento($event)">
+
+                </app-card-pedido>
             }
         </div>
     </div>
 </main>
+
+<!-- Modal -->
+@if (modalConfirmarCancelamento) {
+    <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+        <div class="bg-white rounded-2xl p-8 w-[520px] shadow-lg flex flex-col items-center gap-6">
+            <div>
+                <img src="icons/icone-alerta.png" class="w-16">
+            </div>
+
+            <h2 class="text-2xl font-bold text-[#2C3E66]">
+                Cancelar Pedido #{{ idPedidoSelecionado }}?
+            </h2>
+
+            <p class="text-gray-500 text-center">
+                Tem certeza que deseja cancelar este pedido? Essa ação não poderá ser desfeita.
+            </p>
+
+            @if (mensagemSucessoCancelarPedido) {
+                <div class="bg-green-100 border border-green-300 text-green-700 px-4 py-2 rounded-lg text-sm">
+                    {{ mensagemSucessoCancelarPedido }}
+                </div>
+            }
+
+            @if (mensagemErroCancelarPedido) {
+                <div class="bg-red-100 border border-red-300 text-red-700 px-4 py-2 rounded-lg text-sm">
+                    {{ mensagemErroCancelarPedido }}
+                </div>
+            }
+
+            <div class="flex gap-5">
+                <button
+                    (click)="fecharModalConfirmarCancelamento()"
+                    class="bg-white text-[#334155] border border-[#CDD6E2] rounded-full cursor-pointer px-6 py-3 font-bold hover:bg-[#F8FCFF] hover:text-[#0076D2] hover:border-[#0076D2] transition-all">
+                    Cancelar
+                </button>
+
+                <button
+                    (click)="cancelarPedido()"
+                    class="bg-[#FEE2E2] text-[#EF4444] rounded-full cursor-pointer px-6 py-3 font-bold hover:bg-[#FECACA] transition-all">
+                    Sim, cancelar pedido
+                </button>
+            </div>
+        </div>
+
+    </div>
+}

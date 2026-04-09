@@ -23,7 +23,7 @@
         @if (pedido.status_pedido === "CANCELADO") {
             <p class="text-[#BF1C1C] text-md font-bold bg-[#FEE7E7] rounded-full py-1 px-3 flex items-center gap-2">
                 <img src="icons/icone-pedido-cancelado.png" alt="ícone pagamento cancelado" class="w-6">
-                Pagamento cancelado
+                Pedido cancelado
             </p>
         }
     </div>
@@ -54,12 +54,12 @@
         <div class="flex items-center gap-4">
 
             @if (pedido.status_pedido === "AGUARDANDO_PAGAMENTO") {
-                <button class="bg-[#0076D2] border border-[#0076D2] rounded-full text-white text-sm font-bold py-1 px-4 cursor-pointer flex items-center gap-2 hover:bg-[#005fa8] hover:border-[#005fa8] transition-all">
+                <button [routerLink]="['/pagamento', pedido.id_pedido]" class="bg-[#0076D2] border border-[#0076D2] rounded-full text-white text-sm font-bold py-1 px-4 cursor-pointer flex items-center gap-2 hover:bg-[#005fa8] hover:border-[#005fa8] transition-all">
                     <img src="icons/icone-cartao-branco.png" alt="ícone de seta" class="w-4">
                     Ir para pagamento
                 </button>
 
-                <button class="bg-[#FEE2E2] border border-[#FECACA] rounded-full text-[#BF1C1C] text-sm font-bold py-1 px-4 cursor-pointer flex items-center gap-2 hover:hover:bg-[#FECACA] transition-all">
+                <button (click)="cancelarPedido()" class="bg-[#FEE2E2] border border-[#FECACA] rounded-full text-[#BF1C1C] text-sm font-bold py-1 px-4 cursor-pointer flex items-center gap-2 hover:hover:bg-[#FECACA] transition-all">
                     <img src="icons/icone-pedido-cancelado.png" alt="ícone de seta" class="w-4">
                     Cancelar pedido
                 </button>

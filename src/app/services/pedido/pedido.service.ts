@@ -32,7 +32,7 @@ export class PedidoService {
     return this.http.get<PedidoResponse>(`${this.API}/${idPedido}`, { headers });
   }
 
-  getPedidosPorIdUsuario(idUsuario: number, page: number = 0, size: number = 5): Observable<PedidoPageResponse> {
+  getPedidosPorIdUsuario(idUsuario: number, page: number = 0, size: number = 10): Observable<PedidoPageResponse> {
     const token = localStorage.getItem('tokenUser');
 
     const headers = new HttpHeaders({
@@ -44,5 +44,15 @@ export class PedidoService {
       .set('size', size);
 
     return this.http.get<PedidoPageResponse>(`${this.API}/usuario/${idUsuario}`, { headers, params });
+  }
+
+  cancelarPedido(idPedido: number): Observable<void> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.patch<void>(`${this.API}/${idPedido}/cancelar`, null, { headers });
   }
 }
