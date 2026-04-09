@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PedidoRequest, PedidoResponse } from '../../types/pedido';
+import { PedidoPageResponse, PedidoRequest, PedidoResponse } from '../../types/pedido';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -30,5 +30,29 @@ export class PedidoService {
     });
 
     return this.http.get<PedidoResponse>(`${this.API}/${idPedido}`, { headers });
+  }
+
+  getPedidosPorIdUsuario(idUsuario: number, page: number = 0, size: number = 10): Observable<PedidoPageResponse> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    const params = new HttpParams()
+      .set('page', page)
+      .set('size', size);
+
+    return this.http.get<PedidoPageResponse>(`${this.API}/usuario/${idUsuario}`, { headers, params });
+  }
+
+  cancelarPedido(idPedido: number): Observable<void> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.patch<void>(`${this.API}/${idPedido}/cancelar`, null, { headers });
   }
 }

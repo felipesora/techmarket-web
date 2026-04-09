@@ -28,4 +28,17 @@ export interface ProdutoPedido {
     id_mongo_produto: string
     codigo: string
     nome: string
+    preco_unitario: number
+}
+
+export interface PedidoPageResponse {
+  content: PedidoResponse[]
+  totalElements: number
+  totalPages: number
+  size: number
+  number: number
+  numberOfElements: number
+  first: boolean
+  last: boolean
+  empty: boolean
 }

@@ -11,6 +11,7 @@ import { Carrinho } from './pages/carrinho/carrinho';
 import { ConfirmarPedido } from './pages/confirmar-pedido/confirmar-pedido';
 import { Pagamento } from './pages/pagamento/pagamento';
 import { MeusDados } from './pages/meus-dados/meus-dados';
+import { MeusPedidos } from './pages/meus-pedidos/meus-pedidos';
 
 export const routes: Routes = [
     {
@@ -48,6 +49,10 @@ export const routes: Routes = [
         {
             path: 'meus-dados',
             component: MeusDados
+        },
+        {
+            path: 'meus-pedidos',
+            component: MeusPedidos
         },
         ]
     },
