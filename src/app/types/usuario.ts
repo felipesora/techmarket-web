@@ -3,7 +3,7 @@ export interface UsuarioCadastro {
     email: string
     cpf: string
     senha: string
-    id_perfil: number
+    perfil: string
 }
 
 export interface LoginRequest {
@@ -21,7 +21,7 @@ export interface UsuarioResponse {
     email: string
     cpf: string
     status: string
-    tipo_perfil: string
+    perfil: string
 }
 
 export interface UsuarioUpdateDTO {
@@ -29,7 +29,6 @@ export interface UsuarioUpdateDTO {
     email: string
     cpf: string
     status: string
-    id_perfil: number
 }
 
 export interface AtualizarSenhaDTO {

@@ -70,7 +70,7 @@ export class Cadastro {
       email: usuarioFormulario.email,
       cpf: cpfSemMascara,
       senha: usuarioFormulario.senha,
-      id_perfil: 2,
+      perfil: "USUARIO",
     };
 
     this.identityService.criarUsuario(usuario).subscribe({
@@ -88,6 +88,22 @@ export class Cadastro {
         console.log('Erro completo: ', err.error);
         console.log(err.error.errors);
         console.log('Mensagem: ', this.mensagem);
+
+        if (err.error.message === "CPF já cadastrado para este perfil") {
+          this.tipoMensagem = 'erro';
+          this.mensagem = 'CPF já cadastrado.';
+          this.cdr.detectChanges();
+          console.log('Mensagem: ', this.mensagem);
+          return;
+        }
+
+        if (err.error.message === "Email já cadastrado") {
+          this.tipoMensagem = 'erro';
+          this.mensagem = 'Email já cadastrado.';
+          this.cdr.detectChanges();
+          console.log('Mensagem: ', this.mensagem);
+          return;
+        }
 
         if (err.status === 0) {
           this.tipoMensagem = 'erro';

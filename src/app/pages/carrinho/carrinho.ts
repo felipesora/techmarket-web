@@ -1,6 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CardProdutoCarrinho } from "../../components/card-produto-carrinho/card-produto-carrinho";
 import { CarrinhoService } from '../../services/carrinho/carrinho.service';
 import { CarrinhoItem, ProdutoCarrinho } from '../../types/carrinho';
@@ -17,7 +17,9 @@ export class Carrinho implements OnInit {
   listaCarrinho: CarrinhoItem[] = [];
   listaProdutosDoCarrinho: ProdutoCarrinho[] = [];
 
-  constructor(private carrinhoService: CarrinhoService, private produtoService: ProdutoService, private cdr: ChangeDetectorRef) {}
+  modalCarrinhoVazio: boolean = false;
+
+  constructor(private carrinhoService: CarrinhoService, private produtoService: ProdutoService, private cdr: ChangeDetectorRef, private router: Router) {}
 
   ngOnInit() {
     this.pegarItensDoCarrinho();
@@ -71,5 +73,19 @@ export class Carrinho implements OnInit {
     return this.listaProdutosDoCarrinho.reduce((total, item) => {
       return total + (item.produto.preco * item.quantidade);
     }, 0);
+  }
+
+  revisarPedido() {
+    if (this.listaProdutosDoCarrinho.length === 0) {
+      this.modalCarrinhoVazio = true
+      return;
+    }
+
+    this.router.navigate(['/confirmacao-pedido']);
+  }
+
+  fecharModalCarrinhoVazio() {
+    this.modalCarrinhoVazio = false;
+    this.router.navigate(['/']);
   }
 }

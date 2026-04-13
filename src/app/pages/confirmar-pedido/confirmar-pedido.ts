@@ -19,6 +19,7 @@ export class ConfirmarPedido implements OnInit {
   listaCarrinho: CarrinhoItem[] = [];
   listaProdutosDoCarrinho: ProdutoCarrinho[] = [];
   formaPagamento: string = '';
+  mostrarModalPagamento = false;
 
   constructor(private pedidoService: PedidoService, private carrinhoService: CarrinhoService, private produtoService: ProdutoService, private router: Router, private cdr: ChangeDetectorRef) {}
 
@@ -86,5 +87,14 @@ export class ConfirmarPedido implements OnInit {
         console.log("Erro ao criar o pedido: ", err);
       }
     })
+  }
+
+  irParaPagamento() {
+    if (!this.formaPagamento) {
+      this.mostrarModalPagamento = true;
+      return;
+    }
+
+    this.gerarPedido();
   }
 }
