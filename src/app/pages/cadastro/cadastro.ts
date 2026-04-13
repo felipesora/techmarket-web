@@ -89,6 +89,22 @@ export class Cadastro {
         console.log(err.error.errors);
         console.log('Mensagem: ', this.mensagem);
 
+        if (err.error.message === "CPF já cadastrado para este perfil") {
+          this.tipoMensagem = 'erro';
+          this.mensagem = 'CPF já cadastrado.';
+          this.cdr.detectChanges();
+          console.log('Mensagem: ', this.mensagem);
+          return;
+        }
+
+        if (err.error.message === "Email já cadastrado") {
+          this.tipoMensagem = 'erro';
+          this.mensagem = 'Email já cadastrado.';
+          this.cdr.detectChanges();
+          console.log('Mensagem: ', this.mensagem);
+          return;
+        }
+
         if (err.status === 0) {
           this.tipoMensagem = 'erro';
           this.mensagem = 'Servidor indisponível. Tente novamente em instantes.';
