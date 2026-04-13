@@ -1,0 +1,40 @@
+<header class="bg-white flex justify-between items-center p-7 border-b border-[#E9ECEF]">
+    <button routerLink="/admin/dashboard" class="cursor-pointer">
+        <img src="images/logo-techmarket.png" alt="Logo TechMarket" class="w-32.5">
+    </button>
+
+    <div class="flex items-center gap-7">
+        <!-- Admin Info -->
+        <div class="relative group">
+            <button class="flex items-center gap-3 cursor-pointer">
+                <div class="w-10 h-10 bg-[#0076D2] rounded-full flex items-center justify-center text-white font-bold">
+                    FE
+                </div>
+                <div class="text-left hidden md:block">
+                    <p class="text-sm font-semibold text-gray-800">Felipe</p>
+                    <p class="text-xs text-gray-500">Administrador</p>
+                </div>
+                <img src="icons/icone-seta-baixo.png" alt="seta" class="w-4 group-hover:hidden">
+                <img src="icons/icone-seta-baixo-azul.png" alt="seta" class="w-4 hidden group-hover:block">
+            </button>
+
+            <!-- Dropdown Admin -->
+            <div class="absolute right-0 top-full w-64 p-3 bg-white shadow-lg rounded-xl hidden group-hover:block z-50">
+                <ul class="flex flex-col gap-2 text-sm">
+                    <li>
+                        <button routerLink="/admin/perfil" class="flex items-center gap-3 w-full px-3 py-2 cursor-pointer rounded-lg hover:bg-gray-100 hover:text-[#0076D2] transition">
+                            <img src="icons/icone-perfil.png" alt="Perfil" class="w-5">
+                            Meus Dados
+                        </button>
+                    </li>
+                    <li>
+                        <button class="flex items-center gap-3 w-full px-3 py-2 cursor-pointer rounded-lg hover:bg-[#fef2f2] hover:text-[#EF4444] transition">
+                            <img src="icons/icone-logout.png" alt="Sair" class="w-5">
+                            Sair do Admin
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
