@@ -12,6 +12,7 @@ import { ConfirmarPedido } from './pages/confirmar-pedido/confirmar-pedido';
 import { Pagamento } from './pages/pagamento/pagamento';
 import { MeusDados } from './pages/meus-dados/meus-dados';
 import { MeusPedidos } from './pages/meus-pedidos/meus-pedidos';
+import { authGuard } from './guards/auth/auth-guard';
 
 export const routes: Routes = [
     {
@@ -24,7 +25,8 @@ export const routes: Routes = [
         },
         {
             path: 'favoritos',
-            component: ProdutosFavoritos
+            component: ProdutosFavoritos,
+            canActivate: [authGuard]
         },
         {
             path: 'produtos',
@@ -36,23 +38,28 @@ export const routes: Routes = [
         },
         {
             path: 'carrinho',
-            component: Carrinho
+            component: Carrinho,
+            canActivate: [authGuard]
         },
         {
             path: 'confirmacao-pedido',
-            component: ConfirmarPedido
+            component: ConfirmarPedido,
+            canActivate: [authGuard]
         },
         {
             path: 'pagamento/:idPedido',
-            component: Pagamento
+            component: Pagamento,
+            canActivate: [authGuard]
         },
         {
             path: 'meus-dados',
-            component: MeusDados
+            component: MeusDados,
+            canActivate: [authGuard]
         },
         {
             path: 'meus-pedidos',
-            component: MeusPedidos
+            component: MeusPedidos,
+            canActivate: [authGuard]
         },
         ]
     },
