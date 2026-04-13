@@ -87,10 +87,36 @@
                 </label>
             </div>
 
-            <button (click)="gerarPedido()" [disabled]="!formaPagamento" routerLink="/confirmacao-pedido" class="bg-[#0076D2] flex items-center justify-center gap-1 text-white font-bold text-[1rem] rounded-[15px] px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
+            <button (click)="irParaPagamento()" class="bg-[#0076D2] flex items-center justify-center gap-1 text-white font-bold text-[1rem] rounded-[15px] px-7 py-3 cursor-pointer hover:bg-[#005fa8] transition-all">
                 Ir para pagamento
                 <img src="icons/icone-proximo-branco.png" alt="ícone de próximo" class="w-6">
             </button>
         </div>
     </div>
 </main>
+
+@if (mostrarModalPagamento) {
+    <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+        <div class="bg-white rounded-2xl p-8 w-[420px] shadow-lg flex flex-col items-center gap-6">
+            <div>
+               <img src="icons/icone-alerta.png" class="w-16">
+            </div>
+
+            <h2 class="text-2xl font-bold text-[#2C3E66] text-center">
+                Selecione uma forma de pagamento
+            </h2>
+
+            <p class="text-gray-500 text-center">
+                Escolha uma opção de pagamento para continuar com seu pedido.
+            </p>
+
+            <button
+                (click)="mostrarModalPagamento = false"
+                class="bg-[#0076D2] text-white cursor-pointer px-6 py-3 rounded-lg font-bold hover:bg-[#005fa8] transition">
+                Entendi
+            </button>
+        </div>
+
+    </div>
+}
