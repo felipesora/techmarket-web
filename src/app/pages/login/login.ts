@@ -80,6 +80,14 @@ export class Login {
           return;
         }
 
+        if (err.error.message === "Email ou senha inválidos") {
+          this.tipoMensagem = 'erro';
+          this.mensagem = 'Email ou senha inválidos.';
+          console.log('Mensagem: ', this.mensagem);
+          this.cdr.detectChanges();
+          return;
+        }
+
         this.tipoMensagem = 'erro';
         this.mensagem = 'Erro no login. Tente novamente mais tarde.';
         this.cdr.detectChanges();
