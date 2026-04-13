@@ -70,7 +70,7 @@ export class Cadastro {
       email: usuarioFormulario.email,
       cpf: cpfSemMascara,
       senha: usuarioFormulario.senha,
-      id_perfil: 2,
+      perfil: "USUARIO",
     };
 
     this.identityService.criarUsuario(usuario).subscribe({

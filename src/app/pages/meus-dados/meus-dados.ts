@@ -98,8 +98,7 @@ export class MeusDados implements OnInit {
 
     const usuarioUpdate: UsuarioUpdateDTO = this.formDadosUsuario.value;
     usuarioUpdate.cpf = usuarioUpdate.cpf.replace(/\D/g, '');
-    usuarioUpdate.status = "ATIVO"
-    usuarioUpdate.id_perfil = this.dadosUsuario?.tipo_perfil === "ADMINISTRADOR"? 1 : 2;
+    usuarioUpdate.status = "ATIVO";
 
     this.mensagemSucessoAtualizarDados = null;
     this.mensagemErroAtualizarDados = null;
