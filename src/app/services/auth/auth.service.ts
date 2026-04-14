@@ -59,4 +59,8 @@ export class AuthService {
   isUsuarioLogado(): boolean {
     return this.isTokenValid();
   }
+
+  getPerfilUsuario(): string | null {
+    return localStorage.getItem('perfil');
+  }
 }

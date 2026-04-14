@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
 import { UsuarioService } from '../../../services/usuario/usuario.service';
 import { AtualizarSenhaDTO, UsuarioResponse, UsuarioUpdateDTO } from '../../../types/usuario';
@@ -9,7 +8,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-meus-dados',
-  imports: [NgxMaskDirective, RouterLink, ReactiveFormsModule],
+  imports: [NgxMaskDirective, ReactiveFormsModule],
   templateUrl: './meus-dados.html',
   styleUrl: './meus-dados.css',
 })
