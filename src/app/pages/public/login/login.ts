@@ -62,6 +62,16 @@ export class Login {
         this.mensagem = 'Login efetuado com sucesso!';
         this.cdr.detectChanges();
 
+        const perfil = localStorage.getItem('perfil');
+
+        if (perfil === "ADMINISTRADOR") {
+          setTimeout(() => {
+            this.router.navigate(['/admin/dashboard']);
+          }, 2000);
+
+          return;
+        }
+
         setTimeout(() => {
           this.router.navigate(['/']);
         }, 2000);

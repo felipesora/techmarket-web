@@ -2,76 +2,71 @@
 
     <!-- Título da Página -->
     <div class="flex justify-between items-center">
-        <div class="flex items-center gap-2 border-l-4 border-[#0076D2] pl-3">
+        <div class="flex items-center gap-2">
             <img src="icons/icone-dashboard-azul.png" alt="Dashboard" class="w-8">
             <h1 class="font-bold text-2xl text-gray-800">Visão Geral</h1>
         </div>
-        <!-- <div class="text-sm text-gray-500 bg-white px-4 py-2 rounded-lg shadow-sm">
-            {{ dataAtual | date:'EEEE, dd/MM/yyyy' }}
-        </div> -->
         <div class="text-sm text-gray-500 bg-white px-4 py-2 rounded-lg shadow-sm">
-            13/04/2026
+            {{ dataAtual | date:'EEEE, dd/MM/yyyy' }}
         </div>
     </div>
 
-    <!-- 🔢 KPIs (Cards de Métricas) -->
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <section class="flex flex-wrap gap-6 justify-between">
         
         <!-- Card Produtos -->
-        <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-[#0076D2] hover:shadow-md transition-all duration-300">
+        <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-100">
             <div class="flex justify-between items-start">
                 <div>
                     <p class="text-sm text-gray-500 font-medium">Produtos Cadastrados</p>
                     <h1 class="text-3xl font-bold text-gray-800 mt-2">{{ totalProdutos }}</h1>
                 </div>
                 <div class="bg-[#0076D2]/10 p-3 rounded-full">
-                    <img src="icons/icone-produtos-admin.png" alt="Produtos" class="w-6 h-6">
+                    <img src="icons/icone-produtos-azul.png" alt="Produtos" class="w-6 h-6">
                 </div>
             </div>
         </div>
 
         <!-- Card Pedidos Hoje -->
-        <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-green-500 hover:shadow-md transition-all duration-300">
+        <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-100">
             <div class="flex justify-between items-start">
                 <div>
                     <p class="text-sm text-gray-500 font-medium">Pedidos Hoje</p>
                     <h1 class="text-3xl font-bold text-gray-800 mt-2">{{ pedidosHoje }}</h1>
                 </div>
                 <div class="bg-green-500/10 p-3 rounded-full">
-                    <img src="icons/icone-pedido-admin.png" alt="Pedidos" class="w-6 h-6">
+                    <img src="icons/icone-pedidos-verde.png" alt="Pedidos" class="w-6 h-6">
                 </div>
             </div>
         </div>
 
         <!-- Card Usuários -->
-        <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-purple-500 hover:shadow-md transition-all duration-300">
+        <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-100">
             <div class="flex justify-between items-start">
                 <div>
                     <p class="text-sm text-gray-500 font-medium">Usuários Cadastrados</p>
                     <h1 class="text-3xl font-bold text-gray-800 mt-2">{{ totalUsuarios }}</h1>
                 </div>
                 <div class="bg-purple-500/10 p-3 rounded-full">
-                    <img src="icons/icone-usuarios-admin.png" alt="Usuários" class="w-6 h-6">
+                    <img src="icons/icone-usuarios-roxo.png" alt="Usuários" class="w-6 h-6">
                 </div>
             </div>
         </div>
 
-        <!-- Card Faturamento (Extra) -->
-        <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-amber-500 hover:shadow-md transition-all duration-300">
+        <!-- Card Faturamento -->
+        <!-- <div class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-100">
             <div class="flex justify-between items-start">
                 <div>
                     <p class="text-sm text-gray-500 font-medium">Faturamento (Mês)</p>
                     <h1 class="text-3xl font-bold text-gray-800 mt-2">R$ 47.890</h1>
                 </div>
                 <div class="bg-amber-500/10 p-3 rounded-full">
-                    <img src="icons/icone-dinheiro-admin.png" alt="Faturamento" class="w-6 h-6">
+                    <img src="icons/icone-dinheiro-amarelo.png" alt="Faturamento" class="w-6 h-6">
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </section>
 
-    <!-- ⚡ Ações rápidas -->
     <section>
         <div class="flex items-center gap-2 border-l-4 border-[#0076D2] pl-3">
             <h1 class="font-bold text-xl text-gray-700">Ações rápidas</h1>
@@ -79,27 +74,30 @@
 
         <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-6">
             <button routerLink="/admin/produtos/novo"
-                class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-left border border-transparent hover:border-[#0076D2] group">
+                class="cursor-pointer bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-left border border-transparent hover:border-[#0076D2] group">
                 <div class="bg-[#0076D2]/10 w-10 h-10 rounded-full flex items-center justify-center mb-3 group-hover:bg-[#0076D2] transition-all">
-                    <img src="icons/icone-adicionar-admin.png" alt="Adicionar" class="w-5 h-5">
+                    <img src="icons/icone-produtos-azul.png" alt="Produtos" class="w-6 group-hover:hidden">
+                    <img src="icons/icone-produtos-branco.png" alt="Produtos" class="hidden w-6 group-hover:block">
                 </div>
                 <h2 class="font-semibold text-gray-800">Cadastrar Produto</h2>
                 <p class="text-sm text-gray-500 mt-1">Adicionar novo produto ao catálogo</p>
             </button>
 
             <button routerLink="/admin/pedidos"
-                class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-left border border-transparent hover:border-[#0076D2] group">
+                class="cursor-pointer bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-left border border-transparent hover:border-[#0076D2] group">
                 <div class="bg-green-500/10 w-10 h-10 rounded-full flex items-center justify-center mb-3 group-hover:bg-green-500 transition-all">
-                    <img src="icons/icone-pedido-admin.png" alt="Pedidos" class="w-5 h-5">
+                    <img src="icons/icone-pedidos-verde.png" alt="Pedidos" class="w-6 group-hover:hidden">
+                    <img src="icons/icone-pedidos-branco.png" alt="Pedidos" class="hidden w-6 group-hover:block">
                 </div>
                 <h2 class="font-semibold text-gray-800">Ver Pedidos</h2>
                 <p class="text-sm text-gray-500 mt-1">Acompanhar e gerenciar pedidos</p>
             </button>
 
             <button routerLink="/admin/usuarios"
-                class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-left border border-transparent hover:border-[#0076D2] group">
+                class="cursor-pointer bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-left border border-transparent hover:border-[#0076D2] group">
                 <div class="bg-purple-500/10 w-10 h-10 rounded-full flex items-center justify-center mb-3 group-hover:bg-purple-500 transition-all">
-                    <img src="icons/icone-usuarios-admin.png" alt="Usuários" class="w-5 h-5">
+                    <img src="icons/icone-usuarios-roxo.png" alt="Usuários" class="w-6 group-hover:hidden">
+                    <img src="icons/icone-usuarios-branco.png" alt="Usuários" class="hidden w-6 group-hover:block">
                 </div>
                 <h2 class="font-semibold text-gray-800">Gerenciar Usuários</h2>
                 <p class="text-sm text-gray-500 mt-1">Controle de acesso e perfis</p>
@@ -107,14 +105,13 @@
         </div>
     </section>
 
-    <!-- 📦 Tabelas (Pedidos Recentes + Produtos em Destaque) -->
     <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        <!-- 🧾 Pedidos recentes -->
+        <!-- Pedidos recentes -->
         <div class="bg-white rounded-xl shadow-sm overflow-hidden">
             <div class="p-5 border-b flex justify-between items-center">
                 <span class="font-semibold text-gray-800">Pedidos Recentes</span>
-                <button routerLink="/admin/pedidos" class="text-xs text-[#0076D2] hover:underline">Ver todos</button>
+                <button routerLink="/admin/pedidos" class="cursor-pointer text-xs text-[#0076D2] hover:underline">Ver todos</button>
             </div>
 
             <div class="overflow-x-auto">
@@ -159,11 +156,11 @@
             </div>
         </div>
 
-        <!-- ⭐ Produtos em destaque / Mais Vendidos -->
+        <!-- Produtos em destaque / Mais Vendidos -->
         <div class="bg-white rounded-xl shadow-sm overflow-hidden">
             <div class="p-5 border-b flex justify-between items-center">
                 <span class="font-semibold text-gray-800">Produtos Mais Vendidos</span>
-                <button routerLink="/admin/produtos" class="text-xs text-[#0076D2] hover:underline">Gerenciar</button>
+                <button routerLink="/admin/produtos" class="cursor-pointer text-xs text-[#0076D2] hover:underline">Gerenciar</button>
             </div>
 
             <div class="overflow-x-auto">

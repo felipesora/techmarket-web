@@ -85,8 +85,14 @@ export const routes: Routes = [
         children: [
         {
             path: 'dashboard',
-            component: Dashboard
-        }
+            component: Dashboard,
+            canActivate: [authGuard]
+        },
+        {
+            path: 'meus-dados',
+            component: MeusDados,
+            canActivate: [authGuard]
+        },
         ]
     }
 ];

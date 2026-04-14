@@ -22,13 +22,13 @@
             <div class="absolute right-0 top-full w-64 p-3 bg-white shadow-lg rounded-xl hidden group-hover:block z-50">
                 <ul class="flex flex-col gap-2 text-sm">
                     <li>
-                        <button routerLink="/admin/perfil" class="flex items-center gap-3 w-full px-3 py-2 cursor-pointer rounded-lg hover:bg-gray-100 hover:text-[#0076D2] transition">
+                        <button routerLink="/admin/meus-dados" class="flex items-center gap-3 w-full px-3 py-2 cursor-pointer rounded-lg hover:bg-gray-100 hover:text-[#0076D2] transition">
                             <img src="icons/icone-perfil.png" alt="Perfil" class="w-5">
                             Meus Dados
                         </button>
                     </li>
                     <li>
-                        <button class="flex items-center gap-3 w-full px-3 py-2 cursor-pointer rounded-lg hover:bg-[#fef2f2] hover:text-[#EF4444] transition">
+                        <button (click)="fazerLogout()" class="flex items-center gap-3 w-full px-3 py-2 cursor-pointer rounded-lg hover:bg-[#fef2f2] hover:text-[#EF4444] transition">
                             <img src="icons/icone-logout.png" alt="Sair" class="w-5">
                             Sair do Admin
                         </button>
