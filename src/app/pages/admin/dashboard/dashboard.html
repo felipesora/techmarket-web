@@ -116,33 +116,30 @@
 
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                    <thead class="bg-gray-50 text-left text-gray-600">
+                    <thead class="bg-gray-50 text-gray-500 uppercase text-xs text-left">
                         <tr>
                             <th class="p-4 font-medium">ID</th>
-                            <th class="p-4 font-medium">Cliente</th>
+                            <th class="p-4 font-medium">ID Cliente</th>
                             <th class="p-4 font-medium">Data</th>
                             <th class="p-4 font-medium">Valor</th>
                             <th class="p-4 font-medium">Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="divide-y divide-gray-100">
                         @for (pedido of pedidosRecentes; track $index) {
-                            <tr class="border-t hover:bg-gray-50 transition-all">
-                                <td class="p-4 text-gray-700">#10</td>
-                                <td class="p-4 text-gray-700">Felipe</td>
-                                <td class="p-4 text-gray-500">13/10/2005</td>
-                                <td class="p-4 font-semibold text-gray-800">100</td>
+                            <tr class="hover:bg-gray-50 transition-colors duration-150">
+                                <td class="p-4 font-medium text-gray-700">#{{ pedido.id_pedido }}</td>
+                                <td class="p-4 text-gray-600">{{ pedido.id_usuario }}</td>
+                                <td class="p-4 text-gray-500">{{ pedido.data_criacao | date:'dd/MM/yyyy \'-\' HH:mm' }}</td>
+                                <td class="p-4 font-semibold text-gray-800">{{ pedido.valor_total | currency:'BRL':'symbol':'1.2-2' }}</td>
                                 <td class="p-4">
-                                    <!-- <span class="px-2 py-1 rounded-full text-xs font-medium"
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium"
                                           [ngClass]="{
-                                            'bg-green-100 text-green-700': pedido.status === 'CONCLUIDO',
-                                            'bg-yellow-100 text-yellow-700': pedido.status === 'PENDENTE',
-                                            'bg-red-100 text-red-700': pedido.status === 'CANCELADO'
+                                            'bg-green-100 text-green-700': pedido.status_pedido === 'PAGAMENTO_APROVADO',
+                                            'bg-yellow-100 text-yellow-700': pedido.status_pedido === 'AGUARDANDO_PAGAMENTO',
+                                            'bg-red-100 text-red-700': pedido.status_pedido === 'CANCELADO'
                                           }">
-                                        {{ pedido.status }}
-                                    </span> -->
-                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                                        CONCLUIDO
+                                        {{ formatarStatusPedido(pedido.status_pedido) }}
                                     </span>
                                 </td>
                             </tr>

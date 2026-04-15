@@ -73,4 +73,14 @@ export class ProdutoService {
 
     return this.http.get<Produto>(`${this.API}/${id}`, { headers });
   };
+
+  getQuantidadeProdutos(): Observable<number> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get<number>(`${this.API}/total-produtos-ativos`, { headers });
+  };
 }

@@ -51,4 +51,14 @@ export class UsuarioService {
 
     return this.http.delete<void>(`${this.API}/${id}`, { headers });
   };
+
+  getQuantidadeUsuarios(): Observable<number> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get<number>(`${this.API}/total-usuarios-ativos`, { headers });
+  };
 }
