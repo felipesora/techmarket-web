@@ -1,7 +1,7 @@
 <div class="bg-white rounded-[10px] w-full border border-[#E9ECEF] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#CBD5E1] flex flex-col h-full">
     <div class="border-b border-[#E9ECEF] h-48 flex items-center justify-center">
-        @if (imagemProduto) {
-            <img [src]="imagemProduto" alt="imagem do produto" class="max-h-40 object-contain">
+        @if (produto.imagemId) {
+            <img src="http://localhost:8080/techmarket-product-service/produtos/imagem/{{ produto.imagemId }}" alt="imagem do produto" class="max-h-40 object-contain">
         } @else {
             <div class="w-20 h-20 rounded-full bg-white border-2 border-[#0076D2] flex items-center justify-center">
                 <span class="text-[#0076D2] text-3xl font-bold">?</span>

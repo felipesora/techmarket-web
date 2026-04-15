@@ -1,7 +1,13 @@
 <div class="bg-white px-5 py-4 flex items-center justify-between rounded-[20px] border border-[#f0f2f5] hover:border-[#e0e7ed] hover:translate-y-[-1px] hover:shadow-[0_6px_12px_rgba(0,118,210,0.08)] transition-all">
     <div class="flex items-center gap-3">
-        <div class="rounded-[20px] w-[100px] h-[100px] flex items-center p-1 border border-[#edf2f7]">
-            <img [src]="imagemProduto" alt="imagem do produto">
+        <div class="rounded-[20px] w-[100px] h-[100px] flex items-center justify-center p-1 border border-[#edf2f7]">
+            @if (produto.imagemId) {
+                <img src="http://localhost:8080/techmarket-product-service/produtos/imagem/{{ produto.imagemId }}" alt="imagem do produto" class="max-h-40 object-contain">
+            } @else {
+                <div class="w-15 h-15 rounded-full bg-white border-2 border-[#0076D2] flex items-center justify-center">
+                    <span class="text-[#0076D2] text-3xl font-bold">?</span>
+                </div>
+            }
         </div>
         <div>
             <h2 class="font-bold text-lg">{{ produto.nome }}</h2>

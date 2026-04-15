@@ -14,11 +14,13 @@
             <div class="flex flex-col lg:flex-row gap-8 p-6">
                 <div class="lg:w-1/2">
                     <div class="bg-gray-50 rounded-lg p-4 flex items-center justify-center min-h-[400px]">
-                        <img 
-                            [src]="imagemProduto"
-                            [alt]="produto?.nome"
-                            class="max-w-full max-h-[380px] object-contain"
-                        >
+                        @if (produto?.imagemId) {
+                            <img src="http://localhost:8080/techmarket-product-service/produtos/imagem/{{ produto?.imagemId }}" alt="imagem do produto" class="max-h-40 object-contain">
+                        } @else {
+                            <div class="w-30 h-30 rounded-full bg-white border-2 border-[#0076D2] flex items-center justify-center">
+                                <span class="text-[#0076D2] text-3xl font-bold">?</span>
+                            </div>
+                        }
                     </div>
                 </div>
 
@@ -42,16 +44,6 @@
                     <h1 class="text-2xl lg:text-3xl font-bold text-gray-800 leading-tight">
                         {{ produto?.nome }}
                     </h1>
-                
-                    <!-- Avaliação
-                    <div class="flex items-center gap-3">
-                        <div class="flex items-center gap-1">
-                        <span class="text-yellow-400">★★★★★</span>
-                        <span class="text-sm text-gray-600">4.8</span>
-                        </div>
-                        <span class="text-gray-300">|</span>
-                        <span class="text-sm text-gray-500">150 avaliações</span>
-                    </div> -->
                 
                     <!-- Preço -->
                     <div class="border-t border-b border-gray-100 py-4 my-2">

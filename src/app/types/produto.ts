@@ -21,4 +21,5 @@ export interface Produto {
   estoque: number
   status: string
   dataCriacao: string
+  imagemId: string | null
 }
