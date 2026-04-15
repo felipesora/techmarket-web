@@ -1,5 +1,8 @@
 import { DatePipe, NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { UsuarioService } from '../../../services/usuario/usuario.service';
+import { ProdutoService } from '../../../services/produto/produto.service';
+import { PedidoService } from '../../../services/pedido/pedido.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,13 +10,25 @@ import { Component } from '@angular/core';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard {
+export class Dashboard implements OnInit {
   dataAtual: Date = new Date();
-
-  totalProdutos = 0;
-  pedidosHoje = 0;
-  totalUsuarios = 0;
+  totalProdutos: number = 0;
+  pedidosHoje: number = 0;
+  totalUsuarios: number = 0;
 
   pedidosRecentes = [];
   produtosDestaque = [];
+
+  constructor(
+    private usuarioService: UsuarioService,
+    private produtoService: ProdutoService,
+    private pedidoService: PedidoService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit() {
+    
+  }
+
+
 }
