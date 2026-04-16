@@ -162,7 +162,7 @@
 
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                    <thead class="bg-gray-50 text-left text-gray-600">
+                    <thead class="bg-gray-50 text-gray-500 uppercase text-xs text-left">
                         <tr>
                             <th class="p-4 font-medium">Produto</th>
                             <th class="p-4 font-medium">Preço</th>
@@ -170,28 +170,16 @@
                             <th class="p-4 font-medium">Estoque</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @for (produto of produtosDestaque; track $index) {
+                    <tbody class="divide-y divide-gray-100">
+                        @for (produto of produtosMaisVendidos; track $index) {
                             <tr class="border-t hover:bg-gray-50 transition-all">
                                 <td class="p-4 flex items-center gap-3">
                                     <!-- <img [src]="produto.imagem" class="w-8 h-8 object-contain rounded"> -->
-                                    <img src="images/produtos/celular.png" class="w-8 h-8 object-contain rounded">
-                                    <span class="font-medium text-gray-700">mouse</span>
+                                    <span class="font-medium text-gray-700">{{ produto.nome }}</span>
                                 </td>
-                                <td class="p-4 font-semibold text-gray-800">100</td>
-                                <td class="p-4 text-gray-600">6 un</td>
-                                <td class="p-4">
-                                    <!-- <span [ngClass]="{
-                                        'text-green-600': produto.estoque > 10,
-                                        'text-orange-500': produto.estoque <= 10 && produto.estoque > 0,
-                                        'text-red-500': produto.estoque === 0
-                                    }" class="font-medium">
-                                        {{ produto.estoque }} un
-                                    </span> -->
-                                    <span class="font-medium text-green-600">
-                                        10 un
-                                    </span>
-                                </td>
+                                <td class="p-4 font-semibold text-gray-800">{{ produto.preco | currency:'BRL':'symbol':'1.2-2' }}</td>
+                                <td class="p-4 text-gray-600">{{ produto.quantidadeVendida }} un</td>
+                                <td class="p-4 text-gray-600">{{ produto.estoque }} un</td>
                             </tr>
                         } @empty {
                             <tr>

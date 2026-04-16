@@ -12,7 +12,7 @@ export class ProdutoService {
 
   constructor(private http: HttpClient) {}
 
-  getTodosProdutos(page: number = 0, size: number = 15): Observable<ProdutoPageResponse> {
+  getTodosProdutos(page: number = 0, size: number = 10): Observable<ProdutoPageResponse> {
     const token = localStorage.getItem('tokenUser');
 
     const headers = new HttpHeaders({
@@ -24,6 +24,20 @@ export class ProdutoService {
       .set('size', size);
 
     return this.http.get<ProdutoPageResponse>(this.API, { headers, params });
+  };
+
+  getProdutosMaisVendidos(page: number = 0, size: number = 10): Observable<ProdutoPageResponse> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    const params = new HttpParams()
+      .set('page', page)
+      .set('size', size);
+
+    return this.http.get<ProdutoPageResponse>(`${this.API}/mais-vendidos`, { headers, params });
   };
 
   getProdutosPorIds(ids: string[]): Observable<Produto[]> {

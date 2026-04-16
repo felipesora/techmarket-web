@@ -15,7 +15,7 @@
 
         <div class="pt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             @if (produtos.length !== 0) {
-                @for (produto of produtos; track $index) {
+                @for (produto of produtosMaisVendidos; track $index) {
                     <app-card-produto [produto]="produto"></app-card-produto>
                 }
             } @else {

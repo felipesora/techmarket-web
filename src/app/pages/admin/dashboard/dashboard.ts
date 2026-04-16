@@ -4,6 +4,7 @@ import { UsuarioService } from '../../../services/usuario/usuario.service';
 import { ProdutoService } from '../../../services/produto/produto.service';
 import { PedidoService } from '../../../services/pedido/pedido.service';
 import { PedidoResponse } from '../../../types/pedido';
+import { Produto } from '../../../types/produto';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,7 @@ export class Dashboard implements OnInit {
   totalUsuarios: number = 0;
 
   pedidosRecentes: PedidoResponse[] = [];
-  produtosDestaque = [];
+  produtosMaisVendidos: Produto[] = [];
 
   constructor(
     private usuarioService: UsuarioService,
@@ -32,6 +33,7 @@ export class Dashboard implements OnInit {
     this.pegarQuantidadePedidosHoje();
     this.pegarQuantidadeUsuarios();
     this.pegarPedidosRecentes();
+    this.pegarProdutosMaisVendidos();
   }
 
   pegarQuantidadeProdutos() {
@@ -84,6 +86,19 @@ export class Dashboard implements OnInit {
         console.error('Erro ao carregar pedidos recentes: ', error);
       }
     })
+  };
+
+  pegarProdutosMaisVendidos() {
+    this.produtoService.getProdutosMaisVendidos().subscribe({
+      next: (response) => {
+        this.produtosMaisVendidos = response.content;
+        this.cdr.detectChanges();
+        console.log('Produtos mais vendidos: ', this.produtosMaisVendidos);
+      },
+      error: (error) => {
+        console.error('Erro ao carregar produtos mais vendidos:', error);
+      }
+    });
   };
   
   formatarStatusPedido(status: string) {

@@ -13,6 +13,7 @@ import { Produto } from '../../../types/produto';
 })
 export class Home implements OnInit {
 
+  produtosMaisVendidos: Produto[] = [];
   produtos: Produto[] = [];
 
   constructor(
@@ -26,6 +27,17 @@ export class Home implements OnInit {
   }
 
   listarProdutos() {
+    this.produtoService.getProdutosMaisVendidos().subscribe({
+      next: (response) => {
+        this.produtosMaisVendidos = response.content;
+        this.cdr.detectChanges();
+        console.log('Produtos mais vendidos: ', this.produtosMaisVendidos);
+      },
+      error: (error) => {
+        console.error('Erro ao carregar produtos mais vendidos:', error);
+      }
+    });
+
     this.produtoService.getTodosProdutos().subscribe({
       next: (response) => {
         this.produtos = response.content;
@@ -35,6 +47,6 @@ export class Home implements OnInit {
       error: (error) => {
         console.error('Erro ao carregar produtos:', error);
       }
-    })
+    });
   }
 }

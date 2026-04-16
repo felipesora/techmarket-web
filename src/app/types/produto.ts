@@ -22,4 +22,5 @@ export interface Produto {
   status: string
   dataCriacao: string
   imagemId: string | null
+  quantidadeVendida: number
 }
