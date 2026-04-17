@@ -47,7 +47,7 @@ export class ProdutoService {
       Authorization: `Bearer ${token}`
     });
 
-    return this.http.post<Produto[]>(`${this.API}/favoritos`, ids, { headers });
+    return this.http.post<Produto[]>(`${this.API}/buscar-por-ids`, ids, { headers });
   };
 
   getProdutosPorCategoria(categoria: string, ordenarPor: string): Observable<Produto[]> {
