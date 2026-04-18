@@ -58,7 +58,7 @@ export class ConfirmarPedido implements OnInit {
 
   get precoTotalCarrinho(): number {
     return this.listaProdutosDoCarrinho.reduce((total, item) => {
-      return total + (item.produto.preco * item.quantidade);
+      return total + (item.produto.precoFinal * item.quantidade);
     }, 0);
   }
 

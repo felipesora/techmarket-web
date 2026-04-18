@@ -90,7 +90,7 @@
                     @for (item of pedido.itens; track $index) {
                         <li class="flex items-center justify-between">
                             <p class="text-sm text-black font-bold">{{ item.produto.nome }}</p>
-                            <p class="text-sm text-[#475569]">{{ item.quantidade }}x {{ item.produto.preco_unitario | currency:'BRL':'symbol':'1.2-2' }}</p>
+                            <p class="text-sm text-[#475569]">{{ item.quantidade }}x {{ item.produto.preco_produto | currency:'BRL':'symbol':'1.2-2' }}</p>
                         </li>
                     }
                 </ul>

@@ -11,7 +11,7 @@
         </div>
         <div>
             <h2 class="font-bold text-lg">{{ produto.nome }}</h2>
-            <p class="text-[#0076D2] font-bold text-lg">{{ produto.preco | currency:'BRL':'symbol':'1.2-2' }}</p>
+            <p class="text-[#0076D2] font-bold text-lg">{{ produto.precoFinal | currency:'BRL':'symbol':'1.2-2' }}</p>
         </div>
     </div>
 
@@ -39,7 +39,7 @@
             </button>
         </div>
 
-        <h2 class="font-bold text-lg">{{ produto.preco * quantidade | currency:'BRL':'symbol':'1.2-2' }}</h2>
+        <h2 class="font-bold text-lg">{{ produto.precoFinal * quantidade | currency:'BRL':'symbol':'1.2-2' }}</h2>
 
         <button (click)="remover.emit(produto.id)" class="group cursor-pointer rounded-full p-1 flex items-center justify-center hover:bg-[#fef2f2] transition-all">
             <img src="icons/icone-remover-cinza.png" alt="ícone de remover" class="w-8 group-hover:hidden">

@@ -62,12 +62,12 @@
                         </span>
                         } -->
                         <span class="text-3xl lg:text-4xl font-bold text-[#0076D2]">
-                            {{ produto?.preco | currency:'BRL':'symbol':'1.2-2' }}
+                            {{ produto?.precoFinal | currency:'BRL':'symbol':'1.2-2' }}
                         </span>
                         
                         <!-- Opções de parcelamento -->
                         <p class="text-sm text-gray-500 mt-2">
-                        em até 12x de {{ ((produto?.preco ?? 0) / 12) | currency:'BRL':'symbol':'1.2-2' }} sem juros
+                        em até 12x de {{ ((produto?.precoFinal ?? 0) / 12) | currency:'BRL':'symbol':'1.2-2' }} sem juros
                         </p>
                     </div>
                 

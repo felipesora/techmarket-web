@@ -177,7 +177,7 @@
                                     <!-- <img [src]="produto.imagem" class="w-8 h-8 object-contain rounded"> -->
                                     <span class="font-medium text-gray-700">{{ produto.nome }}</span>
                                 </td>
-                                <td class="p-4 font-semibold text-gray-800">{{ produto.preco | currency:'BRL':'symbol':'1.2-2' }}</td>
+                                <td class="p-4 font-semibold text-gray-800">{{ produto.precoFinal | currency:'BRL':'symbol':'1.2-2' }}</td>
                                 <td class="p-4 text-gray-600">{{ produto.quantidadeVendida }} un</td>
                                 <td class="p-4 text-gray-600">{{ produto.estoque }} un</td>
                             </tr>
