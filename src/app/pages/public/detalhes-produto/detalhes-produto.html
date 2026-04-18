@@ -47,23 +47,20 @@
                 
                     <!-- Preço -->
                     <div class="border-t border-b border-gray-100 py-4 my-2">
-                        <!-- @if (produto?.precoPromocional) {
-                        <div class="flex items-baseline gap-3">
-                            <span class="text-3xl lg:text-4xl font-bold text-[#0076D2]">
-                            {{ produto.precoPromocional | currency:'BRL' }}
-                            </span>
-                            <span class="text-lg text-gray-400 line-through">
-                            {{ produto.preco | currency:'BRL' }}
-                            </span>
-                        </div>
+                        @if (produto?.precoPromocional) {
+                            <div class="flex items-baseline gap-3">
+                                <span class="text-3xl lg:text-4xl font-bold text-[#0076D2]">
+                                {{ produto?.precoPromocional | currency:'BRL':'symbol':'1.2-2' }}
+                                </span>
+                                <span class="text-lg text-gray-400 line-through">
+                                {{ produto?.precoUnitario | currency:'BRL':'symbol':'1.2-2' }}
+                                </span>
+                            </div>
                         } @else {
-                        <span class="text-3xl lg:text-4xl font-bold text-[#0076D2]">
-                            {{ produto?.preco | currency:'BRL' }}
-                        </span>
-                        } -->
-                        <span class="text-3xl lg:text-4xl font-bold text-[#0076D2]">
-                            {{ produto?.precoFinal | currency:'BRL':'symbol':'1.2-2' }}
-                        </span>
+                            <span class="text-3xl lg:text-4xl font-bold text-[#0076D2]">
+                                {{ produto?.precoFinal | currency:'BRL':'symbol':'1.2-2' }}
+                            </span>
+                        }
                         
                         <!-- Opções de parcelamento -->
                         <p class="text-sm text-gray-500 mt-2">

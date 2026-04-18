@@ -10,8 +10,25 @@
             }
         </div>
         <div>
-            <h2 class="font-bold text-lg">{{ produto.nome }}</h2>
-            <p class="text-[#0076D2] font-bold text-lg">{{ produto.precoFinal | currency:'BRL':'symbol':'1.2-2' }}</p>
+            <h2 class="font-bold text-lg">
+                {{ produto.nome }}
+            </h2>
+
+            @if (produto.precoPromocional) {
+                <div class="flex items-center gap-3">
+                    <p class="text-[#0076D2] font-bold text-lg">
+                        {{ produto.precoFinal | currency:'BRL':'symbol':'1.2-2' }}
+                    </p>
+                    <span class="text-md text-gray-400 line-through">
+                        {{ produto.precoUnitario | currency:'BRL':'symbol':'1.2-2' }}
+                    </span>
+                </div>
+            } @else {
+                <p class="text-[#0076D2] font-bold text-lg">
+                    {{ produto.precoFinal | currency:'BRL':'symbol':'1.2-2' }}
+                </p>
+            }
+            
         </div>
     </div>
 
