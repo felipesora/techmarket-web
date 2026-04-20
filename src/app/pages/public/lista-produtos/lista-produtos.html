@@ -17,7 +17,18 @@
       <div class="flex flex-col gap-3">
         <div class="flex items-center gap-2 text-gray-600">
             <span class="font-medium">Categoria:</span>
-            <span class="text-[#0076D2] font-semibold">{{ categoria || 'Todas' }}</span>
+            @if (categoria) {
+              <span class="text-[#0076D2] font-semibold">{{ categoria }}</span>
+
+            } @else if (tipo === "destaque") {
+              <span class="text-[#0076D2] font-semibold">Produtos em Destaque</span>
+
+            } @else if (tipo === "promocao") {
+              <span class="text-[#0076D2] font-semibold">Produtos em Promoção</span>
+
+            } @else {
+              <span class="text-[#0076D2] font-semibold">Todas</span>
+            }
         </div>
         
         <div class="flex items-center justify-between flex-wrap gap-3">

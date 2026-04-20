@@ -15,6 +15,7 @@ export class ListaProdutos implements OnInit {
   listaProdutos: Produto[] = [];
   categoria: string | null = null;
   busca: string | null = null;
+  tipo: string | null = null;
   ordenarPor: string = 'preco_asc';
 
   constructor(private route: ActivatedRoute, private produtoService: ProdutoService, private cdr: ChangeDetectorRef) {}
@@ -22,6 +23,41 @@ export class ListaProdutos implements OnInit {
   ngOnInit() {
     this.pegarAtributosDoParam();
   }
+
+  pegarAtributosDoParam() {
+    this.route.queryParamMap.subscribe(params => {
+      const categoriaParam = params.get('categoria');
+      const buscaParam = params.get('busca');
+      const tipoParam = params.get('tipo');
+
+      if (categoriaParam) {
+        this.categoria = categoriaParam ? categoriaParam.toUpperCase() : null;
+        this.listarProdutosPelaCategoria(this.categoria);
+
+      } else if (buscaParam) {
+        this.busca = buscaParam;
+        this.buscarProdutos(buscaParam);
+
+      } else if (tipoParam) {
+        switch (tipoParam) {
+          case 'destaque':
+            this.tipo = "destaque";
+            this.buscarProdutosMaisVendidos();
+            break;
+
+          case 'promocao':
+            this.tipo = "promocao";
+            this.buscarProdutosEmPromocao();
+            break;
+
+          default:
+            this.buscarTodosProdutos();
+            break;
+        }
+      }
+
+    });
+  };
 
   listarProdutosPelaCategoria(categoria: string | null) {
     if (categoria == null) {
@@ -39,7 +75,7 @@ export class ListaProdutos implements OnInit {
         console.error('Erro ao carregar produtos:', error);
       }
     })
-  }
+  };
 
   buscarProdutos(busca: string | null) {
     if (busca == null) {
@@ -57,25 +93,46 @@ export class ListaProdutos implements OnInit {
         console.error('Erro ao carregar produtos:', error);
       }
     })
-  }
+  };
 
-  pegarAtributosDoParam() {
-    this.route.queryParamMap.subscribe(params => {
-      const categoriaParam = params.get('categoria');
-      const buscaParam = params.get('busca');
-
-      if (categoriaParam) {
-        this.categoria = categoriaParam ? categoriaParam.toUpperCase() : null;
-        this.listarProdutosPelaCategoria(this.categoria);
+  buscarProdutosMaisVendidos() {
+    this.produtoService.getProdutosMaisVendidos(0, 30).subscribe({
+      next: (response) => {
+        this.listaProdutos = response.content;
+        this.cdr.detectChanges();
+        console.log('Produtos mais vendidos: ', this.listaProdutos);
+      },
+      error: (error) => {
+        console.error('Erro ao carregar produtos mais vendidos:', error);
       }
-
-      else if (buscaParam) {
-        this.busca = buscaParam;
-        this.buscarProdutos(buscaParam);
-      }
-
     });
-  }
+  };
+
+  buscarProdutosEmPromocao() {
+    this.produtoService.getProdutosEmPromocao(0, 30).subscribe({
+      next: (response) => {
+        this.listaProdutos = response.content;
+        this.cdr.detectChanges();
+        console.log('Produtos em promoção: ', this.listaProdutos);
+      },
+      error: (error) => {
+        console.error('Erro ao carregar produtos em promoção:', error);
+      }
+    });
+  };
+
+  buscarTodosProdutos() {
+    this.produtoService.getTodosProdutos(0, 30).subscribe({
+      next: (response) => {
+        this.listaProdutos = response.content;
+        this.cdr.detectChanges();
+        console.log('Produtos mais vendidos: ', this.listaProdutos);
+      },
+      error: (error) => {
+        console.error('Erro ao carregar produtos mais vendidos:', error);
+      }
+    });
+  };
 
   alterarOrdenacao(event: Event) {
     const select = event.target as HTMLSelectElement;
@@ -91,5 +148,5 @@ export class ListaProdutos implements OnInit {
     else if (buscaParam) {
       this.buscarProdutos(buscaParam);
     }
-  }
+  };
 }

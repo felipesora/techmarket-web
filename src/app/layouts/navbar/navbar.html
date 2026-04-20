@@ -1,5 +1,19 @@
 <nav class="bg-white flex items-center justify-between p-7 shadow-md">
-    <ul>
+    <ul class="flex items-center gap-7">
+        <li>
+            <button [routerLink]="['/produtos']" [queryParams]="{ tipo: 'promocao' }" class="text-sm cursor-pointer flex items-center gap-1 hover:text-[#0076D2] transition-all duration-300">
+                <img src="icons/icone-promocao.png" alt="ícone de promoção" class="w-6">
+                Promoções
+            </button>
+        </li>
+
+        <li>
+            <button [routerLink]="['/produtos']" [queryParams]="{ tipo: 'destaque' }" class="text-sm cursor-pointer flex items-center gap-1 hover:text-[#0076D2] transition-all duration-300">
+                <img src="icons/icone-destaque.png" alt="ícone de promoção" class="w-6">
+                Destaque
+            </button>
+        </li>
+        
         <li class="relative group">
             <button class="group text-sm cursor-pointer flex items-center gap-2 hover:text-[#0076D2] transition-all duration-300">
                 Categorias

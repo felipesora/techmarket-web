@@ -3,11 +3,12 @@ import { CardProduto } from '../../../components/card-produto/card-produto';
 import { ProdutoService } from '../../../services/produto/produto.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Produto } from '../../../types/produto';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CardProduto],
+  imports: [CardProduto, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -27,7 +28,7 @@ export class Home implements OnInit {
   }
 
   listarProdutos() {
-    this.produtoService.getProdutosMaisVendidos().subscribe({
+    this.produtoService.getProdutosMaisVendidos(0, 5).subscribe({
       next: (response) => {
         this.produtosMaisVendidos = response.content;
         this.cdr.detectChanges();
@@ -38,11 +39,11 @@ export class Home implements OnInit {
       }
     });
 
-    this.produtoService.getTodosProdutos().subscribe({
+    this.produtoService.getProdutosEmPromocao(0, 5).subscribe({
       next: (response) => {
         this.produtos = response.content;
         this.cdr.detectChanges();
-        console.log('Produtos cadastrados: ', this.produtos);
+        console.log('Produtos em promoção: ', this.produtos);
       },
       error: (error) => {
         console.error('Erro ao carregar produtos:', error);

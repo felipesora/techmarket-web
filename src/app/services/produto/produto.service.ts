@@ -40,6 +40,20 @@ export class ProdutoService {
     return this.http.get<ProdutoPageResponse>(`${this.API}/mais-vendidos`, { headers, params });
   };
 
+  getProdutosEmPromocao(page: number = 0, size: number = 10): Observable<ProdutoPageResponse> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    const params = new HttpParams()
+      .set('page', page)
+      .set('size', size);
+
+    return this.http.get<ProdutoPageResponse>(`${this.API}/promocoes`, { headers, params });
+  };
+
   getProdutosPorIds(ids: string[]): Observable<Produto[]> {
     const token = localStorage.getItem('tokenUser');
 
