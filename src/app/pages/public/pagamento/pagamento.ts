@@ -4,10 +4,11 @@ import { PedidoResponse } from '../../../types/pedido';
 import { PedidoService } from '../../../services/pedido/pedido.service';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { PagamentoService } from '../../../services/pagamento/pagamento.service';
+import { CarregamentoComponent } from "../../../components/carregamento-component/carregamento-component";
 
 @Component({
   selector: 'app-pagamento',
-  imports: [CurrencyPipe, DatePipe],
+  imports: [CurrencyPipe, DatePipe, CarregamentoComponent],
   templateUrl: './pagamento.html',
   styleUrl: './pagamento.css',
 })
@@ -16,6 +17,7 @@ export class Pagamento implements OnInit {
   idPedido: number | null = null;
   pedido: PedidoResponse | null = null;
   modalPagamentoSucesso = false;
+  carregando: boolean = false;
 
   constructor(
     private pagamentoService: PagamentoService,
@@ -40,13 +42,18 @@ export class Pagamento implements OnInit {
       return;
     }
 
+    this.carregando = true;
+
     this.pedidoService.getPedidoPorId(idPedido).subscribe({
       next: (response) => {
         this.pedido = response;
+        this.carregando = false;
         this.cdr.detectChanges();
         console.log('Pedido: ', this.pedido);
       },
       error: (error) => {
+        this.carregando = false;
+        this.cdr.detectChanges();
         console.error('Erro ao carregar detalhes do pedido:', error);
       }
     })

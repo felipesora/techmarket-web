@@ -5,10 +5,11 @@ import { Produto } from '../../../types/produto';
 import { CurrencyPipe, NgClass } from '@angular/common';
 import { FavoritosService } from '../../../services/favoritos/favoritos.service';
 import { CarrinhoService } from '../../../services/carrinho/carrinho.service';
+import { CarregamentoComponent } from "../../../components/carregamento-component/carregamento-component";
 
 @Component({
   selector: 'app-detalhes-produto',
-  imports: [CurrencyPipe, RouterLink, NgClass],
+  imports: [CurrencyPipe, RouterLink, NgClass, CarregamentoComponent],
   templateUrl: './detalhes-produto.html',
   styleUrl: './detalhes-produto.css',
 })
@@ -17,6 +18,7 @@ export class DetalhesProduto implements OnInit {
   idProduto: string | null = null;
   produto: Produto | null = null;
   adicionadoNoCarrinho: boolean = false;
+  carregando: boolean = false;
 
   constructor(
     private produtoService: ProdutoService, 
@@ -41,13 +43,18 @@ export class DetalhesProduto implements OnInit {
       return;
     }
 
+    this.carregando = true;
+
     this.produtoService.getProdutoPorId(idProduto).subscribe({
       next: (response) => {
         this.produto = response;
+        this.carregando = false;
         this.cdr.detectChanges();
         console.log('Produto: ', this.produto);
       },
       error: (error) => {
+        this.carregando = false;
+        this.cdr.detectChanges();
         console.error('Erro ao carregar detalhes do produto:', error);
       }
     })

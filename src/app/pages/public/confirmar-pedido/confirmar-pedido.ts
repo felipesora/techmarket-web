@@ -20,6 +20,7 @@ export class ConfirmarPedido implements OnInit {
   listaProdutosDoCarrinho: ProdutoCarrinho[] = [];
   formaPagamento: string = '';
   mostrarModalPagamento = false;
+  carregando: boolean = false;
 
   constructor(private pedidoService: PedidoService, private carrinhoService: CarrinhoService, private produtoService: ProdutoService, private router: Router, private cdr: ChangeDetectorRef) {}
 
@@ -28,6 +29,7 @@ export class ConfirmarPedido implements OnInit {
   }
 
   pegarItensDoCarrinho() {
+    this.carregando = true;
     this.listaCarrinho = this.carrinhoService.listarCarrinho();
     console.log(this.listaCarrinho);
 
@@ -47,10 +49,14 @@ export class ConfirmarPedido implements OnInit {
           };
 
         });
+
+        this.carregando = false;
         this.cdr.detectChanges();
         console.log('Produtos do carrinho: ', this.listaProdutosDoCarrinho);
       },
       error: (error) => {
+        this.carregando = false;
+        this.cdr.detectChanges();
         console.error('Erro ao carregar produtos do carrinho:', error);
       }
     })

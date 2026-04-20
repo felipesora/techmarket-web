@@ -5,10 +5,11 @@ import { CardProdutoCarrinho } from "../../../components/card-produto-carrinho/c
 import { CarrinhoService } from '../../../services/carrinho/carrinho.service';
 import { CarrinhoItem, ProdutoCarrinho } from '../../../types/carrinho';
 import { ProdutoService } from '../../../services/produto/produto.service';
+import { CarregamentoComponent } from "../../../components/carregamento-component/carregamento-component";
 
 @Component({
   selector: 'app-carrinho',
-  imports: [CurrencyPipe, RouterLink, CardProdutoCarrinho],
+  imports: [CurrencyPipe, RouterLink, CardProdutoCarrinho, CarregamentoComponent],
   templateUrl: './carrinho.html',
   styleUrl: './carrinho.css',
 })
@@ -16,6 +17,7 @@ export class Carrinho implements OnInit {
   
   listaCarrinho: CarrinhoItem[] = [];
   listaProdutosDoCarrinho: ProdutoCarrinho[] = [];
+  carregando: boolean = false;
 
   modalCarrinhoVazio: boolean = false;
 
@@ -26,6 +28,7 @@ export class Carrinho implements OnInit {
   }
 
   pegarItensDoCarrinho() {
+    this.carregando = true;
     this.listaCarrinho = this.carrinhoService.listarCarrinho();
     console.log(this.listaCarrinho);
 
@@ -45,10 +48,14 @@ export class Carrinho implements OnInit {
           };
 
         });
+
+        this.carregando = false;
         this.cdr.detectChanges();
         console.log('Produtos do carrinho: ', this.listaProdutosDoCarrinho);
       },
       error: (error) => {
+        this.carregando = false;
+        this.cdr.detectChanges();
         console.error('Erro ao carregar produtos do carrinho:', error);
       }
     })

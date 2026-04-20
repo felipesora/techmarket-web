@@ -1,3 +1,7 @@
+@if (carregando) {
+    <app-carregamento-component />
+}
+
 <main class="bg-[#F5F7FC] p-7 min-h-screen">
     <div class="mb-6">
         <nav class="flex items-center gap-2 text-sm text-gray-500">
@@ -14,13 +18,18 @@
         </div>
 
         <div class="py-6 flex flex-col gap-8">
-            @for (pedido of pedidosUsuario; track $index) {
-                <app-card-pedido 
-                    [pedido]="pedido"
-                    (cancelarPedidoClick)="abrirModalConfirmarCancelamento($event)">
+            @if (pedidosUsuario.length !== 0) {
+                @for (pedido of pedidosUsuario; track $index) {
+                    <app-card-pedido 
+                        [pedido]="pedido"
+                        (cancelarPedidoClick)="abrirModalConfirmarCancelamento($event)">
 
-                </app-card-pedido>
+                    </app-card-pedido>
+                }
+            } @else {
+                <p class="text-center text-gray-500 text-sm py-10">Nenhum pedido encontrado.</p>
             }
+            
         </div>
     </div>
 </main>

@@ -1,3 +1,7 @@
+@if (carregando) {
+    <app-carregamento-component />
+}
+
 <main class="bg-[#F5F7FC] p-7 flex flex-col gap-14 min-h-screen">
   <section>
 
@@ -38,19 +42,21 @@
                 <span class="text-gray-500">{{ listaProdutos.length === 1 ? 'produto' : 'produtos' }}</span>
             </div>
             
-            @if (listaProdutos.length > 1) {
-              <!-- Ordenação -->
-              <div class="flex items-center gap-3">
-                  <label class="text-sm text-gray-600">Ordenar por:</label>
-                  <select
-                  (change)="alterarOrdenacao($event)"
-                      class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#0076D2]">
-                      <option value="preco_asc">Menor preço</option>
-                      <option value="preco_desc">Maior preço</option>
-                  </select>
-              </div>
+            @if (categoria || busca) {
+              @if (listaProdutos.length > 1) {
+                <!-- Ordenação -->
+                <div class="flex items-center gap-3">
+                    <label class="text-sm text-gray-600">Ordenar por:</label>
+                    <select
+                    (change)="alterarOrdenacao($event)"
+                        class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#0076D2]">
+                        <option value="preco_asc">Menor preço</option>
+                        <option value="preco_desc">Maior preço</option>
+                    </select>
+                </div>
+              }
             }
-            
+          
         </div>
       </div>
     </div>

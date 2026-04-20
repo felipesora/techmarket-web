@@ -5,14 +5,17 @@ import { AtualizarSenhaDTO, UsuarioResponse, UsuarioUpdateDTO } from '../../../t
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { confirmarSenhaValidator, cpfValidator, emailValidator, nomeValidator, novaSenhaValidator, senhaAtualValidator, senhasIguaisValidator } from './validatorsDados';
 import { AuthService } from '../../../services/auth/auth.service';
+import { CarregamentoComponent } from "../../../components/carregamento-component/carregamento-component";
 
 @Component({
   selector: 'app-meus-dados',
-  imports: [NgxMaskDirective, ReactiveFormsModule],
+  imports: [NgxMaskDirective, ReactiveFormsModule, CarregamentoComponent],
   templateUrl: './meus-dados.html',
   styleUrl: './meus-dados.css',
 })
 export class MeusDados implements OnInit {
+
+  carregando: boolean = false;
 
   dadosUsuario: UsuarioResponse | null = null;
   mostrarSenhaAtual = false;
@@ -63,6 +66,7 @@ export class MeusDados implements OnInit {
   }
 
   pegarDadosDoUsuario() {
+    this.carregando = true;
     const idUsuario = Number(localStorage.getItem('idUsuarioLogado'));
 
     this.usuarioService.getUsuarioPorId(idUsuario).subscribe({
@@ -75,11 +79,14 @@ export class MeusDados implements OnInit {
           cpf: response.cpf
         });
 
+        this.carregando = false;
         this.cdr.detectChanges();
 
         console.log('Dados do usuários carregados: ', this.dadosUsuario);
       },
       error: (error) => {
+        this.carregando = false;
+        this.cdr.detectChanges();
         console.error('Erro ao carregar os dados do usuário:', error);
       }
     })

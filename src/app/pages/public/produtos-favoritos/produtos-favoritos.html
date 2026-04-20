@@ -1,3 +1,7 @@
+@if (carregando) {
+    <app-carregamento-component />
+}
+
 <main class="bg-[#F5F7FC] p-7 flex flex-col gap-14 min-h-screen">
     <section>
         <div class="flex justify-between items-center">
@@ -13,7 +17,7 @@
                     <app-card-produto [produto]="produto"></app-card-produto>
                 }
             } @else {
-                <p class="w-full text-center text-gray-500 text-sm py-10">Nenhum produto favoritado.</p>
+                <p class="col-span-full text-center text-gray-500 text-sm py-10">Nenhum produto favoritado.</p>
             }
         </div>
     </section>

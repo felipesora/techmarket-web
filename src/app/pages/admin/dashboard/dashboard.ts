@@ -5,14 +5,18 @@ import { ProdutoService } from '../../../services/produto/produto.service';
 import { PedidoService } from '../../../services/pedido/pedido.service';
 import { PedidoResponse } from '../../../types/pedido';
 import { Produto } from '../../../types/produto';
+import { CarregamentoComponent } from "../../../components/carregamento-component/carregamento-component";
+import { finalize, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [DatePipe, CurrencyPipe, NgClass],
+  imports: [DatePipe, CurrencyPipe, NgClass, CarregamentoComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard implements OnInit {
+  carregando: boolean = false;
+
   dataAtual: Date = new Date();
   totalProdutos: number = 0;
   pedidosHoje: number = 0;
@@ -29,11 +33,35 @@ export class Dashboard implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.pegarQuantidadeProdutos();
-    this.pegarQuantidadePedidosHoje();
-    this.pegarQuantidadeUsuarios();
-    this.pegarPedidosRecentes();
-    this.pegarProdutosMaisVendidos();
+    this.carregando = true;
+
+    forkJoin({
+      totalProdutos: this.produtoService.getQuantidadeProdutos(),
+      pedidosHoje: this.pedidoService.getQuantidadePedidosHoje(),
+      totalUsuarios: this.usuarioService.getQuantidadeUsuarios(),
+      pedidosRecentes: this.pedidoService.getTodosPedidos(),
+      maisVendidos: this.produtoService.getProdutosMaisVendidos()
+    })
+    .pipe(
+      finalize(() => {
+        this.carregando = false;
+        this.cdr.detectChanges();
+      })
+    )
+    .subscribe({
+      next: (res) => {
+        this.totalProdutos = res.totalProdutos;
+        this.pedidosHoje = res.pedidosHoje;
+        this.totalUsuarios = res.totalUsuarios;
+        this.pedidosRecentes = res.pedidosRecentes.content;
+        this.produtosMaisVendidos = res.maisVendidos.content;
+
+        console.log('Dashboard carregado');
+      },
+      error: (err) => {
+        console.error('Erro ao carregar dashboard:', err);
+      }
+    });
   }
 
   pegarQuantidadeProdutos() {

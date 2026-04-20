@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AcessoNegado } from './acesso-negado';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AcessoNegado', () => {
   let component: AcessoNegado;
@@ -8,7 +9,7 @@ describe('AcessoNegado', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AcessoNegado],
+      imports: [AcessoNegado, RouterTestingModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AcessoNegado);

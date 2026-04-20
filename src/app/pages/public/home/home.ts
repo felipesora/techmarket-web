@@ -4,23 +4,25 @@ import { ProdutoService } from '../../../services/produto/produto.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Produto } from '../../../types/produto';
 import { RouterLink } from '@angular/router';
+import { CarregamentoComponent } from "../../../components/carregamento-component/carregamento-component";
+import { finalize, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CardProduto, RouterLink],
+  imports: [CardProduto, RouterLink, CarregamentoComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
 
   produtosMaisVendidos: Produto[] = [];
-  produtos: Produto[] = [];
+  produtosEmPromocao: Produto[] = [];
+  carregando: boolean = false;
 
   constructor(
     private produtoService: ProdutoService,
     private cdr: ChangeDetectorRef,
-    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -28,26 +30,30 @@ export class Home implements OnInit {
   }
 
   listarProdutos() {
-    this.produtoService.getProdutosMaisVendidos(0, 5).subscribe({
-      next: (response) => {
-        this.produtosMaisVendidos = response.content;
-        this.cdr.detectChanges();
-        console.log('Produtos mais vendidos: ', this.produtosMaisVendidos);
-      },
-      error: (error) => {
-        console.error('Erro ao carregar produtos mais vendidos:', error);
-      }
-    });
+    this.carregando = true;
 
-    this.produtoService.getProdutosEmPromocao(0, 5).subscribe({
-      next: (response) => {
-        this.produtos = response.content;
+    forkJoin({
+      maisVendidos: this.produtoService.getProdutosMaisVendidos(0, 5),
+      promocoes: this.produtoService.getProdutosEmPromocao(0, 5)
+    })
+    .pipe(
+      finalize(() => {
+        this.carregando = false;
         this.cdr.detectChanges();
-        console.log('Produtos em promoção: ', this.produtos);
+      })
+    )
+    .subscribe({
+      next: (response) => {
+        this.produtosMaisVendidos = response.maisVendidos.content;
+        this.produtosEmPromocao = response.promocoes.content;
+        this.cdr.detectChanges();
+
+        console.log('Mais vendidos:', this.produtosMaisVendidos);
+        console.log('Promoções:', this.produtosEmPromocao);
       },
       error: (error) => {
         console.error('Erro ao carregar produtos:', error);
       }
-    });
+    })
   }
 }

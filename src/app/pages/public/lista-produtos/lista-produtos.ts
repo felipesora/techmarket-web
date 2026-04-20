@@ -3,10 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Produto } from '../../../types/produto';
 import { ProdutoService } from '../../../services/produto/produto.service';
 import { CardProduto } from '../../../components/card-produto/card-produto';
+import { CarregamentoComponent } from "../../../components/carregamento-component/carregamento-component";
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-lista-produtos',
-  imports: [CardProduto],
+  imports: [CardProduto, CarregamentoComponent],
   templateUrl: './lista-produtos.html',
   styleUrl: './lista-produtos.css',
 })
@@ -17,6 +19,7 @@ export class ListaProdutos implements OnInit {
   busca: string | null = null;
   tipo: string | null = null;
   ordenarPor: string = 'preco_asc';
+  carregando: boolean = false;
 
   constructor(private route: ActivatedRoute, private produtoService: ProdutoService, private cdr: ChangeDetectorRef) {}
 
@@ -26,6 +29,7 @@ export class ListaProdutos implements OnInit {
 
   pegarAtributosDoParam() {
     this.route.queryParamMap.subscribe(params => {
+      this.carregando = true;
       const categoriaParam = params.get('categoria');
       const buscaParam = params.get('busca');
       const tipoParam = params.get('tipo');
@@ -36,22 +40,22 @@ export class ListaProdutos implements OnInit {
 
       } else if (buscaParam) {
         this.busca = buscaParam;
-        this.buscarProdutos(buscaParam);
+        this.listarProdutosPorBusca(buscaParam);
 
       } else if (tipoParam) {
         switch (tipoParam) {
           case 'destaque':
             this.tipo = "destaque";
-            this.buscarProdutosMaisVendidos();
+            this.listarProdutosMaisVendidos();
             break;
 
           case 'promocao':
             this.tipo = "promocao";
-            this.buscarProdutosEmPromocao();
+            this.listarProdutosEmPromocao();
             break;
 
           default:
-            this.buscarTodosProdutos();
+            this.listarTodosProdutos();
             break;
         }
       }
@@ -65,38 +69,59 @@ export class ListaProdutos implements OnInit {
       return;
     }
 
-    this.produtoService.getProdutosPorCategoria(categoria, this.ordenarPor).subscribe({
-      next: (response) => {
-        this.listaProdutos = response;
-        this.cdr.detectChanges();
-        console.log('Produtos encontrados: ', this.listaProdutos);
-      },
-      error: (error) => {
-        console.error('Erro ao carregar produtos:', error);
-      }
-    })
+    this.produtoService.getProdutosPorCategoria(categoria, this.ordenarPor)
+      .pipe(
+        finalize(() => {
+          this.carregando = false;
+          this.cdr.detectChanges();
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          this.listaProdutos = response;
+          this.cdr.detectChanges();
+          console.log('Produtos encontrados: ', this.listaProdutos);
+        },
+        error: (error) => {
+          console.error('Erro ao carregar produtos:', error);
+        }
+      })
   };
 
-  buscarProdutos(busca: string | null) {
+  listarProdutosPorBusca(busca: string | null) {
     if (busca == null) {
       this.listaProdutos = [];
       return;
     }
 
-    this.produtoService.getProdutosPorBusca(busca, this.ordenarPor).subscribe({
-      next: (response) => {
-        this.listaProdutos = response;
-        this.cdr.detectChanges();
-        console.log('Produtos encontrados: ', this.listaProdutos);
-      },
-      error: (error) => {
-        console.error('Erro ao carregar produtos:', error);
-      }
-    })
+    this.produtoService.getProdutosPorBusca(busca, this.ordenarPor)
+      .pipe(
+        finalize(() => {
+          this.carregando = false;
+          this.cdr.detectChanges();
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          this.listaProdutos = response;
+          this.cdr.detectChanges();
+          console.log('Produtos encontrados: ', this.listaProdutos);
+        },
+        error: (error) => {
+          console.error('Erro ao carregar produtos:', error);
+        }
+      })
   };
 
-  buscarProdutosMaisVendidos() {
-    this.produtoService.getProdutosMaisVendidos(0, 30).subscribe({
+  listarProdutosMaisVendidos() {
+    this.produtoService.getProdutosMaisVendidos(0, 30)
+    .pipe(
+      finalize(() => {
+        this.carregando = false;
+        this.cdr.detectChanges();
+      })
+    )
+    .subscribe({
       next: (response) => {
         this.listaProdutos = response.content;
         this.cdr.detectChanges();
@@ -108,8 +133,15 @@ export class ListaProdutos implements OnInit {
     });
   };
 
-  buscarProdutosEmPromocao() {
-    this.produtoService.getProdutosEmPromocao(0, 30).subscribe({
+  listarProdutosEmPromocao() {
+    this.produtoService.getProdutosEmPromocao(0, 30)
+    .pipe(
+      finalize(() => {
+        this.carregando = false;
+        this.cdr.detectChanges();
+      })
+    )
+    .subscribe({
       next: (response) => {
         this.listaProdutos = response.content;
         this.cdr.detectChanges();
@@ -121,8 +153,15 @@ export class ListaProdutos implements OnInit {
     });
   };
 
-  buscarTodosProdutos() {
-    this.produtoService.getTodosProdutos(0, 30).subscribe({
+  listarTodosProdutos() {
+    this.produtoService.getTodosProdutos(0, 30)
+    .pipe(
+      finalize(() => {
+        this.carregando = false;
+        this.cdr.detectChanges();
+      })
+    )
+    .subscribe({
       next: (response) => {
         this.listaProdutos = response.content;
         this.cdr.detectChanges();
@@ -146,7 +185,7 @@ export class ListaProdutos implements OnInit {
     }
 
     else if (buscaParam) {
-      this.buscarProdutos(buscaParam);
+      this.listarProdutosPorBusca(buscaParam);
     }
   };
 }
