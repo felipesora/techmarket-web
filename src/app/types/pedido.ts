@@ -28,7 +28,7 @@ export interface ProdutoPedido {
     id_mongo_produto: string
     codigo: string
     nome: string
-    preco_unitario: number
+    preco_produto: number
 }
 
 export interface PedidoPageResponse {

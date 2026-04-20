@@ -17,8 +17,12 @@ export interface Produto {
   descricao: string
   categoria: string
   marca: string
-  preco: number
+  precoUnitario: number
+  precoPromocional: number
+  precoFinal: number
   estoque: number
   status: string
   dataCriacao: string
+  imagemId: string | null
+  quantidadeVendida: number
 }

@@ -1,0 +1,46 @@
+<nav class="bg-white shadow-md">
+    <div class="flex items-center justify-between p-4 px-7">
+        <!-- Menu Principal Admin -->
+        <ul class="flex items-center gap-1">
+            <!-- Dashboard -->
+            <li>
+                <button routerLink="/admin/dashboard" 
+                        routerLinkActive="bg-[#0076D2] text-white"
+                        class="group cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-[#0076D2] hover:text-white transition-all duration-300">
+                    <img src="icons/icone-dashboard-azul.png" alt="Dashboard" class="w-6 group-hover:hidden">
+                    <img src="icons/icone-dashboard-branco.png" alt="Dashboard" class="hidden w-6 group-hover:block">
+                    Dashboard
+                </button>
+            </li>
+
+            <!-- Produtos (com submenu) -->
+            <li>
+                <button class="group cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-[#0076D2] hover:text-white transition-all duration-300">
+                    <img src="icons/icone-produtos-azul.png" alt="Produtos" class="w-6 group-hover:hidden">
+                    <img src="icons/icone-produtos-branco.png" alt="Produtos" class="hidden w-6 group-hover:block">
+                    Produtos
+                </button>
+            </li>
+
+            <!-- Pedidos -->
+            <li>
+                <button class="group cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-[#0076D2] hover:text-white transition-all duration-300">
+                    <img src="icons/icone-pedidos-azul.png" alt="Pedidos" class="w-6 group-hover:hidden">
+                    <img src="icons/icone-pedidos-branco.png" alt="Pedidos" class="hidden w-6 group-hover:block">
+                    Pedidos
+                </button>
+            </li>
+
+            <!-- Usuários -->
+            <li>
+                <button routerLink="/admin/usuarios" 
+                        routerLinkActive="bg-[#0076D2] text-white"
+                        class="group cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-[#0076D2] hover:text-white transition-all duration-300">
+                    <img src="icons/icone-usuarios-azul.png" alt="Usuários" class="w-6 group-hover:hidden">
+                    <img src="icons/icone-usuarios-branco.png" alt="Usuários" class="hidden w-6 group-hover:block">
+                    Usuários
+                </button>
+            </li>
+        </ul>
+    </div>
+</nav>

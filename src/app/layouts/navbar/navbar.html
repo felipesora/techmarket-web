@@ -1,5 +1,19 @@
 <nav class="bg-white flex items-center justify-between p-7 shadow-md">
-    <ul>
+    <ul class="flex items-center gap-7">
+        <li>
+            <button [routerLink]="['/produtos']" [queryParams]="{ tipo: 'promocao' }" class="text-sm cursor-pointer flex items-center gap-1 hover:text-[#0076D2] transition-all duration-300">
+                <img src="icons/icone-promocao.png" alt="ícone de promoção" class="w-6">
+                Promoções
+            </button>
+        </li>
+
+        <li>
+            <button [routerLink]="['/produtos']" [queryParams]="{ tipo: 'destaque' }" class="text-sm cursor-pointer flex items-center gap-1 hover:text-[#0076D2] transition-all duration-300">
+                <img src="icons/icone-destaque.png" alt="ícone de promoção" class="w-6">
+                Destaque
+            </button>
+        </li>
+        
         <li class="relative group">
             <button class="group text-sm cursor-pointer flex items-center gap-2 hover:text-[#0076D2] transition-all duration-300">
                 Categorias
@@ -9,7 +23,7 @@
             </button>
 
             <!-- Dropdown -->
-            <div class="absolute left-0 top-full w-56 p-3 bg-white shadow-lg hidden group-hover:block">
+            <div class="absolute left-0 top-full w-64 p-3 bg-white shadow-lg rounded-xl hidden group-hover:block">
                 <ul class="flex flex-col gap-2 text-sm">
                     <li>
                         <button [routerLink]="['/produtos']" [queryParams]="{ categoria: 'notebooks' }" class="flex items-center gap-2 w-full px-2 py-2 cursor-pointer rounded hover:bg-gray-100 hover:text-[#0076D2] transition">
@@ -98,7 +112,7 @@
             </button>
 
             <!-- Dropdown -->
-            <div class="absolute right-0 top-full w-56 p-3 bg-white shadow-lg hidden group-hover:block">
+            <div class="absolute right-0 top-full w-64 p-3 bg-white shadow-lg rounded-xl hidden group-hover:block">
                 <ul class="flex flex-col gap-2 text-sm">
                     <li>
                         <button [routerLink]="['/meus-dados']" class="flex items-center gap-2 w-full px-2 py-2 cursor-pointer rounded hover:bg-gray-100 hover:text-[#0076D2] transition">
@@ -108,7 +122,7 @@
                     </li>
                     <li>
                         <button [routerLink]="['/meus-pedidos']" class="flex items-center gap-2 w-full px-2 py-2 cursor-pointer rounded hover:bg-gray-100 hover:text-[#0076D2] transition">
-                            <img src="icons/icone-pedidos.png" alt="ícone de notebook" class="w-7">
+                            <img src="icons/icone-pedidos-azul.png" alt="ícone de notebook" class="w-7">
                             Meus Pedidos
                         </button>
                     </li>

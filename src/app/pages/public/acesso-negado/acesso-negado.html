@@ -1,0 +1,42 @@
+<main class="bg-[#F5F7FC] p-7 min-h-screen">
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden p-5">
+        <div class="p-8 flex flex-col items-center gap-6">
+
+            <img src="images/acesso-negado.png" alt="Acesso Negado" class="w-[250px]">
+
+            <div class="flex flex-col items-center gap-2">
+                <h1 class="text-6xl font-bold text-gray-800">403</h1>
+                <h2 class="text-2xl font-bold text-gray-800">Acesso Negado</h2>
+            </div>
+            
+            <div class="bg-red-50 p-4 rounded flex flex-col items-center justify-center">
+                <p class="text-red-700 text-sm font-medium mb-2">
+                    Área restrita a administradores
+                </p>
+                <p class="text-gray-600 text-sm">
+                    Você não tem permissão para acessar esta página. 
+                    Esta área é exclusiva para administradores do sistema.
+                </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4">
+                <div class="flex items-center justify-center gap-2 text-sm text-gray-600">
+                    <img src="icons/icone-info.png" alt="Info" class="w-5 h-5">
+                    <span>Se você é administrador, faça login com sua conta administrativa</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <button routerLink="/" class="cursor-pointer flex items-center justify-center gap-2 px-6 py-3 bg-[#0076D2] text-white rounded-lg font-medium hover:bg-[#005fa8] transition-all duration-300">
+                    Voltar para a Home
+                </button>
+
+                @if (!isUsuarioLogado()) {
+                    <button routerLink="/auth/login" class="cursor-pointer flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-[#0076D2] text-[#0076D2] rounded-lg font-medium hover:bg-[#0076D2] hover:text-white transition-all duration-300">
+                        Fazer Login
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</main>

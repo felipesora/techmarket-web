@@ -12,7 +12,7 @@ export class ProdutoService {
 
   constructor(private http: HttpClient) {}
 
-  getTodosProdutos(page: number = 0, size: number = 15): Observable<ProdutoPageResponse> {
+  getTodosProdutos(page: number = 0, size: number = 10): Observable<ProdutoPageResponse> {
     const token = localStorage.getItem('tokenUser');
 
     const headers = new HttpHeaders({
@@ -26,6 +26,34 @@ export class ProdutoService {
     return this.http.get<ProdutoPageResponse>(this.API, { headers, params });
   };
 
+  getProdutosMaisVendidos(page: number = 0, size: number = 10): Observable<ProdutoPageResponse> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    const params = new HttpParams()
+      .set('page', page)
+      .set('size', size);
+
+    return this.http.get<ProdutoPageResponse>(`${this.API}/mais-vendidos`, { headers, params });
+  };
+
+  getProdutosEmPromocao(page: number = 0, size: number = 10): Observable<ProdutoPageResponse> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    const params = new HttpParams()
+      .set('page', page)
+      .set('size', size);
+
+    return this.http.get<ProdutoPageResponse>(`${this.API}/promocoes`, { headers, params });
+  };
+
   getProdutosPorIds(ids: string[]): Observable<Produto[]> {
     const token = localStorage.getItem('tokenUser');
 
@@ -33,7 +61,7 @@ export class ProdutoService {
       Authorization: `Bearer ${token}`
     });
 
-    return this.http.post<Produto[]>(`${this.API}/favoritos`, ids, { headers });
+    return this.http.post<Produto[]>(`${this.API}/buscar-por-ids`, ids, { headers });
   };
 
   getProdutosPorCategoria(categoria: string, ordenarPor: string): Observable<Produto[]> {
@@ -72,5 +100,15 @@ export class ProdutoService {
     });
 
     return this.http.get<Produto>(`${this.API}/${id}`, { headers });
+  };
+
+  getQuantidadeProdutos(): Observable<number> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get<number>(`${this.API}/total-produtos-ativos`, { headers });
   };
 }

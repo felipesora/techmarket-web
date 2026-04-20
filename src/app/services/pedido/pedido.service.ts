@@ -20,6 +20,20 @@ export class PedidoService {
     });
 
     return this.http.post<PedidoResponse>(this.API, pedido, { headers });
+  };
+
+  getTodosPedidos(page: number = 0, size: number = 5): Observable<PedidoPageResponse> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    const params = new HttpParams()
+      .set('page', page)
+      .set('size', size);
+
+    return this.http.get<PedidoPageResponse>(`${this.API}`, { headers, params });
   }
 
   getPedidoPorId(idPedido: number): Observable<PedidoResponse> {
@@ -55,4 +69,14 @@ export class PedidoService {
 
     return this.http.patch<void>(`${this.API}/${idPedido}/cancelar`, null, { headers });
   }
+
+  getQuantidadePedidosHoje(): Observable<number> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get<number>(`${this.API}/hoje/quantidade`, { headers });
+  };
 }
