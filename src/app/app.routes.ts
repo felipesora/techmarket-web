@@ -20,6 +20,7 @@ import { adminGuard } from './guards/admin/admin-guard';
 import { NaoEncontrado } from './pages/public/nao-encontrado/nao-encontrado';
 import { adminMatchGuard } from './guards/admin/admin-match-guard';
 import { Produtos } from './pages/admin/produtos/produtos';
+import { ListarProdutos } from './pages/admin/listar-produtos/listar-produtos';
 
 export const routes: Routes = [
     {
@@ -37,6 +38,7 @@ export const routes: Routes = [
             { path: 'dashboard', component: Dashboard, canActivate: [authGuard, adminGuard] },
             { path: 'meus-dados', component: MeusDados, canActivate: [authGuard, adminGuard] },
             { path: 'produtos', component: Produtos, canActivate: [authGuard, adminGuard] },
+            { path: 'listar-produtos', component: ListarProdutos, canActivate: [authGuard, adminGuard] },
         ]
     },
     {
