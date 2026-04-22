@@ -19,6 +19,7 @@ import { AcessoNegado } from './pages/public/acesso-negado/acesso-negado';
 import { adminGuard } from './guards/admin/admin-guard';
 import { NaoEncontrado } from './pages/public/nao-encontrado/nao-encontrado';
 import { adminMatchGuard } from './guards/admin/admin-match-guard';
+import { Produtos } from './pages/admin/produtos/produtos';
 
 export const routes: Routes = [
     {
@@ -35,6 +36,7 @@ export const routes: Routes = [
         children: [
             { path: 'dashboard', component: Dashboard, canActivate: [authGuard, adminGuard] },
             { path: 'meus-dados', component: MeusDados, canActivate: [authGuard, adminGuard] },
+            { path: 'produtos', component: Produtos, canActivate: [authGuard, adminGuard] },
         ]
     },
     {

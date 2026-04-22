@@ -1,0 +1,285 @@
+@if (carregando) {
+    <app-carregamento-component />
+}
+
+<main class="bg-[#F5F7FC] p-7 flex flex-col gap-10 min-h-screen">
+
+    <!-- Título da Página e Botão de Cadastro -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div class="flex items-center gap-2">
+            <img src="icons/icone-produtos-azul.png" alt="Produtos" class="w-8">
+            <h1 class="font-bold text-2xl text-gray-800">Gerenciar Produtos</h1>
+        </div>
+        
+        <button routerLink="/admin/produtos/novo"
+                class="cursor-pointer bg-[#0076D2] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#005fa8] transition-all duration-300 flex items-center gap-2 shadow-md hover:shadow-lg">
+                <img src="icons/icone-cadastrar.png" alt="Adicionar" class="w-7">
+                Cadastrar Novo Produto
+        </button>
+    </div>
+
+    <!-- Tabela 1: Produtos Mais Vendidos -->
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+        <div class="p-5 border-b flex justify-between items-center bg-gradient-to-r from-blue-50 to-white">
+            <div class="flex items-center gap-2">
+                <img src="icons/icone-destaque.png" alt="Mais Vendidos" class="w-6">
+                <span class="font-semibold text-gray-800 text-lg">Produtos Mais Vendidos</span>
+            </div>
+            <button [routerLink]="['/produtos']" [queryParams]="{ tipo: 'promocao' }" class="group flex items-center gap-0.5 text-sm text-[#0076D2] cursor-pointer">
+                <span class="group-hover:underline">Ver Todos</span>
+                <img src="icons/icone-seta-direita.png" class="w-3 group-hover:translate-x-1 transition-all duration-200">
+            </button>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-gray-50 text-gray-500 uppercase text-xs text-left border-b">
+                    <tr>
+                        <th class="p-4 font-medium">Produto</th>
+                        <th class="p-4 font-medium">Código</th>
+                        <th class="p-4 font-medium">Preço Normal</th>
+                        <th class="p-4 font-medium">Preço Promoção</th>
+                        <th class="p-4 font-medium">Vendidos</th>
+                        <th class="p-4 font-medium">Estoque</th>
+                        <th class="p-4 font-medium">Status</th>
+                        <th class="p-4 font-medium text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @for (produto of produtosMaisVendidos; track produto.id) {
+                        <tr class="hover:bg-gray-50 transition-colors duration-150">
+                            <!-- Nome e Imagem -->
+                            <td class="p-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="http://localhost:8080/techmarket-product-service/produtos/imagem/{{ produto.imagemId }}" 
+                                         [alt]="produto.nome"
+                                         class="w-10 h-10 object-cover rounded-lg bg-gray-100">
+                                    <div>
+                                        <p class="font-medium text-gray-800">{{ produto.nome }}</p>
+                                        <p class="text-xs text-gray-500">{{ produto.categoria }}</p>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Codigo -->
+                            <td class="p-4 text-gray-800">
+                                {{ produto.codigo }}
+                            </td>
+                            
+                            <!-- Preço Normal -->
+                            <td class="p-4 font-semibold text-gray-800">
+                                {{ produto.precoUnitario | currency:'BRL':'symbol':'1.2-2' }}
+                            </td>
+                            
+                            <!-- Preço Promoção -->
+                            <td class="p-4">
+                                @if (produto.precoPromocional && produto.precoPromocional < produto.precoUnitario) {
+                                    <span class="font-semibold text-green-600">
+                                        {{ produto.precoPromocional | currency:'BRL':'symbol':'1.2-2' }}
+                                    </span>
+                                } @else {
+                                    <span class="text-gray-400">-</span>
+                                }
+                            </td>
+                            
+                            <!-- Vendidos -->
+                            <td class="p-4">
+                                <span class="font-medium text-gray-700">{{ produto.quantidadeVendida || 0 }}</span>
+                                <span class="text-xs text-gray-400"> un</span>
+                            </td>
+                            
+                            <!-- Estoque com cores -->
+                            <td class="p-4">
+                                <span [ngClass]="{
+                                    'text-green-600 font-semibold': produto.estoque > 20,
+                                    'text-orange-500 font-semibold': produto.estoque <= 20 && produto.estoque > 5,
+                                    'text-red-500 font-semibold': produto.estoque <= 5 && produto.estoque > 0,
+                                    'text-gray-400': produto.estoque === 0
+                                }">
+                                    {{ produto.estoque }} un
+                                </span>
+                                @if (produto.estoque <= 5 && produto.estoque > 0) {
+                                    <span class="ml-2 text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">
+                                        Estoque baixo
+                                    </span>
+                                }
+                                @if (produto.estoque === 0) {
+                                    <span class="ml-2 text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">
+                                        Esgotado
+                                    </span>
+                                }
+                            </td>
+                            
+                            <!-- Status -->
+                            <td class="p-4">
+                                <span [ngClass]="{
+                                    'bg-green-100 text-green-700': produto.status === 'ATIVO',
+                                    'bg-red-100 text-red-700': produto.status === 'INATIVO'
+                                }" class="px-2 py-1 rounded-full text-xs font-medium">
+                                    {{ produto.status === 'ATIVO' ? 'Ativo' : 'Inativo' }}
+                                </span>
+                            </td>
+                            
+                            <!-- Ações -->
+                            <td class="p-4">
+                                <div class="flex items-center justify-center gap-2">
+                                    <button (click)="editarProduto(produto.id)"
+                                            class="cursor-pointer"
+                                            title="Editar produto">
+                                        <img src="icons/icone-editar.png" alt="Editar" class="w-5">
+                                    </button>
+                                    <button class="cursor-pointer"
+                                            title="Remover produto">
+                                        <img src="icons/icone-remover.png" alt="Remover produto" class="w-5">
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    } @empty {
+                        <tr>
+                            <td colspan="7" class="p-12 text-center">
+                                <div class="flex flex-col items-center gap-3">
+                                    <p class="text-gray-400">Nenhum produto encontrado</p>
+                                    <button routerLink="/admin/produtos/novo"
+                                            class="mt-2 text-[#0076D2] hover:underline text-sm cursor-pointer">
+                                        Cadastrar novo produto
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tabela 2: Produtos em Promoção -->
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+        <div class="p-5 border-b flex justify-between items-center bg-gradient-to-r from-green-50 to-white">
+            <div class="flex items-center gap-2">
+                <img src="icons/icone-promocao.png" alt="Promoções" class="w-6">
+                <span class="font-semibold text-gray-800 text-lg">Produtos em Promoção</span>
+            </div>
+            <button [routerLink]="['/produtos']" [queryParams]="{ tipo: 'promocao' }" class="group flex items-center gap-0.5 text-sm text-[#0076D2] cursor-pointer">
+                <span class="group-hover:underline">Ver Todos</span>
+                <img src="icons/icone-seta-direita.png" class="w-3 group-hover:translate-x-1 transition-all duration-200">
+            </button>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-gray-50 text-gray-500 uppercase text-xs text-left border-b">
+                    <tr>
+                        <th class="p-4 font-medium">Produto</th>
+                        <th class="p-4 font-medium">Código</th>
+                        <th class="p-4 font-medium">Preço Normal</th>
+                        <th class="p-4 font-medium">Preço Promoção</th>
+                        <th class="p-4 font-medium">Desconto</th>
+                        <th class="p-4 font-medium">Vendidos</th>
+                        <th class="p-4 font-medium">Estoque</th>
+                        <th class="p-4 font-medium">Status</th>
+                        <th class="p-4 font-medium text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @for (produto of produtosEmPromocao; track produto.id) {
+                        <tr class="hover:bg-gray-50 transition-colors duration-150">
+                            <!-- Nome e Imagem -->
+                            <td class="p-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="http://localhost:8080/techmarket-product-service/produtos/imagem/{{ produto.imagemId }}" 
+                                         [alt]="produto.nome"
+                                         class="w-10 h-10 object-cover rounded-lg bg-gray-100">
+                                    <div>
+                                        <p class="font-medium text-gray-800">{{ produto.nome }}</p>
+                                        <p class="text-xs text-gray-500">{{ produto.categoria }}</p>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Codigo -->
+                            <td class="p-4 text-gray-800">
+                                {{ produto.codigo }}
+                            </td>
+                            
+                            <!-- Preço Normal -->
+                            <td class="p-4 font-semibold text-gray-800">
+                                {{ produto.precoUnitario | currency:'BRL':'symbol':'1.2-2' }}
+                            </td>
+                            
+                            <!-- Preço Promoção -->
+                            <td class="p-4">
+                                <span class="font-semibold text-green-600">
+                                    {{ produto.precoPromocional | currency:'BRL':'symbol':'1.2-2' }}
+                                </span>
+                            </td>
+                            
+                            <!-- Desconto -->
+                            <td class="p-4">
+                                @if (produto.precoUnitario && produto.precoPromocional) {
+                                    <span class="inline-flex items-center gap-1 bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">
+                                        {{ calcularDesconto(produto.precoUnitario, produto.precoPromocional) }}%
+                                    </span>
+                                }
+                            </td>
+                            
+                            <!-- Vendidos -->
+                            <td class="p-4">
+                                <span class="font-medium text-gray-700">{{ produto.quantidadeVendida || 0 }}</span>
+                                <span class="text-xs text-gray-400"> un</span>
+                            </td>
+                            
+                            <!-- Estoque -->
+                            <td class="p-4">
+                                <span [ngClass]="{
+                                    'text-green-600': produto.estoque > 20,
+                                    'text-orange-500': produto.estoque <= 20 && produto.estoque > 0,
+                                    'text-red-500': produto.estoque === 0
+                                }" class="font-medium">
+                                    {{ produto.estoque }} un
+                                </span>
+                            </td>
+                            
+                            <!-- Status -->
+                            <td class="p-4">
+                                <span [ngClass]="{
+                                    'bg-green-100 text-green-700': produto.status === 'ATIVO',
+                                    'bg-red-100 text-red-700': produto.status === 'INATIVO'
+                                }" class="px-2 py-1 rounded-full text-xs font-medium">
+                                    {{ produto.status === 'ATIVO' ? 'Ativo' : 'Inativo' }}
+                                </span>
+                            </td>
+                            
+                            <!-- Ações -->
+                            <td class="p-4">
+                                <div class="flex items-center justify-center gap-2">
+                                    <button (click)="editarProduto(produto.id)"
+                                            class="cursor-pointer"
+                                            title="Editar produto">
+                                        <img src="icons/icone-editar.png" alt="Editar" class="w-5">
+                                    </button>
+                                    <button class="cursor-pointer"
+                                            title="Remover produto">
+                                        <img src="icons/icone-remover.png" alt="Remover produto" class="w-5">
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    } @empty {
+                        <tr>
+                            <td colspan="8" class="p-12 text-center">
+                                <div class="flex flex-col items-center gap-3">
+                                    <p class="text-gray-400">Nenhum produto em promoção no momento</p>
+                                    <button routerLink="/admin/produtos/novo"
+                                            class="mt-2 text-[#0076D2] hover:underline text-sm cursor-pointer">
+                                        Cadastrar novo produto
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
