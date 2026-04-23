@@ -111,4 +111,32 @@ export class ProdutoService {
 
     return this.http.get<number>(`${this.API}/total-produtos-ativos`, { headers });
   };
+
+  getProdutosMaisVendidosAdmin(page: number = 0, size: number = 10): Observable<ProdutoPageResponse> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    const params = new HttpParams()
+      .set('page', page)
+      .set('size', size);
+
+    return this.http.get<ProdutoPageResponse>(`${this.API}/admin/mais-vendidos`, { headers, params });
+  };
+
+  getProdutosEmPromocaoAdmin(page: number = 0, size: number = 10): Observable<ProdutoPageResponse> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    const params = new HttpParams()
+      .set('page', page)
+      .set('size', size);
+
+    return this.http.get<ProdutoPageResponse>(`${this.API}/admin/promocoes`, { headers, params });
+  };
 }

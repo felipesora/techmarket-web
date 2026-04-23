@@ -21,6 +21,7 @@ import { NaoEncontrado } from './pages/public/nao-encontrado/nao-encontrado';
 import { adminMatchGuard } from './guards/admin/admin-match-guard';
 import { Produtos } from './pages/admin/produtos/produtos';
 import { ListarProdutos } from './pages/admin/listar-produtos/listar-produtos';
+import { CadastrarProduto } from './pages/admin/cadastrar-produto/cadastrar-produto';
 
 export const routes: Routes = [
     {
@@ -39,6 +40,7 @@ export const routes: Routes = [
             { path: 'meus-dados', component: MeusDados, canActivate: [authGuard, adminGuard] },
             { path: 'produtos', component: Produtos, canActivate: [authGuard, adminGuard] },
             { path: 'listar-produtos', component: ListarProdutos, canActivate: [authGuard, adminGuard] },
+            { path: 'cadastrar-produto', component: CadastrarProduto, canActivate: [authGuard, adminGuard] },
         ]
     },
     {

@@ -31,8 +31,8 @@ export class Produtos implements OnInit {
     this.carregando = true;
   
     forkJoin({
-      maisVendidos: this.produtoService.getProdutosMaisVendidos(0, 5),
-      promocoes: this.produtoService.getProdutosEmPromocao(0, 5)
+      maisVendidos: this.produtoService.getProdutosMaisVendidosAdmin(0, 5),
+      promocoes: this.produtoService.getProdutosEmPromocaoAdmin(0, 5)
     })
     .pipe(
       finalize(() => {

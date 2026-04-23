@@ -52,7 +52,7 @@ export class ListarProdutos implements OnInit {
   }
 
   listarProdutosMaisVendidos() {
-    this.produtoService.getProdutosMaisVendidos(0, 30)
+    this.produtoService.getProdutosMaisVendidosAdmin(0, 30)
     .pipe(
       finalize(() => {
         this.carregando = false;
@@ -72,7 +72,7 @@ export class ListarProdutos implements OnInit {
   };
 
   listarProdutosEmPromocao() {
-    this.produtoService.getProdutosEmPromocao(0, 30)
+    this.produtoService.getProdutosEmPromocaoAdmin(0, 30)
     .pipe(
       finalize(() => {
         this.carregando = false;
