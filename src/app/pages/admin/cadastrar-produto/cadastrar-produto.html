@@ -11,7 +11,7 @@
     </div>
 
     <div class="rounded-[10px] bg-white">
-        <form>
+        <form [formGroup]="form" (ngSubmit)="cadastrarProduto()">
             <!-- Informacoes basicas -->
             <div>
                 <div class="flex items-center gap-2 bg-[#EFF6FE] p-5 border-b border-[#E9ECEF]">
@@ -24,19 +24,29 @@
                     <div class="flex items-center justify-between gap-7">
 
                         <div class="flex w-full flex-col gap-1">
-                            <label for="nome" class="text-[#334155] font-bold text-sm pl-1">Código do Produto <span class="text-red-600">*</span></label>
+                            <label for="codigo" class="text-[#334155] font-bold text-sm pl-1">Código do Produto <span class="text-red-600">*</span></label>
                             <input
-                                formControlName="nome"
-                                name="nome"
+                                formControlName="codigo"
+                                name="codigo"
                                 type="text"
                                 placeholder="Ex: PROD-001"
                                 class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
                             >
+                            @if (submitted && form.get('codigo')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Código obrigatório</span>
+                            }
+                            @if (submitted && form.get('codigo')?.errors?.['codigoMinimo']) {
+                                <span class="text-red-500 text-xs">* Código deve ter no mínimo 3 caracteres</span>
+                            }
+                            @if (submitted && form.get('codigo')?.errors?.['codigoMaximo']) {
+                                <span class="text-red-500 text-xs">* Código deve ter no máximo 50 caracteres</span>
+                            }
                         </div>
 
                         <div class="flex w-full flex-col gap-1">
-                            <label for="nome" class="text-[#334155] font-bold text-sm pl-1">Categoria <span class="text-red-600">*</span></label>
-                            <select 
+                            <label for="categoria" class="text-[#334155] font-bold text-sm pl-1">Categoria <span class="text-red-600">*</span></label>
+                            <select
+                                formControlName="categoria"
                                 name="categoria" 
                                 id="categoria"
                                 class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
@@ -55,6 +65,9 @@
                                 <option value="AUDIO">Áudio</option>
                                 <option value="OUTROS">Outros</option>
                             </select>
+                            @if (submitted && form.get('categoria')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Categoria obrigatório</span>
+                            }
                         </div>
                     </div>
 
@@ -67,16 +80,32 @@
                             placeholder="Digite o nome do produto"
                             class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
                         >
+                        @if (submitted && form.get('nome')?.errors?.['obrigatorio']) {
+                            <span class="text-red-500 text-xs">* Nome obrigatório</span>
+                        }
+                        @if (submitted && form.get('nome')?.errors?.['nomeMinimo']) {
+                            <span class="text-red-500 text-xs">* Nome deve ter no mínimo 3 caracteres</span>
+                        }
+                        @if (submitted && form.get('nome')?.errors?.['nomeMaximo']) {
+                            <span class="text-red-500 text-xs">* Nome deve ter no máximo 150 caracteres</span>
+                        }
                     </div>
 
                     <div class="flex w-full flex-col gap-1">
-                        <label for="nome" class="text-[#334155] font-bold text-sm pl-1">Descrição</label>
-                        <textarea 
+                        <label for="descricao" class="text-[#334155] font-bold text-sm pl-1">Descrição</label>
+                        <textarea
+                            formControlName="descricao"
                             name="descricao" 
                             id="descricao"
                             placeholder="Descreva o produto (características, especificações, etc.)"
                             class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
                         ></textarea>
+                        @if (submitted && form.get('descricao')?.errors?.['descricaoMinimo']) {
+                            <span class="text-red-500 text-xs">* Descrição deve ter no mínimo 3 caracteres</span>
+                        }
+                        @if (submitted && form.get('descricao')?.errors?.['descricaoMaximo']) {
+                            <span class="text-red-500 text-xs">* Descrição deve ter no máximo 500 caracteres</span>
+                        }
                     </div>
                 </div>
             </div>
@@ -93,36 +122,74 @@
                     <div class="flex items-center justify-between gap-7">
 
                         <div class="flex w-full flex-col gap-1">
-                            <label for="nome" class="text-[#334155] font-bold text-sm pl-1">Preço Normal <span class="text-red-600">*</span></label>
+                            <label for="precoNormal" class="text-[#334155] font-bold text-sm pl-1">Preço Normal <span class="text-red-600">*</span></label>
                             <input
-                                formControlName="nome"
-                                name="nome"
-                                type="text"
+                                formControlName="precoNormal"
+                                name="precoNormal"
+                                type="number"
+                                min="0"
+                                step="0.01"
                                 placeholder="R$ 0,00"
                                 class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
                             >
+                            @if (submitted && form.get('precoNormal')?.errors?.['valorInvalido']) {
+                                <span class="text-red-500 text-xs">* Informe um valor válido</span>
+                            }
+
+                            @if (submitted && form.get('precoNormal')?.errors?.['valorNegativo']) {
+                                <span class="text-red-500 text-xs">* O preço não pode ser negativo</span>
+                            }
+                            @if (submitted && form.get('precoNormal')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Preço obrigatório</span>
+                            }
                         </div>
 
                         <div class="flex w-full flex-col gap-1">
-                            <label for="nome" class="text-[#334155] font-bold text-sm pl-1">Preço Promocional</label>
+                            <label for="precoPromocional" class="text-[#334155] font-bold text-sm pl-1">Preço Promocional</label>
                             <input
-                                formControlName="nome"
-                                name="nome"
-                                type="text"
+                                formControlName="precoPromocional"
+                                name="precoPromocional"
+                                type="number"
+                                min="0"
+                                step="0.01"
                                 placeholder="R$ 0,00"
                                 class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
                             >
+                            @if (submitted && form.get('precoPromocional')?.errors?.['valorInvalido']) {
+                                <span class="text-red-500 text-xs">* Informe um valor válido</span>
+                            }
+
+                            @if (submitted && form.get('precoPromocional')?.errors?.['valorNegativo']) {
+                                <span class="text-red-500 text-xs">* O preço não pode ser negativo</span>
+                            }
+                            @if (submitted && form.errors?.['precoPromocionalInvalido']) {
+                                <span class="text-red-500 text-xs">
+                                    * O preço promocional deve ser menor que o preço normal
+                                </span>
+                            }
                         </div>
 
                         <div class="flex w-full flex-col gap-1">
-                            <label for="nome" class="text-[#334155] font-bold text-sm pl-1">Quantidade em Estoque <span class="text-red-600">*</span></label>
+                            <label for="estoque" class="text-[#334155] font-bold text-sm pl-1">Quantidade em Estoque <span class="text-red-600">*</span></label>
                             <input
-                                formControlName="nome"
-                                name="nome"
-                                type="text"
+                                formControlName="estoque"
+                                name="estoque"
+                                type="number"
+                                min="0"
+                                step="1"
                                 placeholder="0"
                                 class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
                             >
+                            @if (submitted && form.get('estoque')?.errors?.['valorInvalido']) {
+                                <span class="text-red-500 text-xs">* Informe um número válido</span>
+                            }
+
+                            @if (submitted && form.get('estoque')?.errors?.['valorNegativo']) {
+                                <span class="text-red-500 text-xs">* O estoque não pode ser negativo</span>
+                            }
+                            @if (submitted && form.get('estoque')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Estoque obrigatório</span>
+                            }
                         </div>
                     </div>
                 </div>
@@ -140,27 +207,36 @@
                     <div class="flex items-center justify-between gap-7">
 
                         <div class="flex w-full flex-col gap-1">
-                            <label for="nome" class="text-[#334155] font-bold text-sm pl-1">Marca do Produto <span class="text-red-600">*</span></label>
+                            <label for="marca" class="text-[#334155] font-bold text-sm pl-1">Marca do Produto <span class="text-red-600">*</span></label>
                             <input
-                                formControlName="nome"
-                                name="nome"
+                                formControlName="marca"
+                                name="marca"
                                 type="text"
                                 placeholder="Ex: Samsung"
                                 class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
                             >
+                            @if (submitted && form.get('marca')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Marca obrigatório</span>
+                            }
+                            @if (submitted && form.get('marca')?.errors?.['marcaMaximo']) {
+                                <span class="text-red-500 text-xs">* Marca deve ter no máximo 100 caracteres</span>
+                            }
                         </div>
 
                         <div class="flex w-full flex-col gap-1">
-                            <label for="nome" class="text-[#334155] font-bold text-sm pl-1">Status <span class="text-red-600">*</span></label>
+                            <label for="status" class="text-[#334155] font-bold text-sm pl-1">Status <span class="text-red-600">*</span></label>
                             <select 
-                                name="categoria" 
-                                id="categoria"
+                                name="status" 
+                                id="status"
                                 class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
                             >
                                 <option value="" disabled>Selecione um status</option>
                                 <option value="ATIVO">Ativo</option>
                                 <option value="INATIVO">Inativo</option>
                             </select>
+                            @if (submitted && form.get('status')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Status obrigatório</span>
+                            }
                         </div>
                     </div>
                 </div>
