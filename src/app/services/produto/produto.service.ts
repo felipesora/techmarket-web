@@ -148,7 +148,7 @@ export class ProdutoService {
     });
 
     return this.http.post<Produto>(`${this.API}`, produto, { headers });
-  }
+  };
 
   editarProduto(id: string, produto: ProdutoEditRequest): Observable<Produto> {
     const token = localStorage.getItem('tokenUser');
@@ -158,7 +158,7 @@ export class ProdutoService {
     });
 
     return this.http.put<Produto>(`${this.API}/${id}`, produto, { headers });
-  }
+  };
 
   uploadImagemProduto(idProduto: string, file: File): Observable<string> {
     const token = localStorage.getItem('tokenUser');
@@ -171,5 +171,15 @@ export class ProdutoService {
     formData.append('file', file);
 
     return this.http.post<string>(`${this.API}/${idProduto}/imagem`, formData, { headers, responseType: 'text' as 'json' });
-  }
+  };
+
+  deletarImagemProduto(idImagem: string): Observable<void> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.delete<void>(`${this.API}/imagem/${idImagem}`, { headers });
+  };
 }

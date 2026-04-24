@@ -24,6 +24,8 @@ export class EditarProduto implements OnInit {
   imagemPreview: string | null = null;
 
   produtoId: string = '';
+  imagemId: string | null = null;
+  imagemRemovida: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -71,11 +73,12 @@ export class EditarProduto implements OnInit {
           status: produto.status,
         });
 
-        console.log(produto.imagemId);
+        this.imagemId = produto.imagemId;
+        console.log(this.imagemId);
         
-
+        
         if (produto.imagemId) {
-          this.imagemPreview = `http://localhost:8080/techmarket-product-service/produtos/imagem/${produto.imagemId}`;
+          this.imagemPreview = `http://localhost:8080/techmarket-product-service/produtos/imagem/${this.imagemId}`;
         }
 
         this.carregando = false;
@@ -120,6 +123,10 @@ export class EditarProduto implements OnInit {
 
         if (this.imagemSelecionada) {
           this.cadastrarImagemDoProduto(response.id, this.imagemSelecionada);
+        }
+
+        if (this.imagemRemovida && this.imagemId) {
+          this.deletarImagemDoProduto(this.imagemId);
         }
 
         this.cdr.detectChanges();
@@ -185,9 +192,23 @@ export class EditarProduto implements OnInit {
     });
   };
 
+  deletarImagemDoProduto(idImagem: string | null) {
+    if (!idImagem) return;
+
+    this.produtoService.deletarImagemProduto(idImagem).subscribe({
+      next: () => {
+        console.log("Imagem deletada com sucesso!");
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
   removerImagem() {
     this.imagemSelecionada = null;
     this.imagemPreview = null;
+    this.imagemRemovida = true;
     this.cdr.detectChanges();
   }
 }
