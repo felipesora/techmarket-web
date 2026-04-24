@@ -131,18 +131,32 @@
                                 
                                 <!-- Ações -->
                                 <td class="p-4">
-                                    <div class="flex items-center justify-center gap-2">
-                                        <button (click)="editarProduto(produto.id)"
-                                                class="cursor-pointer"
-                                                title="Editar produto">
-                                            <img src="icons/icone-editar.png" alt="Editar" class="w-5">
+                                    <div class="relative flex items-center justify-center" (clickOutside)="fecharMenu(produto.id)">
+                                        <button (click)="toggleMenu(produto.id, $event)"
+                                                class="cursor-pointer p-1.5 rounded-lg hover:bg-gray-100 transition-colors duration-150"
+                                                title="Ações">
+                                            <img src="icons/icone-menu.png" alt="Ações" class="w-5">
                                         </button>
-                                        <button class="cursor-pointer"
-                                                title="Remover produto">
-                                            <img src="icons/icone-remover.png" alt="Remover produto" class="w-5">
-                                        </button>
+
+                                        @if (menuAbertoId === produto.id) {
+                                            <div class="absolute right-0 top-full mt-1 w-40 bg-white rounded-xl border border-gray-100 shadow-lg z-[9999] overflow-hidden"
+                                                style="position: fixed;"
+                                                [style.top.px]="menuPosicao.top"
+                                                [style.left.px]="menuPosicao.left">
+                                                <button (click)="editarProduto(produto.id); fecharMenu(produto.id)"
+                                                        class="w-full gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150 cursor-pointer">
+                                                    Editar
+                                                </button>
+                                                <div class="border-t border-gray-100"></div>
+                                                <button (click)="removerProduto(produto.id); fecharMenu(produto.id)"
+                                                        class="w-full gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150 cursor-pointer">
+                                                    Remover
+                                                </button>
+                                            </div>
+                                        }
                                     </div>
                                 </td>
+
                             </tr>
                         } @empty {
                             <tr>
@@ -263,18 +277,32 @@
                                 
                                 <!-- Ações -->
                                 <td class="p-4">
-                                    <div class="flex items-center justify-center gap-2">
-                                        <button (click)="editarProduto(produto.id)"
-                                                class="cursor-pointer"
-                                                title="Editar produto">
-                                            <img src="icons/icone-editar.png" alt="Editar" class="w-5">
+                                    <div class="relative flex items-center justify-center" (clickOutside)="fecharMenu(produto.id)">
+                                        <button (click)="toggleMenu(produto.id, $event)"
+                                                class="cursor-pointer p-1.5 rounded-lg hover:bg-gray-100 transition-colors duration-150"
+                                                title="Ações">
+                                            <img src="icons/icone-menu.png" alt="Ações" class="w-5">
                                         </button>
-                                        <button class="cursor-pointer"
-                                                title="Remover produto">
-                                            <img src="icons/icone-remover.png" alt="Remover produto" class="w-5">
-                                        </button>
+
+                                        @if (menuAbertoId === produto.id) {
+                                            <div class="absolute right-0 top-full mt-1 w-40 bg-white rounded-xl border border-gray-100 shadow-lg z-[9999] overflow-hidden"
+                                                style="position: fixed;"
+                                                [style.top.px]="menuPosicao.top"
+                                                [style.left.px]="menuPosicao.left">
+                                                <button (click)="editarProduto(produto.id); fecharMenu(produto.id)"
+                                                        class="w-full gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150 cursor-pointer">
+                                                    Editar
+                                                </button>
+                                                <div class="border-t border-gray-100"></div>
+                                                <button (click)="removerProduto(produto.id); fecharMenu(produto.id)"
+                                                        class="w-full gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150 cursor-pointer">
+                                                    Remover
+                                                </button>
+                                            </div>
+                                        }
                                     </div>
                                 </td>
+
                             </tr>
                         } @empty {
                             <tr>

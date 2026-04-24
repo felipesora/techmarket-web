@@ -17,11 +17,22 @@ export class Produtos implements OnInit {
   produtosMaisVendidos: Produto[] = [];
   produtosEmPromocao: Produto[] = [];
 
+  menuAbertoId: string | null = null;
+  menuPosicao = { top: 0, left: 0 };
+
   constructor(
     private produtoService: ProdutoService,
     private router: Router,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    // Fecha o menu ao clicar fora
+    document.addEventListener('click', () => {
+      if (this.menuAbertoId) {
+        this.menuAbertoId = null;
+        this.cdr.detectChanges();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.listarProdutos();
@@ -65,5 +76,34 @@ export class Produtos implements OnInit {
   
   editarProduto(id: string) {
     this.router.navigate(['/admin/editar-produto', id]);
+  }
+
+  toggleMenu(id: string, event: MouseEvent) {
+    event.stopPropagation();
+
+    if (this.menuAbertoId === id) {
+      this.menuAbertoId = null;
+      return;
+    }
+
+    const botao = event.currentTarget as HTMLElement;
+    const rect = botao.getBoundingClientRect();
+
+    this.menuPosicao = {
+      top: rect.bottom + 4,
+      left: rect.right - 160
+    };
+
+    this.menuAbertoId = id;
+  }
+
+  fecharMenu(id: string) {
+    if (this.menuAbertoId === id) {
+      this.menuAbertoId = null;
+    }
+  }
+
+  removerProduto(id: string) {
+    
   }
 }
