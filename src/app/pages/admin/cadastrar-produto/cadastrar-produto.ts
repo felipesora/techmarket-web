@@ -20,6 +20,9 @@ export class CadastrarProduto {
   mensagem: string | null = null;
   tipoMensagem: 'sucesso' | 'erro' | null = null;
 
+  imagemSelecionada: File | null = null;
+  imagemPreview: string | null = null;
+
   constructor(
     private formBuilder: FormBuilder,
     private produtoService: ProdutoService,
@@ -66,9 +69,14 @@ export class CadastrarProduto {
     };
 
     this.produtoService.cadastrarProduto(produto).subscribe({
-      next: () => {
+      next: (response) => {
         this.tipoMensagem = 'sucesso';
         this.mensagem = 'Produto cadastrado com sucesso!';
+
+        if (this.imagemSelecionada) {
+          this.cadastrarImagemDoProduto(response.id, this.imagemSelecionada);
+        }
+
         this.cdr.detectChanges();
 
         setTimeout(() => {
@@ -83,5 +91,58 @@ export class CadastrarProduto {
       }
     });
     
+  };
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+
+    const file = input.files[0];
+
+    // ✅ Validação de tipo
+    if (!['image/png', 'image/jpeg'].includes(file.type)) {
+      this.tipoMensagem = 'erro';
+      this.mensagem = 'A imagem deve ser PNG ou JPG';
+      return;
+    }
+
+    this.imagemSelecionada = file;
+
+    // ✅ Gerar preview
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.imagemPreview = reader.result as string;
+      this.cdr.detectChanges();
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  cadastrarImagemDoProduto(idProduto: string, file: File) {
+    if (!file) return;
+
+    this.produtoService.uploadImagemProduto(idProduto, file).subscribe({
+      next: () => {
+        this.tipoMensagem = 'sucesso';
+        this.mensagem = 'Imagem cadastrada com sucesso!';
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.tipoMensagem = 'erro';
+        this.mensagem = 'Erro ao enviar imagem';
+        this.cdr.detectChanges();
+        console.log(err);
+      }
+    });
+  };
+
+  removerImagem() {
+    this.imagemSelecionada = null;
+    this.imagemPreview = null;
+    this.cdr.detectChanges();
   }
 }

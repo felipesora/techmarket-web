@@ -56,19 +56,6 @@
             </div>
         </div>
 
-        <!-- Card Faturamento -->
-        <!-- <div class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-100">
-            <div class="flex justify-between items-start">
-                <div>
-                    <p class="text-sm text-gray-500 font-medium">Faturamento (Mês)</p>
-                    <h1 class="text-3xl font-bold text-gray-800 mt-2">R$ 47.890</h1>
-                </div>
-                <div class="bg-amber-500/10 p-3 rounded-full">
-                    <img src="icons/icone-dinheiro-amarelo.png" alt="Faturamento" class="w-6 h-6">
-                </div>
-            </div>
-        </div> -->
-
     </section>
 
     <section>
@@ -77,8 +64,7 @@
         </div>
 
         <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <button routerLink="/admin/produtos/novo"
-                class="cursor-pointer bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-left border border-transparent hover:border-[#0076D2] group">
+            <button routerLink="/admin/cadastrar-produto" class="cursor-pointer bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-left border border-transparent hover:border-[#0076D2] group">
                 <div class="bg-[#0076D2]/10 w-10 h-10 rounded-full flex items-center justify-center mb-3 group-hover:bg-[#0076D2] transition-all">
                     <img src="icons/icone-produtos-azul.png" alt="Produtos" class="w-6 group-hover:hidden">
                     <img src="icons/icone-produtos-branco.png" alt="Produtos" class="hidden w-6 group-hover:block">
@@ -87,8 +73,7 @@
                 <p class="text-sm text-gray-500 mt-1">Adicionar novo produto ao catálogo</p>
             </button>
 
-            <button routerLink="/admin/pedidos"
-                class="cursor-pointer bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-left border border-transparent hover:border-[#0076D2] group">
+            <button routerLink="/admin/pedidos" class="cursor-pointer bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-left border border-transparent hover:border-[#0076D2] group">
                 <div class="bg-green-500/10 w-10 h-10 rounded-full flex items-center justify-center mb-3 group-hover:bg-green-500 transition-all">
                     <img src="icons/icone-pedidos-verde.png" alt="Pedidos" class="w-6 group-hover:hidden">
                     <img src="icons/icone-pedidos-branco.png" alt="Pedidos" class="hidden w-6 group-hover:block">
@@ -97,8 +82,7 @@
                 <p class="text-sm text-gray-500 mt-1">Acompanhar e gerenciar pedidos</p>
             </button>
 
-            <button routerLink="/admin/usuarios"
-                class="cursor-pointer bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-left border border-transparent hover:border-[#0076D2] group">
+            <button routerLink="/admin/usuarios" class="cursor-pointer bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 text-left border border-transparent hover:border-[#0076D2] group">
                 <div class="bg-purple-500/10 w-10 h-10 rounded-full flex items-center justify-center mb-3 group-hover:bg-purple-500 transition-all">
                     <img src="icons/icone-usuarios-roxo.png" alt="Usuários" class="w-6 group-hover:hidden">
                     <img src="icons/icone-usuarios-branco.png" alt="Usuários" class="hidden w-6 group-hover:block">
@@ -161,7 +145,7 @@
         <div class="bg-white rounded-xl shadow-sm overflow-hidden">
             <div class="p-5 border-b flex justify-between items-center">
                 <span class="font-semibold text-gray-800">Produtos Mais Vendidos</span>
-                <button routerLink="/admin/produtos" class="cursor-pointer text-xs text-[#0076D2] hover:underline">Gerenciar</button>
+                <button [routerLink]="['/admin/listar-produtos']" [queryParams]="{ tipo: 'destaque' }" class="cursor-pointer text-xs text-[#0076D2] hover:underline">Gerenciar</button>
             </div>
 
             <div class="overflow-x-auto">

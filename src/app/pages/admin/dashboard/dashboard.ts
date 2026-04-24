@@ -7,10 +7,11 @@ import { PedidoResponse } from '../../../types/pedido';
 import { Produto } from '../../../types/produto';
 import { CarregamentoComponent } from "../../../components/carregamento-component/carregamento-component";
 import { finalize, forkJoin } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [DatePipe, CurrencyPipe, NgClass, CarregamentoComponent],
+  imports: [DatePipe, CurrencyPipe, NgClass, CarregamentoComponent, RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })

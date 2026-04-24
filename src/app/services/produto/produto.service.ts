@@ -140,13 +140,26 @@ export class ProdutoService {
     return this.http.get<ProdutoPageResponse>(`${this.API}/admin/promocoes`, { headers, params });
   };
 
-  cadastrarProduto(produto: ProdutoRequest): Observable<ProdutoRequest> {
+  cadastrarProduto(produto: ProdutoRequest): Observable<Produto> {
     const token = localStorage.getItem('tokenUser');
 
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
 
-    return this.http.post<ProdutoRequest>(`${this.API}`, produto, { headers });
+    return this.http.post<Produto>(`${this.API}`, produto, { headers });
+  }
+
+  uploadImagemProduto(idProduto: string, file: File): Observable<string> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<string>(`${this.API}/${idProduto}/imagem`, formData, { headers, responseType: 'text' as 'json' });
   }
 }

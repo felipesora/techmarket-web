@@ -250,6 +250,41 @@
                     <h2 class="font-bold">Imagem do Produto</h2>
                 </div>
 
+                <div class="p-5 flex flex-col gap-5">
+
+                    <label class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer transition-all duration-300 hover:border-[#0076D2] hover:bg-blue-50">
+                        <input 
+                            type="file"
+                            accept="image/png, image/jpeg"
+                            (change)="onFileSelected($event)"
+                            class="hidden"
+                        >
+                        <div class="flex flex-col items-center gap-2 text-gray-500">
+                            <img src="icons/icone-imagem-amarelo.png" class="w-10 opacity-70">
+                            <span class="text-sm font-medium">
+                                Clique para enviar uma imagem
+                            </span>
+                            <span class="text-xs">
+                                PNG ou JPG (máx. 5MB)
+                            </span>
+                        </div>
+                    </label>
+
+                    <!-- Preview -->
+                    @if (imagemPreview) {
+                        <div class="border border-[#E9ECEF] rounded-lg p-4 flex flex-col items-center gap-3 justify-center bg-gray-50">
+                            <img 
+                                [src]="imagemPreview" 
+                                alt="Preview da imagem" 
+                                class="max-h-60 object-contain rounded border border-[#E9ECEF]"
+                            >
+
+                            <button type="button" (click)="removerImagem()" class="text-red-600 text-sm font-medium cursor-pointer hover:underline">
+                                Remover imagem
+                            </button>
+                        </div>
+                    }
+                </div>
             </div>
 
             @if (mensagem) {
