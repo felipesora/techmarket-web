@@ -102,7 +102,7 @@ export class CadastrarProduto {
 
     const file = input.files[0];
 
-    // ✅ Validação de tipo
+    // Validação de tipo
     if (!['image/png', 'image/jpeg'].includes(file.type)) {
       this.tipoMensagem = 'erro';
       this.mensagem = 'A imagem deve ser PNG ou JPG';
@@ -111,7 +111,7 @@ export class CadastrarProduto {
 
     this.imagemSelecionada = file;
 
-    // ✅ Gerar preview
+    // Gerar preview
     const reader = new FileReader();
 
     reader.onload = () => {

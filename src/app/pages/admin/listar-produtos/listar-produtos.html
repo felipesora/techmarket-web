@@ -44,6 +44,7 @@
                             <th class="p-4 font-medium">Preço Promoção</th>
                             <th class="p-4 font-medium">Vendidos</th>
                             <th class="p-4 font-medium">Estoque</th>
+                            <th class="p-4 font-medium">Data Criação</th>
                             <th class="p-4 font-medium">Status</th>
                             <th class="p-4 font-medium text-center">Ações</th>
                         </tr>
@@ -112,6 +113,11 @@
                                         </span>
                                     }
                                 </td>
+
+                                <!-- Data criacao -->
+                                <td class="p-4 text-gray-800">
+                                    {{ produto.dataCriacao | date:'dd/MM/yyyy \'-\' HH:mm' }}
+                                </td>
                                 
                                 <!-- Status -->
                                 <td class="p-4">
@@ -176,6 +182,7 @@
                             <th class="p-4 font-medium">Desconto</th>
                             <th class="p-4 font-medium">Vendidos</th>
                             <th class="p-4 font-medium">Estoque</th>
+                            <th class="p-4 font-medium">Data Criação</th>
                             <th class="p-4 font-medium">Status</th>
                             <th class="p-4 font-medium text-center">Ações</th>
                         </tr>
@@ -237,6 +244,11 @@
                                     }" class="font-medium">
                                         {{ produto.estoque }} un
                                     </span>
+                                </td>
+                                
+                                <!-- Data criacao -->
+                                <td class="p-4 text-gray-800">
+                                    {{ produto.dataCriacao | date:'dd/MM/yyyy \'-\' HH:mm' }}
                                 </td>
                                 
                                 <!-- Status -->
