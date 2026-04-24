@@ -1,1 +1,314 @@
-<p>editar-produto works!</p>
+@if (carregando) {
+    <app-carregamento-component />
+}
+
+<main class="bg-[#F5F7FC] p-7 flex flex-col gap-10 min-h-screen">
+    <div>
+        <div class="flex items-center gap-2">
+            <img src="icons/icone-produtos-azul.png" alt="Produtos" class="w-8">
+            <h1 class="font-bold text-2xl text-gray-800">Editar Produto</h1>
+        </div>
+    </div>
+
+    <div class="rounded-[10px] bg-white">
+        <form [formGroup]="form" (ngSubmit)="editarProduto()">
+            <!-- Informacoes basicas -->
+            <div>
+                <div class="flex items-center gap-2 bg-[#EFF6FE] p-5 border-b border-[#E9ECEF]">
+                    <img src="icons/icone-info.png" alt="ícone de Informação" class="w-7">
+                    <h2 class="font-bold">Informações Básicas</h2>
+                </div>
+
+                <div class="p-5 flex flex-col gap-5">
+
+                    <div class="flex items-center justify-between gap-7">
+
+                        <div class="flex w-full flex-col gap-1">
+                            <label for="codigo" class="text-[#334155] font-bold text-sm pl-1">Código do Produto <span class="text-red-600">*</span></label>
+                            <input
+                                formControlName="codigo"
+                                name="codigo"
+                                type="text"
+                                placeholder="Ex: PROD-001"
+                                class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                            >
+                            @if (submitted && form.get('codigo')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Código obrigatório</span>
+                            }
+                            @if (submitted && form.get('codigo')?.errors?.['codigoMinimo']) {
+                                <span class="text-red-500 text-xs">* Código deve ter no mínimo 3 caracteres</span>
+                            }
+                            @if (submitted && form.get('codigo')?.errors?.['codigoMaximo']) {
+                                <span class="text-red-500 text-xs">* Código deve ter no máximo 50 caracteres</span>
+                            }
+                        </div>
+
+                        <div class="flex w-full flex-col gap-1">
+                            <label for="categoria" class="text-[#334155] font-bold text-sm pl-1">Categoria <span class="text-red-600">*</span></label>
+                            <select
+                                formControlName="categoria"
+                                name="categoria"
+                                id="categoria"
+                                class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                            >
+                                <option value="" disabled>Selecione uma categoria</option>
+                                <option value="NOTEBOOKS">Notebooks</option>
+                                <option value="CELULARES">Celulares</option>
+                                <option value="COMPUTADORES">Computadores</option>
+                                <option value="MONITORES">Monitores</option>
+                                <option value="TECLADOS">Teclados</option>
+                                <option value="MOUSES">Mouses</option>
+                                <option value="HEADSETS">Headsets</option>
+                                <option value="PERIFERICOS">Periféricos</option>
+                                <option value="WEBCAMS">Webcams</option>
+                                <option value="COMPONENTES">Componentes</option>
+                                <option value="AUDIO">Áudio</option>
+                                <option value="OUTROS">Outros</option>
+                            </select>
+                            @if (submitted && form.get('categoria')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Categoria obrigatório</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="flex w-full flex-col gap-1">
+                        <label for="nome" class="text-[#334155] font-bold text-sm pl-1">Nome do Produto <span class="text-red-600">*</span></label>
+                        <input
+                            formControlName="nome"
+                            name="nome"
+                            type="text"
+                            placeholder="Digite o nome do produto"
+                            class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                        >
+                        @if (submitted && form.get('nome')?.errors?.['obrigatorio']) {
+                            <span class="text-red-500 text-xs">* Nome obrigatório</span>
+                        }
+                        @if (submitted && form.get('nome')?.errors?.['nomeMinimo']) {
+                            <span class="text-red-500 text-xs">* Nome deve ter no mínimo 3 caracteres</span>
+                        }
+                        @if (submitted && form.get('nome')?.errors?.['nomeMaximo']) {
+                            <span class="text-red-500 text-xs">* Nome deve ter no máximo 150 caracteres</span>
+                        }
+                    </div>
+
+                    <div class="flex w-full flex-col gap-1">
+                        <label for="descricao" class="text-[#334155] font-bold text-sm pl-1">Descrição</label>
+                        <textarea
+                            formControlName="descricao"
+                            name="descricao"
+                            id="descricao"
+                            placeholder="Descreva o produto (características, especificações, etc.)"
+                            class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                        ></textarea>
+                        @if (submitted && form.get('descricao')?.errors?.['descricaoMinimo']) {
+                            <span class="text-red-500 text-xs">* Descrição deve ter no mínimo 3 caracteres</span>
+                        }
+                        @if (submitted && form.get('descricao')?.errors?.['descricaoMaximo']) {
+                            <span class="text-red-500 text-xs">* Descrição deve ter no máximo 500 caracteres</span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preços e Estoque -->
+            <div>
+                <div class="flex items-center gap-2 bg-[#F0FDF4] p-5 border-b border-[#E9ECEF]">
+                    <img src="icons/icone-dinheiro-verde.png" alt="ícone de Informação" class="w-7">
+                    <h2 class="font-bold">Preços e Estoque</h2>
+                </div>
+
+                <div class="p-5 flex flex-col gap-5">
+
+                    <div class="flex items-center justify-between gap-7">
+
+                        <div class="flex w-full flex-col gap-1">
+                            <label for="precoNormal" class="text-[#334155] font-bold text-sm pl-1">Preço Normal <span class="text-red-600">*</span></label>
+                            <input
+                                formControlName="precoNormal"
+                                name="precoNormal"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                placeholder="R$ 0,00"
+                                class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                            >
+                            @if (submitted && form.get('precoNormal')?.errors?.['valorInvalido']) {
+                                <span class="text-red-500 text-xs">* Informe um valor válido</span>
+                            }
+
+                            @if (submitted && form.get('precoNormal')?.errors?.['valorNegativo']) {
+                                <span class="text-red-500 text-xs">* O preço não pode ser negativo</span>
+                            }
+                            @if (submitted && form.get('precoNormal')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Preço obrigatório</span>
+                            }
+                        </div>
+
+                        <div class="flex w-full flex-col gap-1">
+                            <label for="precoPromocional" class="text-[#334155] font-bold text-sm pl-1">Preço Promocional</label>
+                            <input
+                                formControlName="precoPromocional"
+                                name="precoPromocional"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                placeholder="R$ 0,00"
+                                class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                            >
+                            @if (submitted && form.get('precoPromocional')?.errors?.['valorInvalido']) {
+                                <span class="text-red-500 text-xs">* Informe um valor válido</span>
+                            }
+
+                            @if (submitted && form.get('precoPromocional')?.errors?.['valorNegativo']) {
+                                <span class="text-red-500 text-xs">* O preço não pode ser negativo</span>
+                            }
+                            @if (submitted && form.errors?.['precoPromocionalInvalido']) {
+                                <span class="text-red-500 text-xs">
+                                    * O preço promocional deve ser menor que o preço normal
+                                </span>
+                            }
+                        </div>
+
+                        <div class="flex w-full flex-col gap-1">
+                            <label for="estoque" class="text-[#334155] font-bold text-sm pl-1">Quantidade em Estoque <span class="text-red-600">*</span></label>
+                            <input
+                                formControlName="estoque"
+                                name="estoque"
+                                type="number"
+                                min="0"
+                                step="1"
+                                placeholder="0"
+                                class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                            >
+                            @if (submitted && form.get('estoque')?.errors?.['valorInvalido']) {
+                                <span class="text-red-500 text-xs">* Informe um número válido</span>
+                            }
+
+                            @if (submitted && form.get('estoque')?.errors?.['valorNegativo']) {
+                                <span class="text-red-500 text-xs">* O estoque não pode ser negativo</span>
+                            }
+                            @if (submitted && form.get('estoque')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Estoque obrigatório</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marca e Status -->
+            <div>
+                <div class="flex items-center gap-2 bg-[#FAF5FF] p-5 border-b border-[#E9ECEF]">
+                    <img src="icons/icone-etiqueta-roxo.png" alt="ícone de Informação" class="w-7">
+                    <h2 class="font-bold">Marca e Status</h2>
+                </div>
+
+                <div class="p-5 flex flex-col gap-5">
+
+                    <div class="flex items-center justify-between gap-7">
+
+                        <div class="flex w-full flex-col gap-1">
+                            <label for="marca" class="text-[#334155] font-bold text-sm pl-1">Marca do Produto <span class="text-red-600">*</span></label>
+                            <input
+                                formControlName="marca"
+                                name="marca"
+                                type="text"
+                                placeholder="Ex: Samsung"
+                                class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                            >
+                            @if (submitted && form.get('marca')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Marca obrigatório</span>
+                            }
+                            @if (submitted && form.get('marca')?.errors?.['marcaMaximo']) {
+                                <span class="text-red-500 text-xs">* Marca deve ter no máximo 100 caracteres</span>
+                            }
+                        </div>
+
+                        <div class="flex w-full flex-col gap-1">
+                            <label for="status" class="text-[#334155] font-bold text-sm pl-1">Status <span class="text-red-600">*</span></label>
+                            <select
+                                formControlName="status"
+                                name="status"
+                                id="status"
+                                class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                            >
+                                <option value="" disabled>Selecione um status</option>
+                                <option value="ATIVO">Ativo</option>
+                                <option value="INATIVO">Inativo</option>
+                            </select>
+                            @if (submitted && form.get('status')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Status obrigatório</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Imagem do Produto -->
+            <div>
+                <div class="flex items-center gap-2 bg-[#FFFAF3] p-5 border-b border-[#E9ECEF]">
+                    <img src="icons/icone-imagem-amarelo.png" alt="ícone de Informação" class="w-7">
+                    <h2 class="font-bold">Imagem do Produto</h2>
+                </div>
+
+                <div class="p-5 flex flex-col gap-5">
+
+                    <label class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer transition-all duration-300 hover:border-[#0076D2] hover:bg-blue-50">
+                        <input
+                            type="file"
+                            accept="image/png, image/jpeg"
+                            (change)="onFileSelected($event)"
+                            class="hidden"
+                        >
+                        <div class="flex flex-col items-center gap-2 text-gray-500">
+                            <img src="icons/icone-imagem-amarelo.png" class="w-10 opacity-70">
+                            <span class="text-sm font-medium">
+                                Clique para enviar uma imagem
+                            </span>
+                            <span class="text-xs">
+                                PNG ou JPG (máx. 5MB)
+                            </span>
+                        </div>
+                    </label>
+
+                    <!-- Preview -->
+                    @if (imagemPreview) {
+                        <div class="border border-[#E9ECEF] rounded-lg p-4 flex flex-col items-center gap-3 justify-center bg-gray-50">
+                            <img
+                                [src]="imagemPreview"
+                                alt="Preview da imagem"
+                                class="max-h-60 object-contain rounded border border-[#E9ECEF]"
+                            >
+
+                            <button type="button" (click)="removerImagem()" class="text-red-600 text-sm font-medium cursor-pointer hover:underline">
+                                Remover imagem
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            @if (mensagem) {
+                <div class="w-full text-center text-sm font-medium p-3 rounded-lg mt-5"
+                    [ngClass]="{
+                        'bg-green-100 text-green-700': tipoMensagem === 'sucesso',
+                        'bg-red-100 text-red-700': tipoMensagem === 'erro'
+                    }"
+                >
+                    {{ mensagem }}
+                </div>
+            }
+
+            <!-- Botões -->
+            <div class="flex items-center gap-3 justify-end p-5">
+                <button type="button" routerLink="/admin/produtos" class="cursor-pointer bg-gray-100 text-gray-600 text-sm flex items-center border border-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-all">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="cursor-pointer bg-[#0076D2] text-sm text-white px-6 py-3 rounded-lg font-medium hover:bg-[#005fa8] transition-all flex items-center gap-2 hover:shadow-sm">
+                    <img src="icons/icone-editar.png" alt="Editar" class="w-6">
+                    Editar Produto
+                </button>
+            </div>
+        </form>
+    </div>
+</main>

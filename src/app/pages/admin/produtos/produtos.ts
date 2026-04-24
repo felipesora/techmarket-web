@@ -64,6 +64,6 @@ export class Produtos implements OnInit {
   }
   
   editarProduto(id: string) {
-    this.router.navigate(['/admin/produtos/editar', id]);
+    this.router.navigate(['/admin/editar-produto', id]);
   }
 }

@@ -22,6 +22,7 @@ import { adminMatchGuard } from './guards/admin/admin-match-guard';
 import { Produtos } from './pages/admin/produtos/produtos';
 import { ListarProdutos } from './pages/admin/listar-produtos/listar-produtos';
 import { CadastrarProduto } from './pages/admin/cadastrar-produto/cadastrar-produto';
+import { EditarProduto } from './pages/admin/editar-produto/editar-produto';
 
 export const routes: Routes = [
     {
@@ -41,6 +42,7 @@ export const routes: Routes = [
             { path: 'produtos', component: Produtos, canActivate: [authGuard, adminGuard] },
             { path: 'listar-produtos', component: ListarProdutos, canActivate: [authGuard, adminGuard] },
             { path: 'cadastrar-produto', component: CadastrarProduto, canActivate: [authGuard, adminGuard] },
+            { path: 'editar-produto/:id', component: EditarProduto, canActivate: [authGuard, adminGuard] },
         ]
     },
     {
