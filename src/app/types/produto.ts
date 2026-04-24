@@ -26,3 +26,14 @@ export interface Produto {
   imagemId: string | null
   quantidadeVendida: number
 }
+
+export interface ProdutoRequest {
+  codigo: string
+  nome: string
+  descricao?: string
+  categoria: string
+  marca: string
+  precoUnitario?: number
+  precoPromocional: number
+  estoque: number
+}
