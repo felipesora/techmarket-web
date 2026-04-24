@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Produto, ProdutoPageResponse, ProdutoRequest } from '../../types/produto';
+import { Produto, ProdutoPageResponse, ProdutoCreateRequest, ProdutoEditRequest } from '../../types/produto';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -140,7 +140,7 @@ export class ProdutoService {
     return this.http.get<ProdutoPageResponse>(`${this.API}/admin/promocoes`, { headers, params });
   };
 
-  cadastrarProduto(produto: ProdutoRequest): Observable<Produto> {
+  cadastrarProduto(produto: ProdutoCreateRequest): Observable<Produto> {
     const token = localStorage.getItem('tokenUser');
 
     const headers = new HttpHeaders({
@@ -148,6 +148,16 @@ export class ProdutoService {
     });
 
     return this.http.post<Produto>(`${this.API}`, produto, { headers });
+  }
+
+  editarProduto(id: string, produto: ProdutoEditRequest): Observable<Produto> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.put<Produto>(`${this.API}/${id}`, produto, { headers });
   }
 
   uploadImagemProduto(idProduto: string, file: File): Observable<string> {

@@ -4,7 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ProdutoService } from '../../../services/produto/produto.service';
 import { categoriaValidator, codigoValidator, descricaoValidator, marcaValidator, nomeValidator, numeroNaoNegativoValidator, obrigatorioValidator, precoPromocionalValidator, statusValidator } from './validatorsProduto';
-import { ProdutoRequest } from '../../../types/produto';
+import { ProdutoCreateRequest } from '../../../types/produto';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -57,7 +57,7 @@ export class CadastrarProduto {
 
     const formProduto = this.form.value;
 
-    const produto: ProdutoRequest = {
+    const produto: ProdutoCreateRequest = {
       codigo: formProduto.codigo,
       nome: formProduto.nome,
       descricao: formProduto.descricao ? formProduto.descricao : null,

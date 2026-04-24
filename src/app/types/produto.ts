@@ -27,7 +27,7 @@ export interface Produto {
   quantidadeVendida: number
 }
 
-export interface ProdutoRequest {
+export interface ProdutoCreateRequest {
   codigo: string
   nome: string
   descricao?: string
@@ -36,4 +36,16 @@ export interface ProdutoRequest {
   precoUnitario?: number
   precoPromocional: number
   estoque: number
+}
+
+export interface ProdutoEditRequest {
+  codigo: string
+  nome: string
+  descricao?: string
+  categoria: string
+  marca: string
+  precoUnitario?: number
+  precoPromocional: number
+  estoque: number
+  status: string
 }
