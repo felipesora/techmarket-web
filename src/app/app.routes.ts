@@ -23,6 +23,8 @@ import { Produtos } from './pages/admin/produtos/produtos';
 import { ListarProdutos } from './pages/admin/listar-produtos/listar-produtos';
 import { CadastrarProduto } from './pages/admin/cadastrar-produto/cadastrar-produto';
 import { EditarProduto } from './pages/admin/editar-produto/editar-produto';
+import { Pedidos } from './pages/admin/pedidos/pedidos';
+import { ListarPedidos } from './pages/admin/listar-pedidos/listar-pedidos';
 
 export const routes: Routes = [
     {
@@ -43,6 +45,8 @@ export const routes: Routes = [
             { path: 'listar-produtos', component: ListarProdutos, canActivate: [authGuard, adminGuard] },
             { path: 'cadastrar-produto', component: CadastrarProduto, canActivate: [authGuard, adminGuard] },
             { path: 'editar-produto/:id', component: EditarProduto, canActivate: [authGuard, adminGuard] },
+            { path: 'pedidos', component: Pedidos, canActivate: [authGuard, adminGuard] },
+            { path: 'listar-pedidos', component: ListarPedidos, canActivate: [authGuard, adminGuard] },
         ]
     },
     {

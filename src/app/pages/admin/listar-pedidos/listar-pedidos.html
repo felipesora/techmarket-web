@@ -1,0 +1,101 @@
+@if (carregando) {
+    <app-carregamento-component />
+}
+
+<main class="bg-[#F5F7FC] p-7 flex flex-col gap-10 min-h-screen">
+
+    <!-- Título da Página -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div class="flex items-center gap-2">
+            <img src="icons/icone-pedidos-azul.png" alt="Pedidos" class="w-8">
+            <h1 class="font-bold text-2xl text-gray-800">Gerenciar Pedidos</h1>
+        </div>
+
+        <button routerLink="/admin/pedidos" class="cursor-pointer bg-gray-100 text-gray-600 text-sm flex items-center border border-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-all">
+            <img src="icons/icone-voltar.png" alt="ícone de voltar" class="w-6">
+            Voltar
+        </button>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+        <div class="p-5 border-b flex justify-between items-center bg-gradient-to-r from-blue-50 to-white">
+            <div class="flex items-center gap-2">
+                <img src="icons/icone-pedidos-azul.png" alt="Mais Vendidos" class="w-6">
+                <span class="font-semibold text-gray-800 text-lg">
+                    @if (tipo === "hoje") {
+                        Pedidos de Hoje
+                    } @else {
+                        Todos os Pedidos
+                    }
+                    
+                </span>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-gray-50 text-gray-500 uppercase text-xs text-left border-b">
+                    <tr>
+                        <th class="p-4 font-medium">Id Pedido</th>
+                        <th class="p-4 font-medium">Id Usuário</th>
+                        <th class="p-4 font-medium">Valor Total</th>
+                        <th class="p-4 font-medium">Método de Pagamento</th>
+                        <th class="p-4 font-medium">Data Criação</th>
+                        <th class="p-4 font-medium">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @for (pedido of listaPedidos; track pedido.id_pedido) {
+                        <tr class="hover:bg-gray-50 transition-colors duration-150">
+                            <!-- Id Pedido -->
+                            <td class="p-4 text-gray-800">
+                                #{{ pedido.id_pedido }}
+                            </td>
+
+                            <!-- Usuario -->
+                            <td class="p-4 text-gray-800">
+                                #{{ pedido.id_usuario }}
+                            </td>
+                            
+                            <!-- Valor total -->
+                            <td class="p-4 font-semibold text-gray-800">
+                                {{ pedido.valor_total | currency:'BRL':'symbol':'1.2-2' }}
+                            </td>
+                            
+                            <!-- Metodo pagamento -->
+                            <td class="p-4 font-semibold text-gray-800">
+                                {{ formatarMetodoPagamento(pedido.metodo_pagamento) }}
+                            </td>
+                            
+
+                            <!-- Data criacao -->
+                            <td class="p-4 text-gray-800">
+                                {{ pedido.data_criacao| date:'dd/MM/yyyy \'-\' HH:mm' }}
+                            </td>
+                            
+                            <!-- Status -->
+                            <td class="p-4">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium"
+                                          [ngClass]="{
+                                            'bg-green-100 text-green-700': pedido.status_pedido === 'PAGAMENTO_APROVADO',
+                                            'bg-yellow-100 text-yellow-700': pedido.status_pedido === 'AGUARDANDO_PAGAMENTO',
+                                            'bg-red-100 text-red-700': pedido.status_pedido === 'CANCELADO'
+                                          }">
+                                        {{ formatarStatusPedido(pedido.status_pedido) }}
+                                </span>
+                            </td>
+                        </tr>
+                    } @empty {
+                        <tr>
+                            <td colspan="7" class="p-12 text-center">
+                                <div class="flex flex-col items-center gap-3">
+                                    <p class="text-gray-400">Nenhum pedido de hoje encontrado</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
