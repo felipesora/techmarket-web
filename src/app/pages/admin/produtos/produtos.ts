@@ -20,6 +20,11 @@ export class Produtos implements OnInit {
   menuAbertoId: string | null = null;
   menuPosicao = { top: 0, left: 0 };
 
+  modalDeletarProduto: boolean = false;
+  produtoSelecionadoId: string | null = null;
+  mensagemSucessoDeletarProduto: string | null = null;
+  mensagemErroDeletarProduto: string | null = null;
+
   constructor(
     private produtoService: ProdutoService,
     private router: Router,
@@ -103,7 +108,40 @@ export class Produtos implements OnInit {
     }
   }
 
-  removerProduto(id: string) {
-    
+  abrirModal(idProduto: string) {
+    this.produtoSelecionadoId = idProduto;
+    this.modalDeletarProduto = true;
+    this.cdr.detectChanges();
+  };
+
+  fecharModal() {
+    this.modalDeletarProduto = false;
+    this.produtoSelecionadoId = null;
+    this.cdr.detectChanges();
   }
+
+  deletarProduto(idProduto: string) {
+    this.mensagemSucessoDeletarProduto = null;
+    this.mensagemErroDeletarProduto = null;
+
+    this.produtoService.deletarProduto(idProduto).subscribe({
+      next: (response) => {
+        console.log('Produto deletada com sucesso: ', response);
+        this.mensagemSucessoDeletarProduto = "Produto deletado com sucesso!";
+        this.cdr.detectChanges();
+
+        setTimeout(() => {
+          this.listarProdutos();
+          this.fecharModal();
+          this.mensagemSucessoDeletarProduto = null;
+          this.cdr.detectChanges();
+        }, 2000);
+      },
+      error: (error) => {
+        console.error('Erro ao deletar produto:', error);
+        this.mensagemErroDeletarProduto = "Erro ao deletar produto.";
+        this.cdr.detectChanges();
+      }
+    })
+  };
 }

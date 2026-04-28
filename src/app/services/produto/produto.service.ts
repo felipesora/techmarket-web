@@ -160,6 +160,16 @@ export class ProdutoService {
     return this.http.put<Produto>(`${this.API}/${id}`, produto, { headers });
   };
 
+  deletarProduto(id: string): Observable<void> {
+    const token = localStorage.getItem('tokenUser');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.delete<void>(`${this.API}/${id}`, { headers });
+  };
+
   uploadImagemProduto(idProduto: string, file: File): Observable<string> {
     const token = localStorage.getItem('tokenUser');
 
