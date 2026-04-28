@@ -19,12 +19,23 @@ export class Pedidos implements OnInit {
   todosPedidos: PedidoResponse[] = [];
   usuariosMap = new Map<number, string>();
 
+  menuAbertoId: number | null = null;
+  menuPosicao = { top: 0, left: 0 };
+
   constructor(
     private pedidoService: PedidoService,
     private usuarioService: UsuarioService,
     private router: Router,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    // Fecha o menu ao clicar fora
+    document.addEventListener('click', () => {
+      if (this.menuAbertoId) {
+        this.menuAbertoId = null;
+        this.cdr.detectChanges();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.listarPedidos();
@@ -88,4 +99,33 @@ export class Pedidos implements OnInit {
         return metodo;
     }
   };
+
+  toggleMenu(id: number, event: MouseEvent) {
+    event.stopPropagation();
+
+    if (this.menuAbertoId === id) {
+      this.menuAbertoId = null;
+      return;
+    }
+
+    const botao = event.currentTarget as HTMLElement;
+    const rect = botao.getBoundingClientRect();
+
+    this.menuPosicao = {
+      top: rect.bottom + 4,
+      left: rect.right - 160
+    };
+
+    this.menuAbertoId = id;
+  };
+
+  fecharMenu(id: number) {
+    if (this.menuAbertoId === id) {
+      this.menuAbertoId = null;
+    }
+  };
+
+  verDetalhesPedido(id: number) {
+    this.router.navigate(['/admin/detalhes-pedido', id]);
+  }
 }
