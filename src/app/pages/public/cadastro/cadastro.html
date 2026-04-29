@@ -100,19 +100,19 @@
                             <img src="icons/icone-visivel-azul.png" class="w-5 hidden group-hover:block">
                         </button>
                     }
-
-                    @if (submitted && form.get('senha')?.errors?.['senhaObrigatoria']) {
-                        <span class="text-red-500 text-xs">* Senha é obrigatória</span>
-                    }
-
-                    @if (submitted && form.get('senha')?.errors?.['senhaMinimo']) {
-                        <span class="text-red-500 text-xs">* Senha deve ter no mínimo 6 caracteres</span>
-                    }
-
-                    @if (submitted && form.get('senha')?.errors?.['senhaMaximo']) {
-                        <span class="text-red-500 text-xs">* Senha deve ter no máximo 150 caracteres</span>
-                    }
                 </div>
+
+                @if (submitted && form.get('senha')?.errors?.['senhaObrigatoria']) {
+                    <span class="text-red-500 text-xs">* Senha é obrigatória</span>
+                }
+
+                @if (submitted && form.get('senha')?.errors?.['senhaMinimo']) {
+                    <span class="text-red-500 text-xs">* Senha deve ter no mínimo 6 caracteres</span>
+                }
+
+                @if (submitted && form.get('senha')?.errors?.['senhaMaximo']) {
+                    <span class="text-red-500 text-xs">* Senha deve ter no máximo 150 caracteres</span>
+                }
             </div>
 
             <div class="flex flex-col w-full gap-1">

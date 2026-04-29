@@ -136,19 +136,19 @@
                                     <img src="icons/icone-visivel-azul.png" class="w-5 hidden group-hover:block">
                                 </button>
                             }
-
-                            @if (submittedAtualizarSenha && formSenha.get('senhaAtual')?.errors?.['senhaAtualObrigatoria']) {
-                                <span class="text-red-500 text-xs">* Senha é obrigatória</span>
-                            }
-
-                            @if (submittedAtualizarSenha && formSenha.get('senhaAtual')?.errors?.['senhaAtualMinimo']) {
-                                <span class="text-red-500 text-xs">* Senha deve ter no mínimo 6 caracteres</span>
-                            }
-
-                            @if (submittedAtualizarSenha && formSenha.get('senhaAtual')?.errors?.['senhaAtualMaximo']) {
-                                <span class="text-red-500 text-xs">* Senha deve ter no máximo 150 caracteres</span>
-                            }
                         </div>
+
+                        @if (submittedAtualizarSenha && formSenha.get('senhaAtual')?.errors?.['senhaAtualObrigatoria']) {
+                            <span class="text-red-500 text-xs">* Senha é obrigatória</span>
+                        }
+
+                        @if (submittedAtualizarSenha && formSenha.get('senhaAtual')?.errors?.['senhaAtualMinimo']) {
+                            <span class="text-red-500 text-xs">* Senha deve ter no mínimo 6 caracteres</span>
+                        }
+
+                        @if (submittedAtualizarSenha && formSenha.get('senhaAtual')?.errors?.['senhaAtualMaximo']) {
+                            <span class="text-red-500 text-xs">* Senha deve ter no máximo 150 caracteres</span>
+                        }
                     </div>
 
                     <div class="flex flex-col w-full gap-1">
@@ -177,19 +177,19 @@
                                     <img src="icons/icone-visivel-azul.png" class="w-5 hidden group-hover:block">
                                 </button>
                             }
-
-                            @if (submittedAtualizarSenha && formSenha.get('novaSenha')?.errors?.['novaSenhaObrigatoria']) {
-                                <span class="text-red-500 text-xs">* Senha é obrigatória</span>
-                            }
-
-                            @if (submittedAtualizarSenha && formSenha.get('novaSenha')?.errors?.['novaSenhaMinimo']) {
-                                <span class="text-red-500 text-xs">* Senha deve ter no mínimo 6 caracteres</span>
-                            }
-
-                            @if (submittedAtualizarSenha && formSenha.get('novaSenha')?.errors?.['novaSenhaMaximo']) {
-                                <span class="text-red-500 text-xs">* Senha deve ter no máximo 150 caracteres</span>
-                            }
                         </div>
+
+                        @if (submittedAtualizarSenha && formSenha.get('novaSenha')?.errors?.['novaSenhaObrigatoria']) {
+                            <span class="text-red-500 text-xs">* Senha é obrigatória</span>
+                        }
+
+                        @if (submittedAtualizarSenha && formSenha.get('novaSenha')?.errors?.['novaSenhaMinimo']) {
+                            <span class="text-red-500 text-xs">* Senha deve ter no mínimo 6 caracteres</span>
+                        }
+
+                        @if (submittedAtualizarSenha && formSenha.get('novaSenha')?.errors?.['novaSenhaMaximo']) {
+                            <span class="text-red-500 text-xs">* Senha deve ter no máximo 150 caracteres</span>
+                        }
                     </div>
 
                     <div class="flex flex-col w-full gap-1">

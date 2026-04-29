@@ -103,36 +103,43 @@
     </ul>
 
     @if (usuarioLogado()) {
-        <div class="relative group">
-            <button class="group text-sm cursor-pointer flex items-center gap-2 hover:text-[#0076D2] transition-all duration-300">
-                Meu perfil
-
-                <img src="icons/icone-seta-baixo.png" alt="ícone de seta para baixo" class="w-4 group-hover:hidden">
-                <img src="icons/icone-seta-baixo-azul.png" alt="ícone de seta para baixo" class="w-4 hidden group-hover:block">
-            </button>
-
-            <!-- Dropdown -->
-            <div class="absolute right-0 top-full w-64 p-3 bg-white shadow-lg rounded-xl hidden group-hover:block">
-                <ul class="flex flex-col gap-2 text-sm">
-                    <li>
-                        <button [routerLink]="['/meus-dados']" class="flex items-center gap-2 w-full px-2 py-2 cursor-pointer rounded hover:bg-gray-100 hover:text-[#0076D2] transition">
-                            <img src="icons/icone-perfil.png" alt="ícone de usuario" class="w-7">
-                            Meus Dados
-                        </button>
-                    </li>
-                    <li>
-                        <button [routerLink]="['/meus-pedidos']" class="flex items-center gap-2 w-full px-2 py-2 cursor-pointer rounded hover:bg-gray-100 hover:text-[#0076D2] transition">
-                            <img src="icons/icone-pedidos-azul.png" alt="ícone de notebook" class="w-7">
-                            Meus Pedidos
-                        </button>
-                    </li>
-                    <li>
-                        <button (click)="fazerLogout()" class="flex items-center gap-2 w-full px-2 py-2 cursor-pointer rounded hover:bg-[#fef2f2] hover:text-[#EF4444] transition">
-                            <img src="icons/icone-logout.png" alt="ícone de notebook" class="w-7">
-                            Sair
-                        </button>
-                    </li>
-                </ul>
+        <div class="flex items-center gap-7">
+            
+            @if (buscarPerfilUsuario() === "ADMINISTRADOR") {
+                <button [routerLink]="['/admin/dashboard']" class="bg-[#0076D2] text-white p-2 text-sm cursor-pointer rounded-lg hover:bg-[#005fa8] transition-all duration-300">
+                    Ir para Dashboard
+                </button>
+            }
+            
+            <div class="relative group">
+                <button class="group text-sm cursor-pointer flex items-center gap-2 hover:text-[#0076D2] transition-all duration-300">
+                    Meu perfil
+                    <img src="icons/icone-seta-baixo.png" alt="ícone de seta para baixo" class="w-4 group-hover:hidden">
+                    <img src="icons/icone-seta-baixo-azul.png" alt="ícone de seta para baixo" class="w-4 hidden group-hover:block">
+                </button>
+                <!-- Dropdown -->
+                <div class="absolute right-0 top-full w-64 p-3 bg-white shadow-lg rounded-xl hidden group-hover:block">
+                    <ul class="flex flex-col gap-2 text-sm">
+                        <li>
+                            <button [routerLink]="['/meus-dados']" class="flex items-center gap-2 w-full px-2 py-2 cursor-pointer rounded hover:bg-gray-100 hover:text-[#0076D2] transition">
+                                <img src="icons/icone-perfil.png" alt="ícone de usuario" class="w-7">
+                                Meus Dados
+                            </button>
+                        </li>
+                        <li>
+                            <button [routerLink]="['/meus-pedidos']" class="flex items-center gap-2 w-full px-2 py-2 cursor-pointer rounded hover:bg-gray-100 hover:text-[#0076D2] transition">
+                                <img src="icons/icone-pedidos-azul.png" alt="ícone de notebook" class="w-7">
+                                Meus Pedidos
+                            </button>
+                        </li>
+                        <li>
+                            <button (click)="fazerLogout()" class="flex items-center gap-2 w-full px-2 py-2 cursor-pointer rounded hover:bg-[#fef2f2] hover:text-[#EF4444] transition">
+                                <img src="icons/icone-logout.png" alt="ícone de notebook" class="w-7">
+                                Sair
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     } @else {

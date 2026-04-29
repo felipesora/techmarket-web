@@ -19,6 +19,13 @@ import { AcessoNegado } from './pages/public/acesso-negado/acesso-negado';
 import { adminGuard } from './guards/admin/admin-guard';
 import { NaoEncontrado } from './pages/public/nao-encontrado/nao-encontrado';
 import { adminMatchGuard } from './guards/admin/admin-match-guard';
+import { Produtos } from './pages/admin/produtos/produtos';
+import { ListarProdutos } from './pages/admin/listar-produtos/listar-produtos';
+import { CadastrarProduto } from './pages/admin/cadastrar-produto/cadastrar-produto';
+import { EditarProduto } from './pages/admin/editar-produto/editar-produto';
+import { Pedidos } from './pages/admin/pedidos/pedidos';
+import { ListarPedidos } from './pages/admin/listar-pedidos/listar-pedidos';
+import { DetalhesPedido } from './pages/admin/detalhes-pedido/detalhes-pedido';
 
 export const routes: Routes = [
     {
@@ -35,6 +42,13 @@ export const routes: Routes = [
         children: [
             { path: 'dashboard', component: Dashboard, canActivate: [authGuard, adminGuard] },
             { path: 'meus-dados', component: MeusDados, canActivate: [authGuard, adminGuard] },
+            { path: 'produtos', component: Produtos, canActivate: [authGuard, adminGuard] },
+            { path: 'listar-produtos', component: ListarProdutos, canActivate: [authGuard, adminGuard] },
+            { path: 'cadastrar-produto', component: CadastrarProduto, canActivate: [authGuard, adminGuard] },
+            { path: 'editar-produto/:id', component: EditarProduto, canActivate: [authGuard, adminGuard] },
+            { path: 'pedidos', component: Pedidos, canActivate: [authGuard, adminGuard] },
+            { path: 'listar-pedidos', component: ListarPedidos, canActivate: [authGuard, adminGuard] },
+            { path: 'detalhes-pedido/:id', component: DetalhesPedido, canActivate: [authGuard, adminGuard] },
         ]
     },
     {

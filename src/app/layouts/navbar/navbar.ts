@@ -16,6 +16,10 @@ export class Navbar {
     return this.authService.isUsuarioLogado();
   }
 
+  buscarPerfilUsuario() {
+    return this.authService.getPerfilUsuario();
+  }
+
   fazerLogout() {
     this.authService.logout();
   }
