@@ -93,7 +93,7 @@
                                             style="position: fixed;"
                                             [style.top.px]="menuPosicao.top"
                                             [style.left.px]="menuPosicao.left">
-                                            <button (click)="verDetalhesPedido(pedido.id_pedido) ; fecharMenu(pedido.id_pedido)"
+                                            <button (click)="verDetalhesPedido(pedido.id_pedido); fecharMenu(pedido.id_pedido)"
                                                     class="w-full gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150 cursor-pointer">
                                                 Ver Detalhes
                                             </button>
@@ -101,18 +101,11 @@
                                             @if (pedido.status_pedido === "AGUARDANDO_PAGAMENTO") {
                                                 <div class="border-t border-gray-100"></div>
 
-                                                <button (click)="fecharMenu(pedido.id_pedido)"
+                                                <button (click)="abrirModalCancelarPedido(pedido.id_pedido); fecharMenu(pedido.id_pedido)"
                                                         class="w-full gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150 cursor-pointer">
                                                     Cancelar Pedido
                                                 </button>
                                             }
-
-                                            <div class="border-t border-gray-100"></div>
-
-                                            <button (click)="fecharMenu(pedido.id_pedido)"
-                                                    class="w-full gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150 cursor-pointer">
-                                                Excluir
-                                            </button>
                                         </div>
                                     }
                                 </div>
@@ -156,6 +149,7 @@
                         <th class="p-4 font-medium">Método de Pagamento</th>
                         <th class="p-4 font-medium">Data Criação</th>
                         <th class="p-4 font-medium">Status</th>
+                        <th class="p-4 font-medium text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -198,6 +192,39 @@
                                         {{ formatarStatusPedido(pedido.status_pedido) }}
                                 </span>
                             </td>
+
+                            <!-- Ações -->
+                            <td class="p-4">
+                                <div class="relative flex items-center justify-center" (clickOutside)="fecharMenu(pedido.id_pedido)">
+                                    <button (click)="toggleMenu(pedido.id_pedido , $event)"
+                                            class="cursor-pointer p-1.5 rounded-lg hover:bg-gray-100 transition-colors duration-150"
+                                            title="Ações">
+                                        <img src="icons/icone-menu.png" alt="Ações" class="w-5">
+                                    </button>
+
+                                    @if (menuAbertoId === pedido.id_pedido) {
+                                        <div class="absolute right-0 top-full mt-1 w-40 bg-white rounded-xl border border-gray-100 shadow-lg z-[9999] overflow-hidden"
+                                            style="position: fixed;"
+                                            [style.top.px]="menuPosicao.top"
+                                            [style.left.px]="menuPosicao.left">
+                                            <button (click)="verDetalhesPedido(pedido.id_pedido); fecharMenu(pedido.id_pedido)"
+                                                    class="w-full gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150 cursor-pointer">
+                                                Ver Detalhes
+                                            </button>
+
+                                            @if (pedido.status_pedido === "AGUARDANDO_PAGAMENTO") {
+                                                <div class="border-t border-gray-100"></div>
+
+                                                <button (click)="abrirModalCancelarPedido(pedido.id_pedido); fecharMenu(pedido.id_pedido)"
+                                                        class="w-full gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150 cursor-pointer">
+                                                    Cancelar Pedido
+                                                </button>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </td>
+                            
                         </tr>
                     } @empty {
                         <tr>
@@ -213,3 +240,49 @@
         </div>
     </div>
 </main>
+
+<!-- Modal Cancelar Pedido -->
+@if (modalCancelarPedido) {
+    <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+        <div class="bg-white rounded-2xl p-8 w-[520px] shadow-lg flex flex-col items-center gap-6">
+            <div>
+                <img src="icons/icone-alerta.png" class="w-16">
+            </div>
+
+            <h2 class="text-2xl font-bold text-[#2C3E66] text-center">
+                Tem certeza que deseja cancelar este pedido?
+            </h2>
+
+            <p class="text-gray-500 text-center">
+                Esta ação irá cancelar o pedido permanentemente do sistema. Essa operação não pode ser desfeita.
+            </p>
+
+            @if (mensagemSucesso) {
+                <div class="bg-green-100 border border-green-300 text-green-700 px-4 py-2 rounded-lg text-sm">
+                    {{ mensagemSucesso }}
+                </div>
+            }
+
+            @if (mensagemErro) {
+                <div class="bg-red-100 border border-red-300 text-red-700 px-4 py-2 rounded-lg text-sm">
+                    {{ mensagemErro }}
+                </div>
+            }
+
+            <div class="flex gap-5">
+                <button
+                    (click)="fecharModalCancelarPedido()"
+                    class="bg-white text-[#334155] border border-[#CDD6E2] rounded-full cursor-pointer px-6 py-3 font-bold hover:bg-[#F8FCFF] hover:text-[#0076D2] hover:border-[#0076D2] transition-all">
+                    Cancelar
+                </button>
+
+                <button
+                    (click)="cancelarPedido(pedidoSelecionadoId!)"
+                    class="bg-[#FEE2E2] text-[#EF4444] rounded-full cursor-pointer px-6 py-3 font-bold hover:bg-[#FECACA] transition-all">
+                    Sim, cancelar pedido
+                </button>
+            </div>
+        </div>
+    </div>
+}

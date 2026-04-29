@@ -22,6 +22,11 @@ export class Pedidos implements OnInit {
   menuAbertoId: number | null = null;
   menuPosicao = { top: 0, left: 0 };
 
+  pedidoSelecionadoId: number | null = null;
+  modalCancelarPedido: boolean = false;
+  mensagemSucesso: string | null = null;
+  mensagemErro: string | null = null;
+
   constructor(
     private pedidoService: PedidoService,
     private usuarioService: UsuarioService,
@@ -127,5 +132,43 @@ export class Pedidos implements OnInit {
 
   verDetalhesPedido(id: number) {
     this.router.navigate(['/admin/detalhes-pedido', id]);
+  };
+
+  abrirModalCancelarPedido(idPedido: number) {
+    this.pedidoSelecionadoId = idPedido;
+    this.modalCancelarPedido = true;
+    this.cdr.detectChanges();
+  };
+
+  fecharModalCancelarPedido() {
+    this.pedidoSelecionadoId = null;
+    this.modalCancelarPedido = false;
+    this.cdr.detectChanges();
   }
+
+  cancelarPedido(idPedido: number) {
+    this.mensagemSucesso = null;
+    this.mensagemErro = null;
+
+    this.pedidoService.cancelarPedido(idPedido).subscribe({
+      next: (response) => {
+        console.log('Produto cancelado com sucesso: ', response);
+        this.mensagemSucesso = "Pedido cancelado com sucesso!";
+
+        this.cdr.detectChanges();
+
+        setTimeout(() => {
+          this.listarPedidos();
+          this.fecharModalCancelarPedido();
+          this.mensagemSucesso = null;
+          this.cdr.detectChanges();
+        }, 2000);
+      },
+      error: (error) => {
+        console.error('Erro ao cancelar pedido:', error);
+        this.mensagemErro = "Erro ao cancelar pedido.";
+        this.cdr.detectChanges();
+      }
+    })
+  };
 }

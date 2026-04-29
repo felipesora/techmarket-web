@@ -1,1 +1,208 @@
-<p>detalhes-pedido works!</p>
+@if (carregando) {
+    <app-carregamento-component />
+}
+
+<main class="bg-[#F5F7FC] p-7 flex flex-col gap-10 min-h-screen">
+
+    <!-- Título da Página -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div class="flex items-center gap-2">
+            <img src="icons/icone-pedidos-azul.png" alt="Pedidos" class="w-8">
+            <h1 class="font-bold text-2xl text-gray-800">Detalhes do Pedidos</h1>
+        </div>
+
+        <button routerLink="/admin/pedidos" class="cursor-pointer bg-gray-100 text-gray-600 text-sm flex items-center border border-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-all">
+            <img src="icons/icone-voltar.png" alt="ícone de voltar" class="w-6">
+            Voltar
+        </button>
+    </div>
+
+    <div class="flex flex-col gap-5">
+
+        <!-- Informacoes do Pedido -->
+        <div class="w-full bg-white rounded-[10px] shadow-sm">
+            <div class="flex items-center gap-2 bg-[#EFF6FE] p-5 border-b border-[#F3F4F6] rounded-t-[10px]">
+                <img src="icons/icone-info.png" alt="icone info" class="w-7">
+                <h2 class="font-bold text-lg">Informações do Pedido</h2>
+            </div>
+            <div class="p-5 flex flex-col gap-6">
+                <div class="flex items-center justify-between border-b border-[#F3F4F6] pb-2">
+                    <h3 class="text-[#6B7280] font-bold text-sm">Id do Pedido</h3>
+                    <p class="font-bold text-sm">
+                        #{{ pedido.id_pedido }}
+                    </p>
+                </div>
+                <div class="flex items-center justify-between border-b border-[#F3F4F6] pb-2">
+                    <h3 class="text-[#6B7280] font-bold text-sm">Data de Criação</h3>
+                    <p class="font-bold text-sm">
+                        {{ pedido.data_criacao| date:'dd/MM/yyyy \'-\' HH:mm' }}
+                    </p>
+                </div>
+                <div class="flex items-center justify-between">
+                    <h3 class="text-[#6B7280] font-bold text-sm">Status</h3>
+                    <p class="font-bold px-2 py-1 rounded-full text-sm" [ngClass]="{
+                    'bg-green-100 text-green-700': pedido.status_pedido === 'PAGAMENTO_APROVADO',
+                    'bg-yellow-100 text-yellow-700': pedido.status_pedido === 'AGUARDANDO_PAGAMENTO',
+                    'bg-red-100 text-red-700': pedido.status_pedido === 'CANCELADO'}">
+                        {{ formatarStatusPedido(pedido.status_pedido) }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informacoes do Cliente -->
+        <div class="w-full bg-white rounded-[10px] shadow-sm">
+            <div class="flex items-center gap-2 bg-[#FAF5FF] p-5 border-b border-[#F3F4F6] rounded-t-[10px]">
+                <img src="icons/icone-usuario-roxo.png" alt="icone info" class="w-7">
+                <h2 class="font-bold text-lg">Informações do Cliente</h2>
+            </div>
+            <div class="p-5 flex flex-col gap-6">
+                <div class="flex items-center justify-between border-b border-[#F3F4F6] pb-2">
+                    <h3 class="text-[#6B7280] font-bold text-sm">Id do Usuário</h3>
+                    <p class="font-bold text-sm">
+                        #{{ usuario.id_usuario }}
+                    </p>
+                </div>
+                <div class="flex items-center justify-between border-b border-[#F3F4F6] pb-2">
+                    <h3 class="text-[#6B7280] font-bold text-sm">Nome</h3>
+                    <p class="font-bold text-sm">
+                        {{ usuario.nome }}
+                    </p>
+                </div>
+                <div class="flex items-center justify-between">
+                    <h3 class="text-[#6B7280] font-bold text-sm">E-mail</h3>
+                    <p class="font-bold text-sm">
+                        {{ usuario.email }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informacoes do Pagamento -->
+        <div class="w-full bg-white rounded-[10px] shadow-sm">
+            <div class="flex items-center gap-2 bg-[#F0FDF4] p-5 border-b border-[#F3F4F6] rounded-t-[10px]">
+                <img src="icons/icone-dinheiro-verde.png" alt="icone info" class="w-7">
+                <h2 class="font-bold text-lg">Informações do Pagamento</h2>
+            </div>
+            <div class="p-5 flex flex-col gap-6">
+                <div class="flex items-center justify-between border-b border-[#F3F4F6] pb-2">
+                    <h3 class="text-[#6B7280] font-bold text-sm">Método de Pagamento</h3>
+                    <p class="font-bold text-sm">
+                        {{ formatarMetodoPagamento(pedido.metodo_pagamento) }}
+                    </p>
+                </div>
+                <div class="flex items-center justify-between">
+                    <h3 class="text-[#6B7280] font-bold text-sm">Valor Total</h3>
+                    <p class="font-bold text-sm">
+                        {{ pedido.valor_total | currency:'BRL':'symbol':'1.2-2' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Produtos do Pedido -->
+        <div class="w-full bg-white rounded-[10px] shadow-sm">
+            <div class="flex items-center gap-2 bg-[#FFFAF3] p-5 border-b border-[#F3F4F6]">
+                <img src="icons/icone-produto-amarelo.png" alt="icone info" class="w-7">
+                <h2 class="font-bold text-lg">Produtos do Pedido</h2>
+            </div>
+            
+            <div class="overflow-x-auto rounded-[10px]">
+                <table class="w-full text-sm text-left text-gray-600">
+                    
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3">Produto</th>
+                            <th class="px-6 py-3">Quantidade</th>
+                            <th class="px-6 py-3">Preço Unitário</th>
+                            <th class="px-6 py-3">Subtotal</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @for (item of pedido.itens; track $index) {
+                            <tr class="bg-white border-b border-[#F3F4F6]">
+                                
+                                <td class="px-6 py-4 font-medium">
+                                    {{ item.produto.nome }}
+                                </td>
+
+                                <td class="px-6 py-4">
+                                    {{ item.quantidade }}
+                                </td>
+
+                                <td class="px-6 py-4">
+                                    {{ item.produto.preco_produto | currency:'BRL':'symbol':'1.2-2' }}
+                                </td>
+
+                                <td class="px-6 py-4 font-semibold">
+                                    {{ item.subtotal | currency:'BRL':'symbol':'1.2-2' }}
+                                </td>
+
+                            </tr>
+                        }
+                        
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="flex items-center gap-3 justify-end">
+        @if (pedido.status_pedido === "AGUARDANDO_PAGAMENTO") {
+            <button (click)="abrirModalCancelarPedido()" class="bg-[#EF4444] text-white rounded-[5px] px-3 py-2 cursor-pointer hover:bg-red-600 transition-colors duration-200">
+                Cancelar Pedido
+            </button>
+        }
+    </div>
+
+</main>
+
+<!-- Modal Cancelar Pedido -->
+@if (modalCancelarPedido) {
+    <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+        <div class="bg-white rounded-2xl p-8 w-[520px] shadow-lg flex flex-col items-center gap-6">
+            <div>
+                <img src="icons/icone-alerta.png" class="w-16">
+            </div>
+
+            <h2 class="text-2xl font-bold text-[#2C3E66] text-center">
+                Tem certeza que deseja cancelar este pedido?
+            </h2>
+
+            <p class="text-gray-500 text-center">
+                Esta ação irá cancelar o pedido permanentemente do sistema. Essa operação não pode ser desfeita.
+            </p>
+
+            @if (mensagemSucesso) {
+                <div class="bg-green-100 border border-green-300 text-green-700 px-4 py-2 rounded-lg text-sm">
+                    {{ mensagemSucesso }}
+                </div>
+            }
+
+            @if (mensagemErro) {
+                <div class="bg-red-100 border border-red-300 text-red-700 px-4 py-2 rounded-lg text-sm">
+                    {{ mensagemErro }}
+                </div>
+            }
+
+            <div class="flex gap-5">
+                <button
+                    (click)="fecharModalCancelarPedido()"
+                    class="bg-white text-[#334155] border border-[#CDD6E2] rounded-full cursor-pointer px-6 py-3 font-bold hover:bg-[#F8FCFF] hover:text-[#0076D2] hover:border-[#0076D2] transition-all">
+                    Cancelar
+                </button>
+
+                <button
+                    (click)="cancelarPedido(pedido.id_pedido)"
+                    class="bg-[#FEE2E2] text-[#EF4444] rounded-full cursor-pointer px-6 py-3 font-bold hover:bg-[#FECACA] transition-all">
+                    Sim, cancelar pedido
+                </button>
+            </div>
+        </div>
+    </div>
+}
