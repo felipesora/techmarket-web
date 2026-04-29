@@ -1,0 +1,146 @@
+<main class="bg-[#F5F7FC] p-7 flex flex-col gap-10 min-h-screen">
+    <div>
+        <div class="flex items-center gap-2">
+            <img src="icons/icone-administrador.png" alt="Produtos" class="w-8">
+            <h1 class="font-bold text-2xl text-gray-800">Cadastrar Usuário Administrador</h1>
+        </div>
+    </div>
+
+    <div class="rounded-[10px] bg-white">
+        <form [formGroup]="form" (ngSubmit)="cadastrarUsuario()">
+            <!-- Informacoes basicas -->
+            <div>
+                <div class="flex items-center gap-2 bg-[#EFF6FE] p-5 border-b border-[#E9ECEF]">
+                    <img src="icons/icone-info.png" alt="ícone de Informação" class="w-7">
+                    <h2 class="font-bold">Informações Básicas</h2>
+                </div>
+
+                <div class="p-5 flex flex-col gap-5">
+
+                    <div class="flex items-center justify-between gap-7">
+
+                        <div class="flex w-full flex-col gap-1">
+                            <label for="nome" class="text-[#334155] font-bold text-sm pl-1">Nome do Usuário <span class="text-red-600">*</span></label>
+                            <input
+                                formControlName="nome"
+                                name="nome"
+                                type="text"
+                                placeholder="Nome Completo"
+                                class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                            >
+                            @if (submitted && form.get('nome')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* Nome obrigatório</span>
+                            }
+                            @if (submitted && form.get('nome')?.errors?.['nomeMinimo']) {
+                                <span class="text-red-500 text-xs">* Nome deve ter no mínimo 3 caracteres</span>
+                            }
+                            @if (submitted && form.get('nome')?.errors?.['nomeMaximo']) {
+                                <span class="text-red-500 text-xs">* Nome deve ter no máximo 150 caracteres</span>
+                            }
+                        </div>
+
+                        <div class="flex w-full flex-col gap-1">
+                            <label for="email" class="text-[#334155] font-bold text-sm pl-1">E-mail <span class="text-red-600">*</span></label>
+                            <input
+                                formControlName="email"
+                                name="email"
+                                type="text"
+                                placeholder="Ex: admin@techmarket.com"
+                                class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                            >
+                            @if (submitted && form.get('email')?.errors?.['obrigatorio']) {
+                                <span class="text-red-500 text-xs">* E-mail obrigatório</span>
+                            }
+                            @if (submitted && form.get('email')?.errors?.['emailInvalido']) {
+                                <span class="text-red-500 text-xs">* E-mail no formato inválido</span>
+                            }
+                            @if (submitted && form.get('email')?.errors?.['emailMaximo']) {
+                                <span class="text-red-500 text-xs">* E-mail deve ter no máximo 150 caracteres</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="flex w-full flex-col gap-1">
+                        <label for="cpf" class="text-[#334155] font-bold text-sm pl-1">CPF <span class="text-red-600">*</span></label>
+                        <input
+                            formControlName="cpf"
+                            name="cpf"
+                            type="text"
+                            placeholder="000.000.000-00"
+                            mask="000.000.000-00"
+                            class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                        >
+                        @if (submitted && form.get('cpf')?.errors?.['obrigatorio']) {
+                            <span class="text-red-500 text-xs">* CPF é obrigatório</span>
+                        }
+
+                        @if (submitted && form.get('cpf')?.errors?.['cpfFormatoInvalido']) {
+                            <span class="text-red-500 text-xs">* CPF deve seguir o formato 000.000.000-00</span>
+                        }
+                    </div>
+
+                    <div class="flex flex-col w-full gap-1">
+                        <label for="senha" class="text-[#334155] font-bold text-sm">Senha <span class="text-red-600">*</span></label>
+
+                        <div class="relative flex w-full flex-col gap-1">
+                            <input
+                                formControlName="senha"
+                                name="senha"
+                                [type]="mostrarSenha ? 'text' : 'password'"
+                                placeholder="••••••••"
+                                class="border border-[#E2E8F0] rounded-[10px] py-2 px-4 text-sm transition-all duration-300 focus:border-[#0076D2] focus:ring-3 focus:ring-[#0076D2]/10 focus:outline-none"
+                            >
+
+                            @if (!mostrarSenha) {
+                                <button type="button" (click)="toggleSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
+                                    <img src="icons/icone-invisivel-cinza.png" class="w-5 group-hover:hidden">
+                                    <img src="icons/icone-invisivel-azul.png" class="w-5 hidden group-hover:block">
+                                </button>
+                            } @else {
+                                <button type="button" (click)="toggleSenha()" class="group absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
+                                    <img src="icons/icone-visivel-cinza.png" class="w-5 group-hover:hidden">
+                                    <img src="icons/icone-visivel-azul.png" class="w-5 hidden group-hover:block">
+                                </button>
+                            }
+                        </div>
+
+                        @if (submitted && form.get('senha')?.errors?.['obrigatorio']) {
+                            <span class="text-red-500 text-xs">* Senha é obrigatória</span>
+                        }
+
+                        @if (submitted && form.get('senha')?.errors?.['senhaMinimo']) {
+                            <span class="text-red-500 text-xs">* Senha deve ter no mínimo 6 caracteres</span>
+                        }
+
+                        @if (submitted && form.get('senha')?.errors?.['senhaMaximo']) {
+                            <span class="text-red-500 text-xs">* Senha deve ter no máximo 150 caracteres</span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @if (mensagem) {
+                <div class="w-full text-center text-sm font-medium p-3 rounded-lg mt-5" 
+                    [ngClass]="{
+                        'bg-green-100 text-green-700': tipoMensagem === 'sucesso',
+                        'bg-red-100 text-red-700': tipoMensagem === 'erro'
+                    }"
+                >
+                    {{ mensagem }}
+                </div>
+            }
+
+            <!-- Botões -->
+            <div class="flex items-center gap-3 justify-end p-5">
+                <button type="button" routerLink="/admin/usuarios" class="cursor-pointer bg-gray-100 text-gray-600 text-sm flex items-center border border-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-all">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="cursor-pointer bg-[#0076D2] text-sm text-white px-6 py-3 rounded-lg font-medium hover:bg-[#005fa8] transition-all flex items-center gap-2 hover:shadow-sm">
+                    <img src="icons/icone-cadastrar.png" alt="Adicionar" class="w-6">
+                    Cadastrar Administrador
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
