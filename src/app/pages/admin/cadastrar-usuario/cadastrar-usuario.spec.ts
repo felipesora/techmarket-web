@@ -1,18 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListarUsuarios } from './listar-usuarios';
+import { CadastrarUsuario } from './cadastrar-usuario';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideNgxMask } from 'ngx-mask';
 
-describe('ListarUsuarios', () => {
-  let component: ListarUsuarios;
-  let fixture: ComponentFixture<ListarUsuarios>;
+describe('CadastrarUsuario', () => {
+  let component: CadastrarUsuario;
+  let fixture: ComponentFixture<CadastrarUsuario>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ListarUsuarios, RouterTestingModule],
+      imports: [CadastrarUsuario, RouterTestingModule],
+      providers: [provideNgxMask()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ListarUsuarios);
+    fixture = TestBed.createComponent(CadastrarUsuario);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

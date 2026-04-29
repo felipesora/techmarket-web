@@ -28,6 +28,7 @@ import { ListarPedidos } from './pages/admin/listar-pedidos/listar-pedidos';
 import { DetalhesPedido } from './pages/admin/detalhes-pedido/detalhes-pedido';
 import { Usuarios } from './pages/admin/usuarios/usuarios';
 import { ListarUsuarios } from './pages/admin/listar-usuarios/listar-usuarios';
+import { CadastrarUsuario } from './pages/admin/cadastrar-usuario/cadastrar-usuario';
 
 export const routes: Routes = [
     {
@@ -53,6 +54,7 @@ export const routes: Routes = [
             { path: 'detalhes-pedido/:id', component: DetalhesPedido, canActivate: [authGuard, adminGuard] },
             { path: 'usuarios', component: Usuarios, canActivate: [authGuard, adminGuard] },
             { path: 'listar-usuarios', component: ListarUsuarios, canActivate: [authGuard, adminGuard] },
+            { path: 'cadastrar-usuario', component: CadastrarUsuario, canActivate: [authGuard, adminGuard] },
         ]
     },
     {
