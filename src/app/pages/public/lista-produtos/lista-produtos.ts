@@ -114,7 +114,7 @@ export class ListaProdutos implements OnInit {
   };
 
   listarProdutosMaisVendidos() {
-    this.produtoService.getProdutosMaisVendidos(0, 30)
+    this.produtoService.getProdutosMaisVendidos(0, 100)
     .pipe(
       finalize(() => {
         this.carregando = false;
@@ -134,7 +134,7 @@ export class ListaProdutos implements OnInit {
   };
 
   listarProdutosEmPromocao() {
-    this.produtoService.getProdutosEmPromocao(0, 30)
+    this.produtoService.getProdutosEmPromocao(0, 100)
     .pipe(
       finalize(() => {
         this.carregando = false;
@@ -154,7 +154,7 @@ export class ListaProdutos implements OnInit {
   };
 
   listarTodosProdutos() {
-    this.produtoService.getTodosProdutos(0, 30)
+    this.produtoService.getTodosProdutos(0, 100)
     .pipe(
       finalize(() => {
         this.carregando = false;
