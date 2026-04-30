@@ -31,7 +31,7 @@ export class AuthService {
     localStorage.removeItem('produtos-favoritos');
     this.carrinhoService.limparCarrinho();
 
-    this.router.navigate(['/']);
+    this.router.navigate(['/auth/login']);
   }
 
   isTokenValid() {

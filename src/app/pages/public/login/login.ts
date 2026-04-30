@@ -98,6 +98,14 @@ export class Login {
           return;
         }
 
+        if (err.error.message === "Usuário inativo") {
+          this.tipoMensagem = 'erro';
+          this.mensagem = 'Usuário inativo. Entre em contanto com o suporte.';
+          console.log('Mensagem: ', this.mensagem);
+          this.cdr.detectChanges();
+          return;
+        }
+
         this.tipoMensagem = 'erro';
         this.mensagem = 'Erro no login. Tente novamente mais tarde.';
         this.cdr.detectChanges();
