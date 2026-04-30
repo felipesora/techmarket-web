@@ -35,42 +35,42 @@ export const routes: Routes = [
         path: 'auth',
         component: AuthLayout,
         children: [
-            { path: 'login', component: Login },
-            { path: 'cadastro', component: Cadastro }
+            { path: 'login', component: Login, title: "TechMarket - Login" },
+            { path: 'cadastro', component: Cadastro, title: "TechMarket - Cadastro" }
         ]
     },
     {
         path: 'admin',
         component: AdminLayout,
         children: [
-            { path: 'dashboard', component: Dashboard, canActivate: [authGuard, adminGuard] },
-            { path: 'meus-dados', component: MeusDados, canActivate: [authGuard, adminGuard] },
-            { path: 'produtos', component: Produtos, canActivate: [authGuard, adminGuard] },
-            { path: 'listar-produtos', component: ListarProdutos, canActivate: [authGuard, adminGuard] },
-            { path: 'cadastrar-produto', component: CadastrarProduto, canActivate: [authGuard, adminGuard] },
-            { path: 'editar-produto/:id', component: EditarProduto, canActivate: [authGuard, adminGuard] },
-            { path: 'pedidos', component: Pedidos, canActivate: [authGuard, adminGuard] },
-            { path: 'listar-pedidos', component: ListarPedidos, canActivate: [authGuard, adminGuard] },
-            { path: 'detalhes-pedido/:id', component: DetalhesPedido, canActivate: [authGuard, adminGuard] },
-            { path: 'usuarios', component: Usuarios, canActivate: [authGuard, adminGuard] },
-            { path: 'listar-usuarios', component: ListarUsuarios, canActivate: [authGuard, adminGuard] },
-            { path: 'cadastrar-usuario', component: CadastrarUsuario, canActivate: [authGuard, adminGuard] },
+            { path: 'dashboard', component: Dashboard, canActivate: [authGuard, adminGuard], title: "TechMarket - Dashboard" },
+            { path: 'meus-dados', component: MeusDados, canActivate: [authGuard, adminGuard], title: "TechMarket - Meu Dados" },
+            { path: 'produtos', component: Produtos, canActivate: [authGuard, adminGuard], title: "TechMarket - Produtos" },
+            { path: 'listar-produtos', component: ListarProdutos, canActivate: [authGuard, adminGuard], title: "TechMarket - Listar Produtos" },
+            { path: 'cadastrar-produto', component: CadastrarProduto, canActivate: [authGuard, adminGuard], title: "TechMarket - Cadastrar Produto" },
+            { path: 'editar-produto/:id', component: EditarProduto, canActivate: [authGuard, adminGuard], title: "TechMarket - Editar Produto" },
+            { path: 'pedidos', component: Pedidos, canActivate: [authGuard, adminGuard], title: "TechMarket - Pedidos" },
+            { path: 'listar-pedidos', component: ListarPedidos, canActivate: [authGuard, adminGuard], title: "TechMarket - Listar Pedidos" },
+            { path: 'detalhes-pedido/:id', component: DetalhesPedido, canActivate: [authGuard, adminGuard], title: "TechMarket - Detalhes do Pedido" },
+            { path: 'usuarios', component: Usuarios, canActivate: [authGuard, adminGuard], title: "TechMarket - Usuários" },
+            { path: 'listar-usuarios', component: ListarUsuarios, canActivate: [authGuard, adminGuard], title: "TechMarket - Listar Usuários" },
+            { path: 'cadastrar-usuario', component: CadastrarUsuario, canActivate: [authGuard, adminGuard], title: "TechMarket - Cadastrar Usuário" },
         ]
     },
     {
         path: '',
         component: MainLayout,
         children: [
-            { path: '', component: Home},
-            { path: 'favoritos', component: ProdutosFavoritos, canActivate: [authGuard] },
-            { path: 'produtos', component: ListaProdutos },
-            { path: 'detalhes-produto/:id', component: DetalhesProduto },
-            { path: 'carrinho', component: Carrinho, canActivate: [authGuard] },
-            { path: 'confirmacao-pedido', component: ConfirmarPedido, canActivate: [authGuard] },
-            { path: 'pagamento/:idPedido', component: Pagamento, canActivate: [authGuard] },
-            { path: 'meus-dados', component: MeusDados, canActivate: [authGuard] },
-            { path: 'meus-pedidos', component: MeusPedidos, canActivate: [authGuard] },
-            { path: 'acesso-negado', component: AcessoNegado }
+            { path: '', component: Home, title: "TechMarket"},
+            { path: 'favoritos', component: ProdutosFavoritos, canActivate: [authGuard], title: "TechMarket - Favoritos" },
+            { path: 'produtos', component: ListaProdutos, title: "TechMarket - Produtos"  },
+            { path: 'detalhes-produto/:id', component: DetalhesProduto, title: "TechMarket - Detalhes do Produto"},
+            { path: 'carrinho', component: Carrinho, canActivate: [authGuard], title: "TechMarket - Carrinho" },
+            { path: 'confirmacao-pedido', component: ConfirmarPedido, canActivate: [authGuard], title: "TechMarket - Confirmar Pedido" },
+            { path: 'pagamento/:idPedido', component: Pagamento, canActivate: [authGuard], title: "TechMarket - Pagamento" },
+            { path: 'meus-dados', component: MeusDados, canActivate: [authGuard], title: "TechMarket - Meus Dados" },
+            { path: 'meus-pedidos', component: MeusPedidos, canActivate: [authGuard], title: "TechMarket - Meus Pedidos" },
+            { path: 'acesso-negado', component: AcessoNegado, title: "TechMarket - Acesso Negado" }
         ]
     },
     {
@@ -85,7 +85,7 @@ export const routes: Routes = [
         path: '**',
         component: MainLayout,
         children: [
-            { path: '', component: NaoEncontrado }
+            { path: '', component: NaoEncontrado, title: "TechMarket - Não Encontrado" }
         ]
     }
 ];
