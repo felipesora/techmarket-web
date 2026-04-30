@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Produto, ProdutoPageResponse, ProdutoCreateRequest, ProdutoEditRequest } from '../../types/produto';
 import { Observable } from 'rxjs';
+import { env } from '../../core/env';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProdutoService {
 
-  private readonly API = 'http://localhost:8080/techmarket-product-service/produtos';
+  private readonly API = `${env.apiUrl}/techmarket-product-service/produtos`;
 
   constructor(private http: HttpClient) {}
 
