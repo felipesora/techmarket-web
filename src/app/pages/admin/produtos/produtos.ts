@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CurrencyPipe, DatePipe, NgClass } from '@angular/common';
 import { Produto } from '../../../types/produto';
 import { finalize, forkJoin } from 'rxjs';
+import { env } from '../../../core/env';
 
 @Component({
   selector: 'app-produtos',
@@ -144,4 +145,10 @@ export class Produtos implements OnInit {
       }
     })
   };
+
+  getImagemUrl(imagemId: string | null | undefined): string {
+    if (!imagemId) return '';
+
+    return `${env.apiUrl}/techmarket-product-service/produtos/imagem/${imagemId}`;
+  }
 }

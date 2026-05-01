@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AtualizarSenhaDTO, AtualizarStatusDTO, UsuarioPageResponse, UsuarioResponse, UsuarioUpdateDTO } from '../../types/usuario';
+import { env } from '../../core/env';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsuarioService {
 
-  private readonly API = 'http://localhost:8080/techmarket-identity-service/usuarios';
+  private readonly API = `${env.apiUrl}/techmarket-identity-service/usuarios`;
   
   constructor(private http: HttpClient) {}
 
