@@ -3,6 +3,7 @@ import { Produto } from '../../types/produto';
 import { CurrencyPipe } from '@angular/common';
 import { FavoritosService } from '../../services/favoritos/favoritos.service';
 import { RouterLink } from "@angular/router";
+import { env } from '../../core/env';
 
 @Component({
   selector: 'app-card-produto',
@@ -23,5 +24,11 @@ export class CardProduto {
 
   get estaFavoritado(): boolean {
     return this.favoritosService.isFavorito(this.produto.id);
+  }
+
+  getImagemUrl(imagemId: string | null | undefined): string {
+    if (!imagemId) return '';
+
+    return `${env.apiUrl}/techmarket-product-service/produtos/imagem/${imagemId}`;
   }
 }

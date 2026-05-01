@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { CarregamentoComponent } from "../../../components/carregamento-component/carregamento-component";
 import { CurrencyPipe, DatePipe, NgClass } from '@angular/common';
+import { env } from '../../../core/env';
 
 @Component({
   selector: 'app-listar-produtos',
@@ -216,4 +217,10 @@ export class ListarProdutos implements OnInit {
       }
     })
   };
+
+  getImagemUrl(imagemId: string | null | undefined): string {
+    if (!imagemId) return '';
+
+    return `${env.apiUrl}/techmarket-product-service/produtos/imagem/${imagemId}`;
+  }
 }

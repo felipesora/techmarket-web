@@ -6,6 +6,7 @@ import { CurrencyPipe, NgClass } from '@angular/common';
 import { FavoritosService } from '../../../services/favoritos/favoritos.service';
 import { CarrinhoService } from '../../../services/carrinho/carrinho.service';
 import { CarregamentoComponent } from "../../../components/carregamento-component/carregamento-component";
+import { env } from '../../../core/env';
 
 @Component({
   selector: 'app-detalhes-produto',
@@ -82,5 +83,11 @@ export class DetalhesProduto implements OnInit {
       this.adicionadoNoCarrinho = false;
       this.cdr.detectChanges();
     }, 3000);
+  }
+
+  getImagemUrl(imagemId: string | null | undefined): string {
+    if (!imagemId) return '';
+
+    return `${env.apiUrl}/techmarket-product-service/produtos/imagem/${imagemId}`;
   }
 }

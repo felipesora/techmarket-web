@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PedidoPageResponse, PedidoRequest, PedidoResponse } from '../../types/pedido';
 import { Observable } from 'rxjs';
+import { env } from '../../core/env';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PedidoService {
 
-  private readonly API = 'http://localhost:8080/techmarket-order-service/pedidos';
+  private readonly API = `${env.apiUrl}/techmarket-order-service/pedidos`;
 
   constructor(private http: HttpClient) {}
 

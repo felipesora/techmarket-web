@@ -6,6 +6,7 @@ import { ProdutoService } from '../../../services/produto/produto.service';
 import { categoriaValidator, codigoValidator, descricaoValidator, marcaValidator, nomeValidator, numeroNaoNegativoValidator, obrigatorioValidator, precoPromocionalValidator, statusValidator } from '../cadastrar-produto/validatorsProduto';
 import { ProdutoEditRequest } from '../../../types/produto';
 import { NgClass } from '@angular/common';
+import { env } from '../../../core/env';
 
 @Component({
   selector: 'app-editar-produto',
@@ -78,7 +79,7 @@ export class EditarProduto implements OnInit {
         
         
         if (produto.imagemId) {
-          this.imagemPreview = `http://localhost:8080/techmarket-product-service/produtos/imagem/${this.imagemId}`;
+          this.imagemPreview = `${env.apiUrl}/techmarket-product-service/produtos/imagem/${this.imagemId}`;
         }
 
         this.carregando = false;
